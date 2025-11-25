@@ -1,26 +1,19 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer components {
+  .btn-brutal {
+    @apply font-sans border-3 border-black shadow-hard transition-all duration-100 bg-white px-6 py-3 font-bold uppercase tracking-wide text-black hover:bg-brutal-yellow hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-hard-hover active:shadow-hard-active active:translate-x-[4px] active:translate-y-[4px];
+  }
+  
+  .card-brutal {
+    @apply border-3 border-black shadow-hard bg-white p-6;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #F4F4F0;
+  color: #000;
+  font-size: 18px;
 }
