@@ -2,6 +2,11 @@ import Link from 'next/link';
 import PowerPyramid from '../components/features/Pyramid/PowerPyramid';
 import LegalDistinction from '../components/features/Dictionary/LegalDistinction';
 import PoliticianInvoice from '../components/features/Cost/PoliticianInvoice';
+import MBLDossier from '../components/features/Scandals/MBLDossier';
+import BolsaFamiliaBarbaridade from '../components/features/Blocks/BolsaFamiliaBarbaridade';
+import TaxacaoBlusinha from '../components/features/Blocks/TaxacaoBlusinha';
+import BandidolatriaBrasil from '../components/features/Blocks/BandidolatriaBrasil';
+import GastosJanja from '../components/features/Blocks/GastosJanja';
 import { MapPin, Search, AlertOctagon, HelpCircle, Siren, Banknote, Trophy } from 'lucide-react';
 
 export default function Home() {
@@ -22,7 +27,7 @@ export default function Home() {
       <section className="grid md:grid-cols-2 gap-8 items-stretch">
         
         {/* SELETOR DE ESTADO */}
-        <div className="card-brutal bg-brutal-yellow flex flex-col justify-center">
+        <div className="bg-brutal-yellow border-3 border-black shadow-hard p-6 flex flex-col justify-center">
           <div className="flex items-center gap-2 mb-4">
             <MapPin className="w-8 h-8 text-black" />
             <h2 className="text-2xl font-bold uppercase">Fiscalize seu Estado</h2>
@@ -39,7 +44,7 @@ export default function Home() {
                 <option value="RJ">RJ - Rio de Janeiro</option>
                 <option value="MG">MG - Minas Gerais</option>
               </select>
-              <button className="btn-brutal bg-white px-4">
+              <button className="bg-white border-3 border-black shadow-hard px-4 hover:bg-black hover:text-white transition-colors active:shadow-none active:translate-x-[4px] active:translate-y-[4px]">
                 <Search size={20} />
               </button>
             </div>
@@ -48,37 +53,37 @@ export default function Home() {
 
         {/* CARD DESTAQUE: CAMPEÃO DE GASTOS */}
         <div className="flex flex-col gap-4 justify-center">
-           
+            
            {/* Card do Político - CORRIGIDO */}
-           <div className="card-brutal flex flex-col gap-2 bg-white relative overflow-hidden group">
-              {/* Badge de Campeão */}
-              <div className="absolute top-0 right-0 bg-brutal-red text-white text-xs font-black px-3 py-1 border-l-3 border-b-3 border-black z-10">
-                #1 MAIOR GASTADOR (MÊS)
-              </div>
+           <div className="bg-white border-3 border-black shadow-hard p-6 flex flex-col gap-2 relative overflow-hidden group">
+             {/* Badge de Campeão */}
+             <div className="absolute top-0 right-0 bg-brutal-red text-white text-xs font-black px-3 py-1 border-l-3 border-b-3 border-black z-10">
+               #1 MAIOR GASTADOR (MÊS)
+             </div>
 
-              <div className="flex justify-between items-start pt-2">
-                <div>
-                  <span className="text-xs font-bold bg-black text-white px-2 py-1 mb-2 inline-block">DEPUTADA / PR</span>
-                  <p className="font-black text-3xl mt-1 uppercase">Gleisi Hoffmann</p>
-                  <p className="text-sm font-bold text-gray-600">PT</p>
-                </div>
-                <Trophy size={40} className="text-brutal-yellow stroke-black stroke-[2px]" />
-              </div>
+             <div className="flex justify-between items-start pt-2">
+               <div>
+                 <span className="text-xs font-bold bg-black text-white px-2 py-1 mb-2 inline-block">DEPUTADA / PR</span>
+                 <p className="font-black text-3xl mt-1 uppercase">Gleisi Hoffmann</p>
+                 <p className="text-sm font-bold text-gray-600">PT</p>
+               </div>
+               <Trophy size={40} className="text-brutal-yellow stroke-black stroke-[2px]" />
+             </div>
 
-              <div className="mt-4 border-t-2 border-dashed border-black pt-4 flex justify-between items-end">
-                <div className="text-xs font-medium max-w-[50%]">
-                  <span className="block font-bold mb-1">MAIOR DESPESA:</span>
-                  Divulgação de Atividade Parlamentar
-                </div>
-                <div className="text-right">
-                  <p className="text-xs font-bold uppercase">Uso da Cota (Set)</p>
-                  {/* Agora bate com o valor da tabela da página interna */}
-                  <p className="text-3xl font-black text-brutal-red leading-none">R$ 31.200</p>
-                </div>
-              </div>
+             <div className="mt-4 border-t-2 border-dashed border-black pt-4 flex justify-between items-end">
+               <div className="text-xs font-medium max-w-[50%]">
+                 <span className="block font-bold mb-1">MAIOR DESPESA:</span>
+                 Divulgação de Atividade Parlamentar
+               </div>
+               <div className="text-right">
+                 <p className="text-xs font-bold uppercase">Uso da Cota (Set)</p>
+                 {/* Agora bate com o valor da tabela da página interna */}
+                 <p className="text-3xl font-black text-brutal-red leading-none">R$ 31.200</p>
+               </div>
+             </div>
            </div>
 
-           <Link href="/bancada" className="btn-brutal text-center hover:bg-black hover:text-white transition-colors">
+           <Link href="/bancada" className="bg-white border-3 border-black shadow-hard p-3 font-bold uppercase text-center hover:bg-black hover:text-white transition-colors active:shadow-none active:translate-x-[4px] active:translate-y-[4px]">
              Ver bancada completa &rarr;
            </Link>
         </div>
@@ -86,7 +91,12 @@ export default function Home() {
 
       <hr className="border-t-3 border-black" />
 
-      {/* SECTION 2: A FATURA (NOVO BLOCO) */}
+      {/* SECTION: DOSSIÊ MBL (NOVO) */}
+      <MBLDossier />
+
+      <hr className="border-t-3 border-black" />
+
+      {/* SECTION 2: A FATURA */}
       <section className="py-8">
         <PoliticianInvoice />
       </section>
@@ -114,7 +124,7 @@ export default function Home() {
 
       {/* SECTION 5: CURIOSIDADES E CONTROVÉRSIAS */}
       <section className="grid md:grid-cols-2 gap-8">
-        <div className="card-brutal bg-blue-50 flex flex-col gap-4">
+        <div className="bg-blue-50 border-3 border-black shadow-hard p-6 flex flex-col gap-4">
           <div className="flex items-center gap-2 border-b-3 border-black pb-2">
             <HelpCircle className="w-8 h-8 text-brutal-blue stroke-[3px]" />
             <h3 className="text-2xl font-black uppercase">Teoria vs. Prática</h3>
@@ -135,7 +145,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="card-brutal bg-white flex flex-col gap-4 border-brutal-red">
+        <div className="bg-white border-3 border-brutal-red border-black shadow-hard p-6 flex flex-col gap-4">
           <div className="flex items-center gap-2 border-b-3 border-black pb-2">
             <AlertOctagon className="w-8 h-8 text-brutal-red stroke-[3px]" />
             <h3 className="text-2xl font-black uppercase text-brutal-red">Hipocrisia Alert</h3>
@@ -167,7 +177,7 @@ export default function Home() {
             <span className="font-black uppercase tracking-wide">O Roubo Legalizado</span>
           </div>
         </div>
-        <div className="card-brutal bg-white p-0 overflow-hidden">
+        <div className="bg-white border-3 border-black shadow-hard p-0 overflow-hidden">
            <div className="grid md:grid-cols-12 min-h-[300px]">
               <div className="md:col-span-4 bg-brutal-bg p-8 flex flex-col justify-center border-b-3 md:border-b-0 md:border-r-3 border-black">
                  <Banknote size={48} className="mb-4 text-green-700" />
@@ -192,6 +202,16 @@ export default function Home() {
            </div>
         </div>
       </section>
+
+      {/* NOVA SECTION: BLOCOS EXTRAS */}
+      <hr className="border-t-3 border-black" />
+
+        <section className="grid md:grid-cols-2 gap-8">
+            <BolsaFamiliaBarbaridade />
+            <TaxacaoBlusinha />
+            <BandidolatriaBrasil />
+            <GastosJanja />
+        </section>
 
       <footer className="text-center py-8 border-t-3 border-black font-mono text-xs uppercase mt-12">
         <p>Projeto Open Source • Transparência Radical</p>
