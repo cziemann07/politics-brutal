@@ -3,6 +3,8 @@ import PowerPyramid from '../components/features/Pyramid/PowerPyramid';
 import LegalDistinction from '../components/features/Dictionary/LegalDistinction';
 import PoliticianInvoice from '../components/features/Cost/PoliticianInvoice';
 import MBLDossier from '../components/features/Scandals/MBLDossier';
+import Supremo from '../components/features/Scandals/Supremo';
+import Supremo2 from '../components/features/Scandals/Supremo2';
 import BolsaFamiliaBarbaridade from '../components/features/Blocks/BolsaFamiliaBarbaridade';
 import TaxacaoBlusinha from '../components/features/Blocks/TaxacaoBlusinha';
 import BandidolatriaBrasil from '../components/features/Blocks/BandidolatriaBrasil';
@@ -88,8 +90,12 @@ export default function Home() {
            </Link>
         </div>
       </section>
-
       <hr className="border-t-3 border-black" />
+
+      {/* SECTION: DOSSIÊ SUPREMO (NOVO) */}
+      <Supremo />
+
+      <Supremo2 />
 
       {/* SECTION: DOSSIÊ MBL (NOVO) */}
       <MBLDossier />
