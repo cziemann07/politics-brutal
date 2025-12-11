@@ -1,22 +1,107 @@
 import React from 'react';
 import { AlertTriangle, TrendingUp, Users, DollarSign, XCircle, CheckCircle } from 'lucide-react';
+import InstaShareButton from '../../ui/InstaShareButton';
 
 export default function Supremo() {
   return (
     <section className="flex flex-col gap-8">
     {/* HEADER DO DOSSIÊ */}
-    <div className="flex flex-col md:flex-row justify-between items-end border-b-3 border-black pb-4">
+    <div className="flex flex-col md:flex-row justify-between items-end border-b-3 border-black pb-4 gap-4">
         <div>
-        <div className="bg-brutal-red text-white text-xs font-black px-2 py-1 inline-block mb-2 uppercase tracking-widest transform -rotate-1">
-            Dossiê Exclusivo
+            <div className="bg-brutal-red text-white text-xs font-black px-2 py-1 inline-block mb-2 uppercase tracking-widest transform -rotate-1">
+                Dossiê Exclusivo
+            </div>
+            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none">
+                Os <span className="text-brutal-red decoration-4 underline decoration-black">Imperadores de Toga</span>
+            </h2>
         </div>
-        <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none">
-            Os <span className="text-brutal-red decoration-4 underline decoration-black">Imperadores de Toga</span>
-        </h2>
-        </div>
-        <div className="text-right mt-4 md:mt-0">
-        <p className="font-bold text-sm bg-black text-white px-3 py-1">FONTE: OPERAÇÃO COMPLIANCE ZERO / PF / MPF</p>
-        <p className="font-mono text-xs mt-1 uppercase">Dados: Dez/2025</p>
+        
+        <div className="flex flex-col items-end gap-3">
+            {/* A NOVA CHAMADA GIGANTE */}
+            <InstaShareButton data={{
+                // Cabeçalho
+                titleMain: "OS",
+                titleHighlight: "IMPERADORES",
+                source: "COMPLIANCE 0 / PF",
+                dataDate: "DEZ/2025",
+
+                // Seção Linha do Tempo
+                timelineTitle: 'O "JOGO DE CADEIRAS" NO STF',
+                timelineSubtitle: "Como o processo bilionário foi parar nas mãos de um ministro que viajou com advogado da defesa?",
+                timelineSteps: [
+                    {
+                        id: 1,
+                        date: "28 NOV",
+                        textPrefix: "Dias Toffoli é",
+                        highlight: "sorteado relator",
+                        textSuffix: "do recurso do Banco Master no STF."
+                    },
+                    {
+                        id: 2,
+                        date: "29 NOV",
+                        textPrefix: "Viaja ao Peru em jatinho com",
+                        highlight: "Augusto Arruda Botelho",
+                        textSuffix: ", advogado de diretor do Master."
+                    },
+                    {
+                        id: 3,
+                        date: "03 DEZ",
+                        textPrefix: "Botelho entra com recurso. No mesmo dia, Toffoli coloca caso em",
+                        highlight: "sigilo máximo",
+                        textSuffix: "e traz para o STF."
+                    }
+                ],
+
+                // Seção Família (Tem que ter 4 itens para ficar igual o desenho)
+                familyTitle: "O ESCRITÓRIO DE FAMÍLIA",
+                familySubtitle: "",
+                familyCards: [
+                    {
+                        name: "VIVIANE BARCI DE MORAES",
+                        roleBadge: "PROPRIETÁRIA",
+                        roleBadgeColor: "red",
+                        description: "Esposa do Ministro Alexandre de Moraes",
+                        detailLabel: "CONTRATO MASTER:",
+                        detailValue: "R$ 3,6 Mi/mês"
+                    },
+                    {
+                        name: "ALEXANDRE B. DE MORAES",
+                        roleBadge: "SÓCIO",
+                        roleBadgeColor: "gray",
+                        description: "Filho do Ministro Alexandre de Moraes",
+                        detailLabel: "ATUAÇÃO:",
+                        detailValue: "Assina ações pelo Master"
+                    },
+                    {
+                        name: "GIULIANA BARCI DE MORAES",
+                        roleBadge: "SÓCIA",
+                        roleBadgeColor: "gray",
+                        description: "Filha do Ministro Alexandre de Moraes",
+                        detailLabel: "ATUAÇÃO:",
+                        detailValue: "Assina ações pelo Master"
+                    },
+                    {
+                        name: "DANIEL VORCARO (DONO DO MASTER)",
+                        roleBadge: "ORDEM",
+                        roleBadgeColor: "gray",
+                        description: "",
+                        detailLabel: "ORDEM DADA:",
+                        detailValue: "Prioridade MÁXIMA nos pagamentos"
+                    }
+                ],
+
+                // Seção Final
+                theoryQuote: 'ÉTICA JUDICIAL "O magistrado deve evitar situações que possam comprometer a sua imparcialidade ou gerar conflito de interesses."',
+                realityTitle: "A REALIDADE (CASO MASTER)",
+                realityMainValue: "R$ 129 MILHÕES",
+                realitySubValue: "R$ 3,6 Mi/mês por 36 meses",
+                realityScope: 'Representar o banco "onde for necessário", sem causa específica.'
+            }} />
+            
+            <div className="text-right">
+                <p className="font-bold text-sm bg-black text-white px-3 py-1">FONTE: OPERAÇÃO COMPLIANCE ZERO / PF</p>
+                <p className="font-mono text-xs mt-1 uppercase">Dados: Dez/2025</p>
+            </div>
         </div>
     </div>
 
@@ -244,6 +329,9 @@ export default function Supremo() {
         NOTA CONTEXTUAL: O STF já definiu que ministros <span className="font-bold">podem julgar processos</span> mesmo quando envolvem escritórios de familiares. O interesse de partes em contratar escritórios com proximidade ao STF é amplamente documentado.
         </p>
     </div>
+
+
+
     </section>
   );
 }
