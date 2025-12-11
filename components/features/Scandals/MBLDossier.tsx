@@ -1,12 +1,14 @@
 import React from 'react';
 import { AlertTriangle, TrendingUp, Users, DollarSign, XCircle, CheckCircle } from 'lucide-react';
+// IMPORTANTE: O caminho do import deve estar correto
+import InstaShareButton from '../../ui/InstaShareButton';
 
 export default function MBLDossier() {
   return (
     <section className="flex flex-col gap-8">
       
       {/* HEADER DO DOSSIÊ */}
-      <div className="flex flex-col md:flex-row justify-between items-end border-b-3 border-black pb-4">
+      <div className="flex flex-col md:flex-row justify-between items-end border-b-3 border-black pb-4 gap-4">
         <div>
           <div className="bg-brutal-red text-white text-xs font-black px-2 py-1 inline-block mb-2 uppercase tracking-widest transform -rotate-1">
             Dossiê Exclusivo
@@ -15,9 +17,93 @@ export default function MBLDossier() {
             Missão <span className="text-brutal-red decoration-4 underline decoration-black">Mamata</span>
           </h2>
         </div>
-        <div className="text-right mt-4 md:mt-0">
-          <p className="font-bold text-sm bg-black text-white px-3 py-1">FONTE: TSE / DADOS ABERTOS (MAR/2025)</p>
-          <p className="font-mono text-xs mt-1 uppercase">Ref: Análise Nando Moura</p>
+
+        <div className="flex flex-col items-end gap-3">
+             {/* --- BOTÃO DE COMPARTILHAR (CONFIGURADO PARA O MBL) --- */}
+             <InstaShareButton data={{
+                // Cabeçalho
+                titleMain: "MISSÃO",
+                titleHighlight: "MAMATA",
+                source: "TSE",
+                dataDate: "MAR/2025",
+
+                // Seção Linha do Tempo (Adaptada para o 'Milagre das Assinaturas')
+                timelineTitle: 'O "MILAGRE" DAS ASSINATURAS',
+                timelineSubtitle: "Como o dinheiro público turbinou a criação do partido que prometeu não usar fundão.",
+                timelineSteps: [
+                    {
+                        id: 1,
+                        date: "SEM FUNDÃO",
+                        textPrefix: "Em 8 meses de trabalho orgânico, conseguiram apenas",
+                        highlight: "32.000 assinaturas",
+                        textSuffix: "válidas."
+                    },
+                    {
+                        id: 2,
+                        date: "COM FUNDÃO",
+                        textPrefix: "Em apenas 1 mês, injetando",
+                        highlight: "R$ 400 Mil em anúncios",
+                        textSuffix: "do Facebook/Instagram..."
+                    },
+                    {
+                        id: 3,
+                        date: "RESULTADO",
+                        textPrefix: "O número saltou magicamente para",
+                        highlight: "70.000+ assinaturas",
+                        textSuffix: "em tempo recorde."
+                    }
+                ],
+
+                // Seção Família
+                familyTitle: "A ÁRVORE GENEALÓGICA",
+                familySubtitle: "NEPOTISMO CRUZADO & CARGOS NO PARTIDO",
+                familyCards: [
+                    {
+                        name: "ALEXANDRE HENRIQUE",
+                        roleBadge: "IRMÃOZÃO",
+                        roleBadgeColor: "red",
+                        description: "Irmão de Renan Santos",
+                        detailLabel: "SALÁRIO ANUAL:",
+                        detailValue: "R$ 86.000,00"
+                    },
+                    {
+                        name: "SUELI LIPOR",
+                        roleBadge: "MÃEZONA",
+                        roleBadgeColor: "gray",
+                        description: "Mãe de Renan Santos (Mora em SP)",
+                        detailLabel: "SITUAÇÃO:",
+                        detailValue: "Dirigente na Bahia morando em SP"
+                    },
+                    {
+                        name: "MÁRIO JORGE",
+                        roleBadge: "PAIZÃO",
+                        roleBadgeColor: "gray",
+                        description: "Pai de Renan Santos (Mora em SP)",
+                        detailLabel: "SITUAÇÃO:",
+                        detailValue: "Presidente no RN morando em SP"
+                    },
+                    {
+                        name: "CLÃ-DO-VAL",
+                        roleBadge: "FAMÍLIA",
+                        roleBadgeColor: "gray",
+                        description: "Gustavo (Irmão) e Manuel (Pai) de Arthur do Val",
+                        detailLabel: "CARGOS:",
+                        detailValue: "Controlam o partido em MG"
+                    }
+                ],
+
+                // Seção Final (Hipocrisia)
+                theoryQuote: 'O DISCURSO (ANTES) "Não usarei fundão nem se for de 20 trilhões. A palavra de um homem basta." - Arthur do Val',
+                realityTitle: "A REALIDADE (HOJE)",
+                realityMainValue: "R$ 249.510,50",
+                realitySubValue: "Com 22 assessores, o Deputado Guto Zacarias usou 95,70% do limite de vagas utilizadas.",
+                realityScope: "A mudança de discurso do MBL é um dos acontecimentos políticos mais tristes dos últimos anos."
+            }} />
+
+            <div className="text-right">
+                <p className="font-bold text-sm bg-black text-white px-3 py-1">FONTE: TSE / DADOS ABERTOS (MAR/2025)</p>
+                <p className="font-mono text-xs mt-1 uppercase">Ref: Análise Nando Moura</p>
+            </div>
         </div>
       </div>
 
@@ -156,7 +242,7 @@ export default function MBLDossier() {
                 <span>70.000+ Assinaturas</span>
               </div>
               <div className="w-full bg-white border-2 border-black h-6 relative">
-                 {/* Pattern para o gráfico crescido */}
+                {/* Pattern para o gráfico crescido */}
                 <div className="bg-brutal-red h-full w-[85%] border-r-2 border-black flex items-center justify-end px-2 text-white">
                   $$$
                 </div>

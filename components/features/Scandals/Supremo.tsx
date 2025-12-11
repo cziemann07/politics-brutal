@@ -40,8 +40,8 @@ export default function Supremo() {
                         id: 2,
                         date: "29 NOV",
                         textPrefix: "Viaja ao Peru em jatinho com",
-                        highlight: "Augusto Arruda Botelho",
-                        textSuffix: ", advogado de diretor do Master."
+                        highlight: "Augusto Arruda Botelho,",
+                        textSuffix: "advogado de um dos diretores do Master."
                     },
                     {
                         id: 3,
@@ -60,8 +60,8 @@ export default function Supremo() {
                         name: "VIVIANE BARCI DE MORAES",
                         roleBadge: "PROPRIETÁRIA",
                         roleBadgeColor: "red",
-                        description: "Esposa do Ministro Alexandre de Moraes",
-                        detailLabel: "CONTRATO MASTER:",
+                        description: "Esposa do Ministro Alexandre de Moraes, e dona do escritório",
+                        detailLabel: "VALOR DE SEU CONTRATO COM O BANCO MASTER:",
                         detailValue: "R$ 3,6 Mi/mês"
                     },
                     {
@@ -70,7 +70,7 @@ export default function Supremo() {
                         roleBadgeColor: "gray",
                         description: "Filho do Ministro Alexandre de Moraes",
                         detailLabel: "ATUAÇÃO:",
-                        detailValue: "Assina ações pelo Master"
+                        detailValue: "Participa de ações pelo Master"
                     },
                     {
                         name: "GIULIANA BARCI DE MORAES",
@@ -78,15 +78,15 @@ export default function Supremo() {
                         roleBadgeColor: "gray",
                         description: "Filha do Ministro Alexandre de Moraes",
                         detailLabel: "ATUAÇÃO:",
-                        detailValue: "Assina ações pelo Master"
+                        detailValue: "Participa de ações pelo Master"
                     },
                     {
                         name: "DANIEL VORCARO (DONO DO MASTER)",
-                        roleBadge: "ORDEM",
+                        roleBadge: "CLIENTE",
                         roleBadgeColor: "gray",
                         description: "",
                         detailLabel: "ORDEM DADA:",
-                        detailValue: "Prioridade MÁXIMA nos pagamentos"
+                        detailValue: "Prioridade MÁXIMA nos pagamentos ao escritório"
                     }
                 ],
 
@@ -128,7 +128,7 @@ export default function Supremo() {
             <AlertTriangle className="text-black" size={24} />
             </h3>
             <div className="flex flex-col gap-1">
-                <span className="text-xs font-bold uppercase">Contrato Escritório da Esposa</span>
+                <span className="text-xs font-bold uppercase">Contrato Escritório de Advocacia de Viviane era de</span>
                 <span className="text-4xl font-black tracking-tighter">R$ 129<span className="text-lg"> MILHÕES</span></span>
                 <span className="text-xs font-mono">(R$ 3,6 Mi/mês por 36 meses)</span>
             </div>

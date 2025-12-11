@@ -199,12 +199,12 @@ export default function InstaShareButton({ data }: { data: InstaShareComplexProp
                 </div>
                 <div className="relative z-10 text-center w-full">
                     <h3 className="text-3xl font-black uppercase mb-4 border-b-2 border-black inline-block pb-1 whitespace-nowrap">
-                        {data.theoryQuote.split('"')[0]} (TEORIA)
+                        {data.theoryQuote.split('"')[0]} 
                     </h3>
                     <blockquote className="font-serif italic text-2xl leading-relaxed text-gray-800">
                         "{data.theoryQuote.split('"')[1]}"
                     </blockquote>
-                    <p className="text-sm font-bold mt-4 text-right block w-full">- Código de Ética da Magistratura</p>
+                    <p className="text-sm font-bold mt-4 text-right block w-full">- Arthur do Val</p>
                 </div>
             </div>
 
@@ -216,7 +216,7 @@ export default function InstaShareButton({ data }: { data: InstaShareComplexProp
                     <h3 className="text-3xl font-black uppercase mb-6 max-w-[85%] leading-tight">
                         {data.realityTitle}
                     </h3>
-                    <p className="font-bold text-sm uppercase mb-1">CONTRATO ESCRITÓRIO DA ESPOSA</p>
+                    <p className="font-bold text-sm uppercase mb-1">GUTO ZACARIAS GASTOS MENSAIS:</p>
                     <div className="mb-2">
                         <span className="text-4xl font-black leading-none tracking-tighter block mb-2 text-white drop-shadow-sm whitespace-nowrap">
                             {data.realityMainValue}
@@ -228,7 +228,7 @@ export default function InstaShareButton({ data }: { data: InstaShareComplexProp
                 </div>
                 <div className="border-t-[3px] border-black pt-3 mt-4">
                     <p className="font-bold text-lg leading-tight">
-                        <span className="font-black">ESCOPO:</span> {data.realityScope}
+                        <span className="font-black"></span> {data.realityScope}
                     </p>
                 </div>
             </div>
