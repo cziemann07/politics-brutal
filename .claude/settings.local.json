@@ -6,7 +6,9 @@
       "Bash(npm run build:*)",
       "Bash(timeout 15 npm run dev:*)",
       "Bash(curl:*)",
-      "Bash(start:*)"
+      "Bash(start:*)",
+      "WebSearch",
+      "WebFetch(domain:dadosabertos.camara.leg.br)"
     ]
   }
 }

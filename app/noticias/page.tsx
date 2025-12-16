@@ -1,69 +1,262 @@
 "use client";
 
 import { useState } from "react";
-import { Newspaper, ExternalLink, Calendar, TrendingUp } from "lucide-react";
+import {
+  Newspaper,
+  ExternalLink,
+  Calendar,
+  TrendingUp,
+  AlertTriangle,
+  DollarSign,
+  Users,
+  Scale,
+  Filter,
+} from "lucide-react";
+import NewsShareButton, { NewsShareData } from "@/components/ui/NewsShareButton";
 
-// Placeholder - será substituído por feed de notícias real
-const mockNoticias = [
+interface Noticia {
+  id: number;
+  titulo: string;
+  subtitulo: string;
+  fonte: string;
+  fonteUrl: string;
+  data: string;
+  categoria: "hipocrisia" | "corrupcao" | "polarizacao" | "alerta" | "fato";
+  tags: string[];
+  destaque?: string;
+  contexto?: string;
+  relevancia: "alta" | "media" | "baixa";
+}
+
+// Notícias reais e atuais - Dezembro 2025
+const noticias: Noticia[] = [
   {
     id: 1,
-    titulo: "Deputado X ultrapassa teto de gastos em 150%",
-    fonte: "Folha de S.Paulo",
-    data: "2024-09-20",
-    url: "#",
+    titulo: "Zezé Di Camargo: Do Palanque de Lula ao Moralismo de Ocasião",
+    subtitulo:
+      "Cantor que fez campanha para Lula em 2002 agora exige cancelamento de seu programa no SBT porque a emissora recebeu o presidente.",
+    fonte: "Poder360 / CartaCapital",
+    fonteUrl: "https://www.poder360.com.br/poder-midia/zeze-critica-sbt-sugere-aproximacao-com-lula-e-pede-fim-de-show/",
+    data: "15/12/2025",
+    categoria: "hipocrisia",
+    tags: ["Zezé Di Camargo", "SBT", "Lula", "Hipocrisia"],
+    destaque: "Em 2002 fez campanha para Lula. Em 2025 quer censurar sua presença na TV.",
+    contexto:
+      "Zezé recebeu R$ 2,21 milhões em cachês de prefeituras entre 2024-2025. Silvio Santos, que ele diz defender, nunca se indispôs com nenhum governo e pediu ajuda pessoalmente a Lula em 2010.",
     relevancia: "alta",
-    tags: ["Gastos", "CEAP", "Irregularidade"],
   },
   {
     id: 2,
-    titulo: "Nova investigação sobre desvio de verba parlamentar",
-    fonte: "G1",
-    data: "2024-09-19",
-    url: "#",
+    titulo: "Câmara Rejeita Cassar Zambelli Mesmo Após Condenação",
+    subtitulo:
+      "Deputados protegem colega condenada e presa no exterior. Corporativismo vence mais uma vez.",
+    fonte: "Agência Brasil",
+    fonteUrl: "https://agenciabrasil.ebc.com.br/politica",
+    data: "14/12/2025",
+    categoria: "corrupcao",
+    tags: ["Zambelli", "Cassação", "Câmara", "Corporativismo"],
+    destaque: "Quando se trata de proteger os seus, esquerda e direita se unem.",
+    contexto:
+      "Lindbergh Farias (PT) protocolou mandado de segurança pedindo que o STF determine a perda dos mandatos. A mesma Câmara que finge defender a moralidade.",
     relevancia: "alta",
-    tags: ["Investigações", "Corrupção"],
   },
   {
     id: 3,
-    titulo: "Projeções eleitorais 2026: veja quem está na frente",
-    fonte: "Poder360",
-    data: "2024-09-18",
-    url: "#",
+    titulo: "R$ 7,3 Bilhões em Emendas Pix Travadas por Suspeita de Desvio",
+    subtitulo:
+      "Dino manda PF investigar quase mil emendas. Assessora controlava 'salinha das emendas' na Câmara.",
+    fonte: "Transparência Internacional",
+    fonteUrl: "https://transparenciainternacional.org.br/publicacoes/raio-x-das-emendas-ao-orcamento/",
+    data: "12/12/2025",
+    categoria: "corrupcao",
+    tags: ["Emendas Pix", "Orçamento Secreto", "Corrupção", "Dino"],
+    destaque: "O 'Orçamento Secreto 2.0' que deputados de TODOS os partidos adoram.",
+    contexto:
+      "TCU investiga 40 mil emendas com conexões ao crime organizado. PF estima prejuízo de R$ 22 milhões só em uma operação de pavimentação.",
+    relevancia: "alta",
+  },
+  {
+    id: 4,
+    titulo: "Desembargador Preso por Vender Sentenças e Vazar Operações",
+    subtitulo:
+      "Macário Judice Neto, relator do caso TH Joias, foi promovido a desembargador após 17 anos afastado por denúncias.",
+    fonte: "ND Mais",
+    fonteUrl: "https://ndmais.com.br/justica/quem-e-o-desembargador-macario-judice-neto-preso/",
+    data: "10/12/2025",
+    categoria: "corrupcao",
+    tags: ["Judiciário", "Corrupção", "Operação Unha e Carne"],
+    destaque: "Afastado por vender sentenças, voltou e foi PROMOVIDO.",
+    contexto:
+      "Presidente da Alerj foi abordado com R$ 90 mil em espécie no carro. Solto 6 dias depois com tornozeleira. Justiça para quem?",
+    relevancia: "alta",
+  },
+  {
+    id: 5,
+    titulo: "Pablo Marçal: Condenado, Absolvido, e Pronto Para 2026",
+    subtitulo:
+      "Inelegibilidade revertida em segunda instância. Sistema protege quem sabe jogar o jogo.",
+    fonte: "TRE-SP",
+    fonteUrl: "https://www.tre-sp.jus.br/comunicacao/noticias/2025/Novembro/pablo-marcal-tem-condenacao-a-inelegibilidade-revertida-em-segunda-instancia",
+    data: "Nov/2025",
+    categoria: "alerta",
+    tags: ["Pablo Marçal", "Eleições", "Inelegibilidade"],
+    destaque: "Vendeu apoio por R$ 5.000 via Pix. Foi condenado. Foi absolvido.",
+    contexto:
+      "Também condenado por difamação contra Tabata Amaral e por acusações falsas contra instituto de pesquisa. Mas segue elegível.",
+    relevancia: "alta",
+  },
+  {
+    id: 6,
+    titulo: "MBL e Marçal: Inimigos que Usam as Mesmas Táticas",
+    subtitulo:
+      "Renan Santos chama Marçal de 'mentiroso'. Marçal diz que MBL 'não serve pra nada'. Ambos têm razão.",
+    fonte: "Revista Fórum / Metrópoles",
+    fonteUrl: "https://revistaforum.com.br/politica/2025/11/24/video-pablo-maral-esculhamba-mbl-derrotados-no-serve-pra-nada-192778.html",
+    data: "Nov/2025",
+    categoria: "hipocrisia",
+    tags: ["MBL", "Pablo Marçal", "Direita", "Briga"],
+    destaque: "Ambos fazem a mesma coisa. Só brigam quando é um contra o outro.",
+    contexto:
+      "Analistas apontam que a liberação do partido do MBL e a absolvição de Marçal visam fragmentar o bolsonarismo. Todos disputando o mesmo eleitor.",
     relevancia: "media",
-    tags: ["Eleições 2026", "Pesquisas"],
+  },
+  {
+    id: 7,
+    titulo: "Correios: De Centro do Mensalão a Buraco de R$ 4 Bilhões",
+    subtitulo:
+      "Empresa que foi pivô de escândalo em 2005 agora pede socorro ao Tesouro após sair da lista de privatização.",
+    fonte: "ND Mais",
+    fonteUrl: "https://ndmais.com.br/politica/polemicas-do-governo-lula-correios-bndes-dirceu/",
+    data: "Dez/2025",
+    categoria: "fato",
+    tags: ["Correios", "Mensalão", "Governo Lula", "Estatais"],
+    destaque: "20 anos depois, o mesmo problema. Os mesmos personagens.",
+    contexto:
+      "Dirceu articula nos bastidores. BNDES financia ditaduras amigas. A história se repete como farsa.",
+    relevancia: "media",
+  },
+  {
+    id: 8,
+    titulo: "PEC da Blindagem: Congresso Quer Impunidade por Lei",
+    subtitulo:
+      "Proposta fortalece sigilo e dificulta investigações sobre uso de emendas. Voto secreto incluso.",
+    fonte: "Agência Brasil",
+    fonteUrl: "https://agenciabrasil.ebc.com.br/politica/noticia/2025-09/pec-da-blindagem-pode-barrar-acoes-contra-corrupcao-no-uso-de-emendas",
+    data: "Set/2025",
+    categoria: "corrupcao",
+    tags: ["PEC", "Impunidade", "Emendas", "Congresso"],
+    destaque: "Quanto mais se investiga, mais eles tentam se blindar.",
+    contexto:
+      "A urgência da blindagem coincide com o avanço das investigações que já alcançam quase uma centena de parlamentares.",
+    relevancia: "alta",
+  },
+  {
+    id: 9,
+    titulo: "Anistia ao 8 de Janeiro: Senador Quer Perdão Total",
+    subtitulo:
+      "Espiridião Amin quer reincluir perdão completo aos condenados. PL beneficiaria também Bolsonaro.",
+    fonte: "CNN Brasil",
+    fonteUrl: "https://www.cnnbrasil.com.br/tudo-sobre/polemica/",
+    data: "Dez/2025",
+    categoria: "polarizacao",
+    tags: ["8 de Janeiro", "Anistia", "Bolsonaro", "Golpe"],
+    destaque: "Para a direita radical: 'patriotas injustiçados'. Para a lei: criminosos.",
+    contexto:
+      "Especialistas afirmam que o PL da Dosimetria beneficiaria também criminosos comuns, não só os golpistas.",
+    relevancia: "alta",
+  },
+  {
+    id: 10,
+    titulo: "SBT Sempre Puxou Saco de Quem Está no Poder",
+    subtitulo:
+      "Silvio Santos nunca se indispôs com nenhum governo. Filhas seguem a mesma cartilha. Surpresa de quem?",
+    fonte: "Análise PSF",
+    fonteUrl: "#",
+    data: "15/12/2025",
+    categoria: "fato",
+    tags: ["SBT", "Silvio Santos", "Governo", "Mídia"],
+    destaque: "O SBT apoiou Collor, FHC, Lula 1, Lula 2, Dilma, Temer, Bolsonaro, Lula 3.",
+    contexto:
+      "Quem achou que as filhas de Silvio eram 'de direita' não entendeu nada sobre como funcionam grandes empresas de mídia no Brasil.",
+    relevancia: "media",
   },
 ];
+
+const categoriaLabels = {
+  hipocrisia: { label: "Hipocrisia", icon: Users, color: "bg-brutal-red" },
+  corrupcao: { label: "Corrupção", icon: DollarSign, color: "bg-black" },
+  polarizacao: { label: "Polarização", icon: Scale, color: "bg-gray-700" },
+  alerta: { label: "Alerta", icon: AlertTriangle, color: "bg-brutal-red" },
+  fato: { label: "Fato", icon: Newspaper, color: "bg-gray-800" },
+};
 
 export default function NoticiasPage() {
   const [filtro, setFiltro] = useState<string>("todas");
 
   const categorias = [
     { id: "todas", label: "Todas" },
-    { id: "gastos", label: "Gastos" },
-    { id: "investigacoes", label: "Investigações" },
-    { id: "eleicoes", label: "Eleições 2026" },
+    { id: "hipocrisia", label: "Hipocrisia" },
+    { id: "corrupcao", label: "Corrupção" },
+    { id: "polarizacao", label: "Polarização" },
+    { id: "alerta", label: "Alertas" },
   ];
+
+  const noticiasFiltradas =
+    filtro === "todas" ? noticias : noticias.filter((n) => n.categoria === filtro);
 
   return (
     <main className="min-h-screen bg-brutal-bg p-4 md:p-8 max-w-7xl mx-auto">
-      <div className="mb-8">
-        <h1 className="text-5xl font-black uppercase mb-2 flex items-center gap-3">
-          <Newspaper size={48} />
-          Notícias Atuais
-        </h1>
-        <p className="text-lg font-bold text-gray-700">
-          Acompanhe as últimas notícias sobre política brasileira
+      {/* HEADER */}
+      <div className="mb-8 border-b-3 border-black pb-6">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="bg-black p-2 border-2 border-black">
+            <Newspaper size={32} className="text-white" />
+          </div>
+          <div>
+            <span className="text-xs font-black uppercase tracking-widest text-gray-500">
+              Curadoria Crítica
+            </span>
+            <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter leading-none">
+              Notícias Sem Filtro
+            </h1>
+          </div>
+        </div>
+        <p className="text-lg font-bold text-gray-700 max-w-3xl">
+          Não reproduzimos manchetes. Contextualizamos, criticamos e expomos a hipocrisia de
+          todos os lados. Cada notícia aqui pode ser compartilhada como card no Instagram.
         </p>
       </div>
 
-      {/* Filtros */}
-      <div className="flex flex-wrap gap-2 mb-6">
+      {/* AVISO */}
+      <div className="card-brutal bg-black text-white mb-8">
+        <div className="flex items-start gap-4">
+          <AlertTriangle size={24} className="text-brutal-red shrink-0 mt-1" />
+          <div>
+            <p className="font-bold mb-2">
+              ATENÇÃO: Não somos isentos. Somos críticos de TODOS.
+            </p>
+            <p className="text-sm font-medium opacity-80">
+              Cada notícia tem fontes linkadas. Verifique você mesmo. Não confie em nós.
+              Não confie em ninguém. Pesquise.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* FILTROS */}
+      <div className="flex flex-wrap items-center gap-2 mb-8">
+        <div className="flex items-center gap-2 mr-4">
+          <Filter size={18} className="text-gray-600" />
+          <span className="font-bold text-sm uppercase text-gray-600">Filtrar:</span>
+        </div>
         {categorias.map((cat) => (
           <button
             key={cat.id}
             onClick={() => setFiltro(cat.id)}
-            className={`px-4 py-2 font-bold uppercase border-2 border-black transition-all ${
-              filtro === cat.id ? "bg-black text-white" : "bg-white hover:bg-brutal-yellow"
+            className={`px-4 py-2 font-bold uppercase text-sm border-2 border-black transition-all ${
+              filtro === cat.id
+                ? "bg-black text-white"
+                : "bg-white hover:bg-black hover:text-white"
             }`}
           >
             {cat.label}
@@ -71,58 +264,150 @@ export default function NoticiasPage() {
         ))}
       </div>
 
-      {/* Grid de Notícias */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {mockNoticias.map((noticia) => (
-          <article
-            key={noticia.id}
-            className="card-brutal hover:shadow-hard-hover transition-all group"
-          >
-            <div className="flex items-start justify-between mb-3">
-              <span className="text-xs font-bold bg-black text-white px-2 py-1 uppercase">
-                {noticia.fonte}
-              </span>
-              {noticia.relevancia === "alta" && (
-                <TrendingUp size={16} className="text-brutal-red" />
-              )}
-            </div>
+      {/* GRID DE NOTÍCIAS */}
+      <div className="space-y-6">
+        {noticiasFiltradas.map((noticia) => {
+          const catConfig = categoriaLabels[noticia.categoria];
+          const CatIcon = catConfig.icon;
 
-            <h3 className="font-black text-lg uppercase mb-3 group-hover:text-brutal-red transition-colors">
-              {noticia.titulo}
-            </h3>
+          const shareData: NewsShareData = {
+            titulo: noticia.titulo,
+            subtitulo: noticia.subtitulo,
+            fonte: noticia.fonte,
+            data: noticia.data,
+            categoria: noticia.categoria,
+            destaque: noticia.destaque,
+            contexto: noticia.contexto,
+          };
 
-            <div className="flex items-center gap-2 text-xs font-bold text-gray-600 mb-3">
-              <Calendar size={14} />
-              {new Date(noticia.data).toLocaleDateString("pt-BR")}
-            </div>
-
-            <div className="flex flex-wrap gap-2 mb-4">
-              {noticia.tags.map((tag, idx) => (
-                <span
-                  key={idx}
-                  className="text-xs font-bold bg-gray-100 border border-black px-2 py-1"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-            <a
-              href={noticia.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-sm font-bold text-brutal-blue hover:text-black transition-colors"
+          return (
+            <article
+              key={noticia.id}
+              className="card-brutal hover:shadow-hard-hover transition-all"
             >
-              Ler mais <ExternalLink size={14} />
-            </a>
-          </article>
-        ))}
+              <div className="flex flex-col lg:flex-row lg:items-start gap-6">
+                {/* CONTEÚDO */}
+                <div className="flex-1">
+                  {/* META */}
+                  <div className="flex flex-wrap items-center gap-3 mb-4">
+                    <span
+                      className={`${catConfig.color} text-white text-xs font-black px-3 py-1 uppercase flex items-center gap-2`}
+                    >
+                      <CatIcon size={14} />
+                      {catConfig.label}
+                    </span>
+                    <span className="text-xs font-bold text-gray-500 flex items-center gap-1">
+                      <Calendar size={12} />
+                      {noticia.data}
+                    </span>
+                    {noticia.relevancia === "alta" && (
+                      <span className="text-xs font-bold text-brutal-red flex items-center gap-1">
+                        <TrendingUp size={12} />
+                        DESTAQUE
+                      </span>
+                    )}
+                  </div>
+
+                  {/* TÍTULO */}
+                  <h2 className="font-black text-xl md:text-2xl uppercase mb-3 leading-tight">
+                    {noticia.titulo}
+                  </h2>
+
+                  {/* SUBTÍTULO */}
+                  <p className="font-medium text-gray-700 mb-4 leading-relaxed">
+                    {noticia.subtitulo}
+                  </p>
+
+                  {/* DESTAQUE */}
+                  {noticia.destaque && (
+                    <div className="bg-brutal-red text-white p-4 mb-4 border-2 border-black">
+                      <p className="font-black text-sm md:text-base">{noticia.destaque}</p>
+                    </div>
+                  )}
+
+                  {/* CONTEXTO */}
+                  {noticia.contexto && (
+                    <div className="bg-gray-100 p-4 mb-4 border-2 border-black">
+                      <p className="font-medium text-sm text-gray-700">{noticia.contexto}</p>
+                    </div>
+                  )}
+
+                  {/* TAGS */}
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {noticia.tags.map((tag, idx) => (
+                      <span
+                        key={idx}
+                        className="text-xs font-bold bg-white border border-black px-2 py-1"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* AÇÕES */}
+                <div className="flex lg:flex-col gap-3 lg:items-end shrink-0">
+                  {/* BOTÃO COMPARTILHAR */}
+                  <NewsShareButton data={shareData} />
+
+                  {/* LINK FONTE */}
+                  {noticia.fonteUrl !== "#" && (
+                    <a
+                      href={noticia.fonteUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-black transition-colors"
+                    >
+                      <span className="hidden sm:inline">Ver fonte</span>
+                      <ExternalLink size={16} />
+                    </a>
+                  )}
+                </div>
+              </div>
+
+              {/* FONTE */}
+              <div className="mt-4 pt-4 border-t-2 border-gray-200 flex items-center justify-between">
+                <span className="text-xs font-bold text-gray-500">
+                  FONTE: {noticia.fonte}
+                </span>
+                <span className="text-xs font-medium text-gray-400">
+                  Verifique. Não confie.
+                </span>
+              </div>
+            </article>
+          );
+        })}
       </div>
 
-      {/* Placeholder para integração futura */}
-      <div className="mt-8 card-brutal bg-brutal-yellow">
-        <p className="font-bold text-center">
-          🔄 Em breve: Integração com feeds de notícias em tempo real
+      {/* FOOTER */}
+      <div className="mt-12 card-brutal bg-black text-white">
+        <h3 className="font-black text-xl uppercase mb-4">Como Usar Esta Página</h3>
+        <div className="grid md:grid-cols-3 gap-6">
+          <div>
+            <span className="text-brutal-red font-black text-2xl">1.</span>
+            <p className="font-medium mt-2">
+              Leia a notícia e o contexto que adicionamos
+            </p>
+          </div>
+          <div>
+            <span className="text-brutal-red font-black text-2xl">2.</span>
+            <p className="font-medium mt-2">
+              Clique na fonte original e verifique você mesmo
+            </p>
+          </div>
+          <div>
+            <span className="text-brutal-red font-black text-2xl">3.</span>
+            <p className="font-medium mt-2">
+              Use o botão "Compartilhar" para baixar o card e postar no Instagram
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* MENSAGEM FINAL */}
+      <div className="mt-8 bg-brutal-bg border-3 border-black p-6 text-center">
+        <p className="font-black text-lg uppercase">
+          Política Sem Filtro: Expondo a hipocrisia de esquerda, direita e centro desde 2025.
         </p>
       </div>
     </main>

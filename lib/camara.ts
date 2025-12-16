@@ -260,3 +260,109 @@ export async function buildBancadaDataset(params: {
     150 // 150ms de delay entre requisições
   );
 }
+
+// ========== VOTAÇÕES ==========
+
+export type VotacaoBasic = {
+  id: string;
+  uri: string;
+  data: string;
+  dataHoraRegistro: string;
+  siglaOrgao: string;
+  uriOrgao: string;
+  uriEvento: string | null;
+  proposicaoObjeto: string | null;
+  uriProposicaoObjeto: string | null;
+  descricao: string;
+  aprovacao: number; // 1 = aprovado, 0 = rejeitado
+};
+
+export type VotoDeputado = {
+  tipoVoto: string; // "Sim", "Não", "Abstenção", "Obstrução", etc
+  dataRegistroVoto: string;
+  deputado_: {
+    id: number;
+    uri: string;
+    nome: string;
+    siglaPartido: string;
+    uriPartido: string;
+    siglaUf: string;
+    idLegislatura: number;
+    urlFoto: string;
+    email: string;
+  };
+};
+
+export type VotacaoComVotos = VotacaoBasic & {
+  votos: VotoDeputado[];
+  resumo: {
+    sim: number;
+    nao: number;
+    abstencao: number;
+    obstrucao: number;
+    outros: number;
+    total: number;
+  };
+};
+
+export async function listVotacoes(params?: {
+  dataInicio?: string;
+  dataFim?: string;
+  itens?: number;
+  pagina?: number;
+  ordem?: "ASC" | "DESC";
+}): Promise<VotacaoBasic[]> {
+  const q = new URLSearchParams();
+  q.set("ordem", params?.ordem ?? "DESC");
+  q.set("ordenarPor", "dataHoraRegistro");
+  q.set("itens", String(params?.itens ?? 30));
+
+  if (params?.pagina) q.set("pagina", String(params.pagina));
+  if (params?.dataInicio) q.set("dataInicio", params.dataInicio);
+  if (params?.dataFim) q.set("dataFim", params.dataFim);
+
+  const url = `${BASE}/votacoes?${q.toString()}`;
+  const response = await fetchJson<Paged<VotacaoBasic>>(url);
+
+  return response.dados ?? [];
+}
+
+export async function getVotacaoVotos(votacaoId: string): Promise<VotoDeputado[]> {
+  const url = `${BASE}/votacoes/${votacaoId}/votos`;
+  const response = await fetchJson<Paged<VotoDeputado>>(url);
+
+  return response.dados ?? [];
+}
+
+export async function getVotacaoCompleta(votacaoId: string): Promise<VotacaoComVotos | null> {
+  try {
+    // Busca dados básicos da votação
+    const votacaoUrl = `${BASE}/votacoes/${votacaoId}`;
+    const votacaoResponse = await fetchJson<{ dados: VotacaoBasic }>(votacaoUrl);
+    const votacao = votacaoResponse.dados;
+
+    if (!votacao) return null;
+
+    // Busca votos
+    const votos = await getVotacaoVotos(votacaoId);
+
+    // Calcula resumo
+    const resumo = {
+      sim: votos.filter(v => v.tipoVoto === "Sim").length,
+      nao: votos.filter(v => v.tipoVoto === "Não").length,
+      abstencao: votos.filter(v => v.tipoVoto === "Abstenção").length,
+      obstrucao: votos.filter(v => v.tipoVoto === "Obstrução").length,
+      outros: votos.filter(v => !["Sim", "Não", "Abstenção", "Obstrução"].includes(v.tipoVoto)).length,
+      total: votos.length,
+    };
+
+    return {
+      ...votacao,
+      votos,
+      resumo,
+    };
+  } catch (error) {
+    console.error(`Erro ao buscar votação ${votacaoId}:`, error);
+    return null;
+  }
+}

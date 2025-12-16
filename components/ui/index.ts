@@ -1,5 +1,8 @@
 export { default as BrutalBlock } from "./BrutalBlock";
 export { default as InstaShareButton } from "./InstaShareButton";
+export { default as NewsShareButton } from "./NewsShareButton";
+export { default as VotacaoShareButton } from "./VotacaoShareButton";
+export { default as EscandaloShareButton } from "./EscandaloShareButton";
 export { default as FeatureCard } from "./FeatureCard";
 export { default as StatCard } from "./StatCard";
 export { default as SectionHeader } from "./SectionHeader";

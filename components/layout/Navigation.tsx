@@ -58,12 +58,9 @@ export default function Navigation() {
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="bg-brutal-yellow border-2 border-black px-3 py-1 font-black text-xl transform group-hover:rotate-2 transition-transform">
+              <div className="bg-black text-white border-2 border-black px-3 py-1 font-black text-xl transform group-hover:scale-105 transition-transform">
                 PSF
               </div>
-              <span className="font-black text-xl md:text-2xl uppercase hidden sm:inline">
-                Política Sem Filtro
-              </span>
             </Link>
 
             {/* Desktop Navigation */}
@@ -78,7 +75,7 @@ export default function Navigation() {
                     className={`flex items-center gap-2 px-4 py-2 font-bold text-sm uppercase transition-all ${
                       active
                         ? "bg-black text-white border-2 border-black"
-                        : "hover:bg-brutal-yellow border-2 border-transparent hover:border-black"
+                        : "hover:bg-black hover:text-white border-2 border-transparent hover:border-black"
                     }`}
                   >
                     <Icon size={16} />
@@ -112,7 +109,7 @@ export default function Navigation() {
                     href={item.href}
                     onClick={() => setIsOpen(false)}
                     className={`flex items-center gap-3 px-4 py-3 font-bold uppercase border-2 border-black transition-all ${
-                      active ? "bg-black text-white" : "bg-white hover:bg-brutal-yellow"
+                      active ? "bg-black text-white" : "bg-white hover:bg-black hover:text-white"
                     }`}
                   >
                     <Icon size={20} />
