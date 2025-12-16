@@ -6,9 +6,38 @@
   .btn-brutal {
     @apply font-sans border-3 border-black shadow-hard transition-all duration-100 bg-white px-6 py-3 font-bold uppercase tracking-wide text-black hover:bg-brutal-yellow hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-hard-hover active:shadow-hard-active active:translate-x-[4px] active:translate-y-[4px];
   }
-  
+
   .card-brutal {
     @apply border-3 border-black shadow-hard bg-white p-6;
+  }
+
+  /* Tipografia Padronizada */
+  .heading-hero {
+    @apply text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter leading-[0.9];
+  }
+
+  .heading-section {
+    @apply text-3xl md:text-4xl font-black uppercase tracking-tight;
+  }
+
+  .heading-card {
+    @apply text-xl md:text-2xl font-black uppercase;
+  }
+
+  .heading-subtitle {
+    @apply text-lg md:text-xl font-bold;
+  }
+
+  .text-body {
+    @apply text-base leading-relaxed font-medium;
+  }
+
+  .text-small {
+    @apply text-sm leading-tight font-medium;
+  }
+
+  .text-label {
+    @apply text-xs font-bold uppercase tracking-wide;
   }
 }
 

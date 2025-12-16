@@ -1,9 +1,8 @@
-import { CheckCircle2, RefreshCcw } from 'lucide-react';
+import { CheckCircle2, RefreshCcw } from "lucide-react";
 
 export default function LegalDistinction() {
   return (
     <div className="grid md:grid-cols-2 gap-8 w-full">
-      
       {/* CARD INOCENTE */}
       <div className="card-brutal border-green-700 bg-green-50 relative group transition-transform hover:-translate-y-1">
         <div className="absolute -top-4 -left-4 bg-green-700 text-white font-bold px-3 py-1 border-2 border-black shadow-[2px_2px_0px_0px_#000]">
@@ -15,7 +14,9 @@ export default function LegalDistinction() {
           "O Juiz leu as provas e viu que eu não fiz nada."
         </p>
         <p className="text-sm leading-tight">
-          O processo foi até o fim. As provas foram analisadas e concluiu-se que o réu <span className="font-bold bg-green-200 px-1">não cometeu o crime</span>. Ele está livre porque é honesto no caso julgado.
+          O processo foi até o fim. As provas foram analisadas e concluiu-se que o réu{" "}
+          <span className="font-bold bg-green-200 px-1">não cometeu o crime</span>. Ele está livre
+          porque é honesto no caso julgado.
         </p>
       </div>
 
@@ -30,10 +31,11 @@ export default function LegalDistinction() {
           "O carteiro entregou o processo no endereço errado."
         </p>
         <p className="text-sm leading-tight">
-          Houve um erro formal (ex: CEP errado, juiz errado). O jogo é resetado. As provas <span className="font-bold bg-yellow-200 px-1">não foram invalidadas</span>, apenas o processo. O crime pode ter ocorrido, mas prescreveu ou vai começar do zero.
+          Houve um erro formal (ex: CEP errado, juiz errado). O jogo é resetado. As provas{" "}
+          <span className="font-bold bg-yellow-200 px-1">não foram invalidadas</span>, apenas o
+          processo. O crime pode ter ocorrido, mas prescreveu ou vai começar do zero.
         </p>
       </div>
-
     </div>
   );
 }

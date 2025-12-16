@@ -1,20 +1,17 @@
 // components/features/Blocks/BandidolatriaBrasil.tsx
-import BrutalBlock from '../../BrutalBlock';
-import { Shield, Skull } from 'lucide-react';
+import { BrutalBlock } from "@/components/ui";
+import { Shield, Skull } from "lucide-react";
 
 export default function BandidolatriaBrasil() {
   return (
-    <BrutalBlock 
-      title="A Inversão Moral e a Bandidolatria" 
-      theme="orange"
-    >
+    <BrutalBlock title="A Inversão Moral e a Bandidolatria" theme="orange">
       <p className="font-medium text-sm leading-tight">
-        Criminosos armados dominam territórios enquanto o Estado negocia ou finge que não vê. Quando a polícia age, é atacada. Quando não age, é cúmplice por omissão.
+        Criminosos armados dominam territórios enquanto o Estado negocia ou finge que não vê. Quando
+        a polícia age, é atacada. Quando não age, é cúmplice por omissão.
       </p>
 
       {/* NOVO BLOCO VISUAL: INVERSÃO DE VALORES */}
       <div className="grid grid-cols-2 gap-3 border-3 border-orange-600 p-4 bg-orange-100">
-        
         {/* Coluna 1: O "Vilão" */}
         <div className="flex flex-col items-center p-2 border-r-2 border-orange-600">
           <Shield className="w-8 h-8 text-orange-600 mb-1" />
@@ -23,7 +20,7 @@ export default function BandidolatriaBrasil() {
             Policial é condenado e tratado como opressor.
           </p>
         </div>
-        
+
         {/* Coluna 2: A "Vítima" */}
         <div className="flex flex-col items-center p-2">
           <Skull className="w-8 h-8 text-brutal-red mb-1" />
