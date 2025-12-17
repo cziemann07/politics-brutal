@@ -15,8 +15,10 @@ import {
   ChevronDown,
   ChevronUp,
   Loader2,
+  BarChart3,
 } from "lucide-react";
 import VotacaoShareButton, { VotacaoShareData } from "@/components/ui/VotacaoShareButton";
+import { VotacaoBarChart } from "@/components/charts";
 
 interface Votacao {
   id: string;
@@ -311,17 +313,27 @@ export default function VotacoesPage() {
                       </div>
                     ) : detalhes ? (
                       <div className="space-y-6">
-                        {/* Votos por Partido */}
+                        {/* GRAFICO DE VOTOS POR PARTIDO */}
+                        {detalhes.votosPorPartido.length > 0 && (
+                          <VotacaoBarChart
+                            dados={detalhes.votosPorPartido}
+                            titulo={votacao.descricao}
+                            descricao={`Votacao de ${new Date(votacao.data).toLocaleDateString("pt-BR")}`}
+                            aprovado={votacao.aprovado}
+                          />
+                        )}
+
+                        {/* Votos por Partido - Grid */}
                         <div>
                           <h4 className="font-black text-lg uppercase mb-4 flex items-center gap-2">
                             <TrendingUp size={20} />
-                            Votos por Partido
+                            Votos por Partido (Detalhado)
                           </h4>
                           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
                             {detalhes.votosPorPartido.slice(0, 12).map((p) => (
                               <div
                                 key={p.partido}
-                                className="border-2 border-black p-3 text-center bg-white"
+                                className="border-2 border-black dark:border-brutal-dark-border p-3 text-center bg-white dark:bg-brutal-dark-surface"
                               >
                                 <span className="font-black text-lg block">{p.partido}</span>
                                 <div className="flex justify-center gap-2 mt-2 text-xs font-bold">

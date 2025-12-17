@@ -8,7 +8,9 @@
       "Bash(curl:*)",
       "Bash(start:*)",
       "WebSearch",
-      "WebFetch(domain:dadosabertos.camara.leg.br)"
+      "WebFetch(domain:dadosabertos.camara.leg.br)",
+      "Bash(cat:*)",
+      "Bash(find:*)"
     ]
   }
 }

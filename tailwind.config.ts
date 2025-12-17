@@ -8,6 +8,7 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: "class",
   theme: {
     extend: {
       fontFamily: {
@@ -19,6 +20,13 @@ const config: Config = {
         "brutal-yellow": "#FFE600",
         "brutal-blue": "#4A90E2",
         "brutal-red": "#FF4444",
+        // Dark mode colors - inspirado no X (Twitter)
+        "brutal-dark-bg": "#000000",
+        "brutal-dark-surface": "#16181C",
+        "brutal-dark-border": "#2F3336",
+        "brutal-dark-text": "#E7E9EA",
+        "brutal-dark-muted": "#71767B",
+        "brutal-dark-accent": "#1D9BF0",
       },
       spacing: {
         "brutal-xs": "0.5rem", // 8px - Interno de cards

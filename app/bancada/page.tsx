@@ -1,11 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowLeft, Search, Filter, AlertCircle, User } from "lucide-react";
+import { Search, Filter, AlertCircle, User, X, Building2, Phone, Mail, Users, MapPin, BarChart3 } from "lucide-react";
+import { PartidoDistribuicaoChart, GastosCeapChart } from "@/components/charts";
 
 /* =========================
-   TYPES (ALINHADOS AO BACKEND)
+  TYPES (ALINHADOS AO BACKEND)
 ========================= */
 
 type DeputadoBasicApi = {
@@ -30,6 +30,42 @@ type PoliticianCard = DeputadoBasicApi & {
   status?: "Regular" | "Irregular";
 };
 
+type DeputadoDetalhes = {
+  id: number;
+  nome: string;
+  nomeCivil: string;
+  siglaPartido: string;
+  siglaUf: string;
+  urlFoto: string;
+  email: string;
+  dataNascimento: string;
+  escolaridade: string;
+  sexo: string;
+  municipioNascimento: string;
+  ufNascimento: string;
+  ultimoStatus: {
+    situacao: string;
+    condicaoEleitoral: string;
+    gabinete?: {
+      nome: string;
+      predio: string;
+      sala: string;
+      andar: string;
+      telefone: string;
+      email: string;
+    };
+  };
+};
+
+type OrgaoDeputado = {
+  idOrgao: number;
+  siglaOrgao: string;
+  nomeOrgao: string;
+  titulo: string;
+  dataInicio: string;
+  dataFim: string | null;
+};
+
 /* =========================
    CONSTANTES (MÊS FECHADO)
 ========================= */
@@ -49,6 +85,15 @@ export default function BancadaPage() {
   const [isLoadingBase, setIsLoadingBase] = useState(true);
   const [isLoadingCeap, setIsLoadingCeap] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Estados do modal
+  const [selectedDeputado, setSelectedDeputado] = useState<PoliticianCard | null>(null);
+  const [detalhes, setDetalhes] = useState<DeputadoDetalhes | null>(null);
+  const [orgaos, setOrgaos] = useState<OrgaoDeputado[]>([]);
+  const [isLoadingDetalhes, setIsLoadingDetalhes] = useState(false);
+
+  // Estado para mostrar/ocultar graficos
+  const [showCharts, setShowCharts] = useState(false);
 
   /* =========================
      1) CARREGA DEPUTADOS (RÁPIDO)
@@ -93,6 +138,33 @@ export default function BancadaPage() {
     return Array.from(new Set(cards.map((c) => c.state))).sort();
   }, [cards]);
 
+  // Dados para o grafico de distribuicao por partido
+  const dadosDistribuicaoPartido = useMemo(() => {
+    const contagem: Record<string, number> = {};
+    cards.forEach((c) => {
+      contagem[c.party] = (contagem[c.party] || 0) + 1;
+    });
+    return Object.entries(contagem).map(([partido, quantidade]) => ({
+      partido,
+      quantidade,
+    }));
+  }, [cards]);
+
+  // Dados para o grafico de gastos CEAP
+  const dadosGastosCeap = useMemo(() => {
+    return cards
+      .filter((c) => typeof c.expenses === "number" && c.expenses > 0)
+      .map((c) => ({
+        id: c.id,
+        nome: c.name,
+        partido: c.party,
+        estado: c.state,
+        gastos: c.expenses || 0,
+        teto: c.teto || 0,
+        status: c.status || "Regular",
+      }));
+  }, [cards]);
+
   /* =========================
      FILTRO LOCAL
   ========================= */
@@ -111,7 +183,50 @@ export default function BancadaPage() {
   }, [cards, searchTerm, filterState]);
 
   /* =========================
-     2) CARREGA CEAP SOB DEMANDA
+     2) ABRE MODAL COM DETALHES DO DEPUTADO
+  ========================= */
+
+  async function openDeputadoModal(deputado: PoliticianCard) {
+    setSelectedDeputado(deputado);
+    setIsLoadingDetalhes(true);
+    setDetalhes(null);
+    setOrgaos([]);
+
+    try {
+      // Busca detalhes e órgãos em paralelo diretamente da API da Câmara
+      const [detalhesRes, orgaosRes] = await Promise.all([
+        fetch(`https://dadosabertos.camara.leg.br/api/v2/deputados/${deputado.id}`),
+        fetch(`https://dadosabertos.camara.leg.br/api/v2/deputados/${deputado.id}/orgaos?dataInicio=2023-01-01&itens=50`),
+      ]);
+
+      if (detalhesRes.ok) {
+        const detalhesJson = await detalhesRes.json();
+        setDetalhes(detalhesJson.dados);
+      }
+
+      if (orgaosRes.ok) {
+        const orgaosJson = await orgaosRes.json();
+        // Filtra apenas órgãos ativos (sem dataFim)
+        const orgaosAtivos = (orgaosJson.dados || []).filter(
+          (o: OrgaoDeputado) => !o.dataFim
+        );
+        setOrgaos(orgaosAtivos);
+      }
+    } catch (e) {
+      console.error("Erro ao buscar detalhes:", e);
+    } finally {
+      setIsLoadingDetalhes(false);
+    }
+  }
+
+  function closeModal() {
+    setSelectedDeputado(null);
+    setDetalhes(null);
+    setOrgaos([]);
+  }
+
+  /* =========================
+     3) CARREGA CEAP SOB DEMANDA
   ========================= */
 
   async function loadCeap() {
@@ -178,13 +293,54 @@ export default function BancadaPage() {
       )}
 
       {/* AÇÕES */}
-      <button
-        onClick={loadCeap}
-        disabled={isLoadingBase || isLoadingCeap}
-        className="btn-brutal bg-black text-white font-black mb-6"
-      >
-        {isLoadingCeap ? "Calculando CEAP..." : "Carregar CEAP"}
-      </button>
+      <div className="flex flex-wrap gap-4 mb-6">
+        <button
+          onClick={loadCeap}
+          disabled={isLoadingBase || isLoadingCeap}
+          className="btn-brutal bg-black text-white font-black"
+        >
+          {isLoadingCeap ? "Calculando CEAP..." : "Carregar CEAP"}
+        </button>
+
+        <button
+          onClick={() => setShowCharts(!showCharts)}
+          disabled={isLoadingBase}
+          className="btn-brutal bg-brutal-blue text-white font-black flex items-center gap-2"
+        >
+          <BarChart3 size={18} />
+          {showCharts ? "Ocultar Graficos" : "Ver Graficos"}
+        </button>
+      </div>
+
+      {/* GRAFICOS */}
+      {showCharts && !isLoadingBase && (
+        <div className="mb-8 space-y-6">
+          <div className="grid lg:grid-cols-2 gap-6">
+            {/* Grafico de Distribuicao por Partido */}
+            <PartidoDistribuicaoChart
+              dados={dadosDistribuicaoPartido}
+              titulo="Distribuicao por Partido"
+            />
+
+            {/* Grafico de Gastos CEAP (so aparece se tiver dados) */}
+            {dadosGastosCeap.length > 0 && (
+              <GastosCeapChart
+                dados={dadosGastosCeap}
+                titulo="Top Gastadores CEAP"
+                periodo="09/2024"
+              />
+            )}
+          </div>
+
+          {dadosGastosCeap.length === 0 && (
+            <div className="card-brutal bg-brutal-yellow text-black p-4 text-center">
+              <p className="font-bold">
+                Clique em "Carregar CEAP" para ver o grafico de gastos dos deputados.
+              </p>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* FILTROS */}
       <div className="card-brutal p-4 mb-8 bg-white flex gap-4">
@@ -221,50 +377,253 @@ export default function BancadaPage() {
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredPoliticians.map((pol) => (
-            <Link key={pol.id} href={`/politico/${pol.id}`}>
-              <div className="card-brutal hover:-translate-y-1 transition relative">
-                {pol.status && (
-                  <div
-                    className={`absolute top-2 right-2 px-2 py-1 text-xs font-black border-2 border-black
-                    ${pol.status === "Regular" ? "bg-green-400" : "bg-brutal-red text-white"}`}
-                  >
-                    {pol.status}
+            <div
+              key={pol.id}
+              onClick={() => openDeputadoModal(pol)}
+              className="card-brutal hover:-translate-y-1 transition relative cursor-pointer"
+            >
+              {pol.status && (
+                <div
+                  className={`absolute top-2 right-2 px-2 py-1 text-xs font-black border-2 border-black
+                  ${pol.status === "Regular" ? "bg-green-400" : "bg-brutal-red text-white"}`}
+                >
+                  {pol.status}
+                </div>
+              )}
+
+              <div className="h-44 bg-gray-200 flex items-center justify-center overflow-hidden">
+                {pol.image ? (
+                  <img src={pol.image} alt={pol.name} className="object-cover w-full h-full" />
+                ) : (
+                  <User size={48} className="text-gray-500" />
+                )}
+              </div>
+
+              <div className="p-4">
+                <h2 className="font-black text-xl uppercase">{pol.name}</h2>
+                <p className="font-bold text-sm text-gray-600">
+                  {pol.party} · {pol.state}
+                </p>
+
+                <div className="mt-3 border-2 border-black p-2">
+                  <p className="text-xs font-bold flex gap-1 items-center">
+                    <AlertCircle size={12} /> CEAP
+                  </p>
+
+                  <p className="font-black text-xl text-brutal-red text-right">
+                    R$ {pol.expenses?.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                  </p>
+
+                  {typeof pol.teto === "number" && (
+                    <p className="text-[10px] text-right text-gray-500">
+                      Teto UF: R$ {pol.teto.toLocaleString("pt-BR")}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* MODAL DE DETALHES DO DEPUTADO */}
+      {selectedDeputado && (
+        <div
+          className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4"
+          onClick={closeModal}
+        >
+          <div
+            className="bg-white border-4 border-black shadow-hard max-w-3xl w-full max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header do Modal */}
+            <div className="bg-black text-white p-4 flex justify-between items-center sticky top-0 z-10">
+              <h2 className="font-black text-xl uppercase">Detalhes do Deputado</h2>
+              <button
+                onClick={closeModal}
+                className="p-1 hover:bg-white/20 transition"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            {isLoadingDetalhes ? (
+              <div className="p-8 text-center">
+                <div className="font-black text-xl">Carregando detalhes...</div>
+              </div>
+            ) : (
+              <div className="p-6">
+                {/* Seção Principal: Foto + Info */}
+                <div className="grid md:grid-cols-3 gap-6 mb-6">
+                  {/* Foto Ampliada */}
+                  <div className="md:col-span-1">
+                    <div className="border-4 border-black shadow-hard bg-gray-100">
+                      {(detalhes?.urlFoto || selectedDeputado.image) ? (
+                        <img
+                          src={detalhes?.urlFoto || selectedDeputado.image}
+                          alt={selectedDeputado.name}
+                          className="w-full aspect-square object-cover object-top"
+                        />
+                      ) : (
+                        <div className="w-full aspect-square flex items-center justify-center bg-gray-200">
+                          <User size={80} className="text-gray-400" />
+                        </div>
+                      )}
+                    </div>
+                    {selectedDeputado.status && (
+                      <div
+                        className={`mt-3 px-3 py-2 text-center font-black uppercase border-3 border-black
+                        ${selectedDeputado.status === "Regular" ? "bg-green-400" : "bg-brutal-red text-white"}`}
+                      >
+                        Status CEAP: {selectedDeputado.status}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Informações Básicas */}
+                  <div className="md:col-span-2 space-y-4">
+                    <div>
+                      <h3 className="text-3xl font-black uppercase leading-tight">
+                        {detalhes?.nome || selectedDeputado.name}
+                      </h3>
+                      {detalhes?.nomeCivil && detalhes.nomeCivil !== detalhes.nome && (
+                        <p className="text-sm text-gray-500">
+                          Nome civil: {detalhes.nomeCivil}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="flex flex-wrap gap-2">
+                      <span className="bg-brutal-yellow border-2 border-black px-3 py-1 font-black">
+                        {selectedDeputado.party}
+                      </span>
+                      <span className="bg-brutal-blue text-white border-2 border-black px-3 py-1 font-black">
+                        {selectedDeputado.state}
+                      </span>
+                      <span className="bg-gray-200 border-2 border-black px-3 py-1 font-bold">
+                        Deputado Federal
+                      </span>
+                    </div>
+
+                    {detalhes && (
+                      <div className="space-y-2 text-sm">
+                        {detalhes.municipioNascimento && (
+                          <p className="flex items-center gap-2">
+                            <MapPin size={16} className="text-gray-500" />
+                            <span>
+                              Natural de <strong>{detalhes.municipioNascimento}</strong>
+                              {detalhes.ufNascimento && ` - ${detalhes.ufNascimento}`}
+                            </span>
+                          </p>
+                        )}
+                        {detalhes.escolaridade && (
+                          <p className="flex items-center gap-2">
+                            <Users size={16} className="text-gray-500" />
+                            <span>Escolaridade: <strong>{detalhes.escolaridade}</strong></span>
+                          </p>
+                        )}
+                        {detalhes.email && (
+                          <p className="flex items-center gap-2">
+                            <Mail size={16} className="text-gray-500" />
+                            <a href={`mailto:${detalhes.email}`} className="text-brutal-blue underline">
+                              {detalhes.email}
+                            </a>
+                          </p>
+                        )}
+                      </div>
+                    )}
+
+                    {/* CEAP */}
+                    <div className="border-3 border-black p-3 bg-gray-50">
+                      <p className="text-xs font-bold flex gap-1 items-center mb-1">
+                        <AlertCircle size={14} /> CEAP (09/2024)
+                      </p>
+                      <p className="font-black text-2xl text-brutal-red">
+                        R$ {selectedDeputado.expenses?.toLocaleString("pt-BR", { minimumFractionDigits: 2 }) || "0,00"}
+                      </p>
+                      {typeof selectedDeputado.teto === "number" && (
+                        <p className="text-xs text-gray-500">
+                          Teto para {selectedDeputado.state}: R$ {selectedDeputado.teto.toLocaleString("pt-BR")}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Gabinete */}
+                {detalhes?.ultimoStatus?.gabinete && (
+                  <div className="border-3 border-black mb-6">
+                    <div className="bg-black text-white px-4 py-2 flex items-center gap-2">
+                      <Building2 size={18} />
+                      <span className="font-black uppercase">Gabinete</span>
+                    </div>
+                    <div className="p-4 grid md:grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-sm text-gray-500">Localização</p>
+                        <p className="font-bold">
+                          {detalhes.ultimoStatus.gabinete.predio}, {detalhes.ultimoStatus.gabinete.andar}º andar, Sala {detalhes.ultimoStatus.gabinete.sala}
+                        </p>
+                      </div>
+                      {detalhes.ultimoStatus.gabinete.telefone && (
+                        <div>
+                          <p className="text-sm text-gray-500 flex items-center gap-1">
+                            <Phone size={12} /> Telefone
+                          </p>
+                          <p className="font-bold">{detalhes.ultimoStatus.gabinete.telefone}</p>
+                        </div>
+                      )}
+                      {detalhes.ultimoStatus.gabinete.email && (
+                        <div className="md:col-span-2">
+                          <p className="text-sm text-gray-500 flex items-center gap-1">
+                            <Mail size={12} /> E-mail do Gabinete
+                          </p>
+                          <a
+                            href={`mailto:${detalhes.ultimoStatus.gabinete.email}`}
+                            className="font-bold text-brutal-blue underline"
+                          >
+                            {detalhes.ultimoStatus.gabinete.email}
+                          </a>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 )}
 
-                <div className="h-44 bg-gray-200 flex items-center justify-center overflow-hidden">
-                  {pol.image ? (
-                    <img src={pol.image} alt={pol.name} className="object-cover w-full h-full" />
-                  ) : (
-                    <User size={48} className="text-gray-500" />
-                  )}
-                </div>
-
-                <div className="p-4">
-                  <h2 className="font-black text-xl uppercase">{pol.name}</h2>
-                  <p className="font-bold text-sm text-gray-600">
-                    {pol.party} · {pol.state}
-                  </p>
-
-                  <div className="mt-3 border-2 border-black p-2">
-                    <p className="text-xs font-bold flex gap-1 items-center">
-                      <AlertCircle size={12} /> CEAP
-                    </p>
-
-                    <p className="font-black text-xl text-brutal-red text-right">
-                      R$ {pol.expenses?.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
-                    </p>
-
-                    {typeof pol.teto === "number" && (
-                      <p className="text-[10px] text-right text-gray-500">
-                        Teto UF: R$ {pol.teto.toLocaleString("pt-BR")}
-                      </p>
-                    )}
+                {/* Órgãos/Comissões */}
+                {orgaos.length > 0 && (
+                  <div className="border-3 border-black">
+                    <div className="bg-brutal-yellow px-4 py-2 border-b-3 border-black">
+                      <span className="font-black uppercase">Comissões e Órgãos ({orgaos.length})</span>
+                    </div>
+                    <div className="p-4 space-y-2 max-h-48 overflow-y-auto">
+                      {orgaos.map((orgao) => (
+                        <div
+                          key={`${orgao.idOrgao}-${orgao.titulo}`}
+                          className="flex justify-between items-start border-b border-dashed border-gray-300 pb-2 last:border-0"
+                        >
+                          <div>
+                            <p className="font-bold text-sm">{orgao.siglaOrgao}</p>
+                            <p className="text-xs text-gray-600">{orgao.nomeOrgao}</p>
+                          </div>
+                          <span className="text-xs bg-gray-200 px-2 py-1 font-bold border border-black">
+                            {orgao.titulo}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
+                )}
+
+                {/* Info sobre assessores */}
+                <div className="mt-6 p-4 bg-gray-100 border-2 border-dashed border-gray-400">
+                  <p className="text-sm text-gray-600">
+                    <strong>Nota:</strong> Cada gabinete de deputado pode ter até <strong>25 secretários parlamentares</strong> (assessores),
+                    com verba mensal de até <strong>R$ 111.675,59</strong> para remuneração de pessoal.
+                  </p>
                 </div>
               </div>
-            </Link>
-          ))}
+            )}
+          </div>
         </div>
       )}
     </main>

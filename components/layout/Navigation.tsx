@@ -14,7 +14,10 @@ import {
   Search,
   BarChart3,
   AlertCircle,
+  Sun,
+  Moon,
 } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const navItems = [
   { href: "/", label: "Início", icon: Home },
@@ -30,6 +33,7 @@ export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
+  const { theme, toggleTheme, isDark } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -50,8 +54,8 @@ export default function Navigation() {
       <header
         className={`sticky top-0 z-50 transition-all duration-200 ${
           isScrolled
-            ? "bg-brutal-bg border-b-3 border-black shadow-hard"
-            : "bg-brutal-bg border-b-3 border-black"
+            ? "bg-brutal-bg dark:bg-brutal-dark-bg border-b-3 border-black dark:border-brutal-dark-border shadow-hard dark:shadow-none"
+            : "bg-brutal-bg dark:bg-brutal-dark-bg border-b-3 border-black dark:border-brutal-dark-border"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 md:px-8">
@@ -74,8 +78,8 @@ export default function Navigation() {
                     href={item.href}
                     className={`flex items-center gap-2 px-4 py-2 font-bold text-sm uppercase transition-all ${
                       active
-                        ? "bg-black text-white border-2 border-black"
-                        : "hover:bg-black hover:text-white border-2 border-transparent hover:border-black"
+                        ? "bg-black text-white border-2 border-black dark:bg-brutal-dark-accent dark:border-brutal-dark-accent"
+                        : "hover:bg-black hover:text-white border-2 border-transparent hover:border-black dark:hover:bg-brutal-dark-accent dark:hover:border-brutal-dark-accent"
                     }`}
                   >
                     <Icon size={16} />
@@ -85,20 +89,33 @@ export default function Navigation() {
               })}
             </nav>
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden btn-brutal p-2"
-              aria-label="Toggle menu"
-            >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+            {/* Theme Toggle & Mobile Menu */}
+            <div className="flex items-center gap-2">
+              {/* Theme Toggle Button */}
+              <button
+                onClick={toggleTheme}
+                className="p-2 border-2 border-black dark:border-brutal-dark-border bg-white dark:bg-brutal-dark-surface font-bold transition-all hover:bg-black hover:text-white dark:hover:bg-brutal-dark-accent"
+                aria-label={isDark ? "Ativar modo claro" : "Ativar modo noturno"}
+                title={isDark ? "Modo claro" : "Modo noturno"}
+              >
+                {isDark ? <Sun size={20} /> : <Moon size={20} />}
+              </button>
+
+              {/* Mobile Menu Button */}
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="lg:hidden btn-brutal p-2"
+                aria-label="Toggle menu"
+              >
+                {isOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="lg:hidden border-t-3 border-black bg-white">
+          <div className="lg:hidden border-t-3 border-black dark:border-brutal-dark-border bg-white dark:bg-brutal-dark-surface">
             <nav className="max-w-7xl mx-auto px-4 py-4 space-y-2">
               {navItems.map((item) => {
                 const Icon = item.icon;
@@ -108,8 +125,10 @@ export default function Navigation() {
                     key={item.href}
                     href={item.href}
                     onClick={() => setIsOpen(false)}
-                    className={`flex items-center gap-3 px-4 py-3 font-bold uppercase border-2 border-black transition-all ${
-                      active ? "bg-black text-white" : "bg-white hover:bg-black hover:text-white"
+                    className={`flex items-center gap-3 px-4 py-3 font-bold uppercase border-2 border-black dark:border-brutal-dark-border transition-all ${
+                      active
+                        ? "bg-black text-white dark:bg-brutal-dark-accent dark:border-brutal-dark-accent"
+                        : "bg-white dark:bg-brutal-dark-bg hover:bg-black hover:text-white dark:hover:bg-brutal-dark-accent dark:hover:border-brutal-dark-accent"
                     }`}
                   >
                     <Icon size={20} />

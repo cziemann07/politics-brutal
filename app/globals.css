@@ -7,8 +7,16 @@
     @apply font-sans border-3 border-black shadow-hard transition-all duration-100 bg-white px-6 py-3 font-bold uppercase tracking-wide text-black hover:bg-black hover:text-white hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-hard-hover active:shadow-hard-active active:translate-x-[4px] active:translate-y-[4px];
   }
 
+  .dark .btn-brutal {
+    @apply border-brutal-dark-border bg-brutal-dark-surface text-brutal-dark-text shadow-none hover:bg-brutal-dark-accent hover:text-white hover:border-brutal-dark-accent;
+  }
+
   .card-brutal {
     @apply border-3 border-black shadow-hard bg-white p-6;
+  }
+
+  .dark .card-brutal {
+    @apply border-brutal-dark-border bg-brutal-dark-surface shadow-none;
   }
 
   /* Tipografia Padronizada */
@@ -41,8 +49,71 @@
   }
 }
 
+/* Light Mode (padrão) */
 body {
   background-color: #F4F4F0;
   color: #000;
   font-size: 18px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+/* Dark Mode - inspirado no X (Twitter) */
+.dark body,
+html.dark body {
+  background-color: #000000;
+  color: #E7E9EA;
+}
+
+/* Transições suaves para elementos principais */
+.dark {
+  --brutal-shadow: none;
+}
+
+/* Override de cores específicas para dark mode */
+.dark .bg-brutal-bg {
+  background-color: #000000;
+}
+
+.dark .bg-white {
+  background-color: #16181C;
+}
+
+.dark .border-black {
+  border-color: #2F3336;
+}
+
+.dark .text-black {
+  color: #E7E9EA;
+}
+
+.dark .text-gray-600,
+.dark .text-gray-700 {
+  color: #71767B;
+}
+
+.dark .shadow-hard {
+  box-shadow: none;
+}
+
+.dark .shadow-hard-hover {
+  box-shadow: 0 0 0 1px #1D9BF0;
+}
+
+/* Cores de destaque no dark mode */
+.dark .bg-brutal-yellow {
+  background-color: #1D9BF0;
+}
+
+.dark .text-brutal-yellow {
+  color: #1D9BF0;
+}
+
+.dark .bg-brutal-red {
+  background-color: #F4212E;
+}
+
+.dark .bg-green-500 {
+  background-color: #00BA7C;
+}
+
+/* Hover states customizados para elementos no dark mode sao tratados diretamente nas classes Tailwind */
