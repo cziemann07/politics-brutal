@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ArrowLeft, Scale, Siren, Share2 } from "lucide-react";
+import { ArrowLeft, Scale, Siren, Share2, Heart } from "lucide-react";
 import { PoliticianInvoice } from "@/components/features";
+import { PedirExplicacaoButton } from "@/components/ui";
 
 type PoliticianData = {
   id: number;
@@ -25,6 +26,8 @@ export default function PoliticianProfile({ params }: { params: { id: string } }
   const [politician, setPolitician] = useState<PoliticianData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isFavorito, setIsFavorito] = useState(false);
+  const [isPremium, setIsPremium] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -40,6 +43,16 @@ export default function PoliticianProfile({ params }: { params: { id: string } }
         }
 
         setPolitician(json);
+
+        // Verificar se e favorito
+        const saved = localStorage.getItem("deputados-favoritos");
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          setIsFavorito(parsed.some((f: { id: number }) => f.id === json.id));
+        }
+
+        const premiumStatus = localStorage.getItem("vigilante-premium");
+        setIsPremium(premiumStatus === "true");
       } catch (e: any) {
         setError(e.message ?? String(e));
       } finally {
@@ -47,6 +60,39 @@ export default function PoliticianProfile({ params }: { params: { id: string } }
       }
     })();
   }, [params.id]);
+
+  function toggleFavorito() {
+    if (!politician) return;
+
+    const saved = localStorage.getItem("deputados-favoritos");
+    const parsed = saved ? JSON.parse(saved) : [];
+
+    if (isFavorito) {
+      const updated = parsed.filter((f: { id: number }) => f.id !== politician.id);
+      localStorage.setItem("deputados-favoritos", JSON.stringify(updated));
+      setIsFavorito(false);
+    } else {
+      const limiteFavoritos = isPremium ? 5 : 1;
+      if (parsed.length >= limiteFavoritos) {
+        alert(
+          isPremium
+            ? "Voce ja atingiu o limite de 5 deputados favoritos."
+            : "No plano gratuito você pode favoritar apenas 1 deputado. Faça upgrade para o Vigilante PRO!"
+        );
+        return;
+      }
+
+      const novoFavorito = {
+        id: politician.id,
+        nome: politician.name,
+        partido: politician.party,
+        estado: politician.state,
+        urlFoto: politician.image || "",
+      };
+      localStorage.setItem("deputados-favoritos", JSON.stringify([...parsed, novoFavorito]));
+      setIsFavorito(true);
+    }
+  }
 
   if (isLoading) {
     return (
@@ -173,9 +219,36 @@ export default function PoliticianProfile({ params }: { params: { id: string } }
             }}
           />
 
-          <button className="w-full btn-brutal bg-brutal-blue text-white flex justify-center gap-2">
-            <Share2 size={20} /> Compartilhar ficha
-          </button>
+          <div className="flex flex-col gap-3">
+            <button className="w-full btn-brutal bg-brutal-blue text-white flex justify-center gap-2">
+              <Share2 size={20} /> Compartilhar ficha
+            </button>
+
+            {/* Botao Favoritar */}
+            <button
+              onClick={toggleFavorito}
+              className={`w-full btn-brutal flex justify-center gap-2 ${
+                isFavorito
+                  ? "bg-brutal-red text-white"
+                  : "bg-white hover:bg-brutal-red hover:text-white"
+              }`}
+            >
+              <Heart size={20} className={isFavorito ? "fill-current" : ""} />
+              {isFavorito ? "Remover dos Favoritos" : "Adicionar aos Favoritos"}
+            </button>
+
+            {/* Botao Pedir Explicacao */}
+            {politician.expenses > 0 && (
+              <PedirExplicacaoButton
+                deputadoNome={politician.name}
+                deputadoPartido={politician.party}
+                deputadoEstado={politician.state}
+                gastoValor={politician.expenses}
+                gastoTipo="CEAP"
+                gastoPeriodo="no ultimo mes"
+              />
+            )}
+          </div>
         </div>
       </div>
     </main>

@@ -261,23 +261,23 @@ export default function InvestigacoesPage() {
   };
 
   return (
-    <main className="min-h-screen bg-brutal-bg p-4 md:p-8 max-w-7xl mx-auto">
+    <main className="min-h-screen bg-brutal-bg dark:bg-brutal-dark-bg p-4 md:p-8 max-w-7xl mx-auto">
       {/* HEADER IMPACTANTE */}
-      <div className="mb-8 border-b-3 border-black pb-6">
+      <div className="mb-8 border-b-3 border-black dark:border-brutal-dark-border pb-6">
         <div className="flex items-center gap-3 mb-4">
-          <div className="bg-brutal-red p-3 border-2 border-black">
+          <div className="bg-brutal-red p-3 border-2 border-black dark:border-brutal-red">
             <Flame size={36} className="text-white" />
           </div>
           <div>
             <span className="text-xs font-black uppercase tracking-widest text-brutal-red">
               Refrescando Sua Memória
             </span>
-            <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter leading-none">
+            <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter leading-none dark:text-brutal-dark-text">
               Os Maiores Escândalos
             </h1>
           </div>
         </div>
-        <p className="text-lg font-bold text-gray-700 max-w-3xl">
+        <p className="text-lg font-bold text-gray-700 dark:text-brutal-dark-muted max-w-3xl">
           Eles querem que você esqueça. Querem que o tempo apague a memória. Que você volte a
           confiar cegamente. Não deixe. Aqui está a história que NINGUÉM deve esquecer.
         </p>
@@ -360,16 +360,16 @@ export default function InvestigacoesPage() {
                     )}
 
                     <div className="flex flex-wrap items-center gap-3 mb-3">
-                      <h2 className="font-black text-2xl md:text-3xl uppercase">
+                      <h2 className="font-black text-2xl md:text-3xl uppercase dark:text-brutal-dark-text">
                         {escandalo.nome}
                       </h2>
-                      <span className="text-sm font-bold bg-gray-200 px-3 py-1 border-2 border-black flex items-center gap-1">
+                      <span className="text-sm font-bold bg-gray-200 dark:bg-brutal-dark-bg px-3 py-1 border-2 border-black dark:border-brutal-dark-border flex items-center gap-1 dark:text-brutal-dark-text">
                         <Calendar size={14} />
                         {escandalo.periodo}
                       </span>
                     </div>
 
-                    <p className="font-medium text-gray-700 mb-4">
+                    <p className="font-medium text-gray-700 dark:text-brutal-dark-muted mb-4">
                       {escandalo.descricao}
                     </p>
 
@@ -393,7 +393,7 @@ export default function InvestigacoesPage() {
                   {/* Ações */}
                   <div className="flex items-center gap-3 shrink-0">
                     <EscandaloShareButton data={shareData} />
-                    <button className="p-2 border-2 border-black hover:bg-black hover:text-white transition-all">
+                    <button className="p-2 border-2 border-black dark:border-brutal-dark-border dark:text-brutal-dark-text hover:bg-black hover:text-white dark:hover:bg-brutal-dark-accent transition-all">
                       {isExpanded ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
                     </button>
                   </div>
@@ -414,9 +414,9 @@ export default function InvestigacoesPage() {
 
               {/* CONTEÚDO EXPANDIDO */}
               {isExpanded && (
-                <div className="mt-6 pt-6 border-t-3 border-black">
+                <div className="mt-6 pt-6 border-t-3 border-black dark:border-brutal-dark-border">
                   {/* Tabs */}
-                  <div className="flex flex-wrap gap-2 mb-6 border-b-2 border-black">
+                  <div className="flex flex-wrap gap-2 mb-6 border-b-2 border-black dark:border-brutal-dark-border">
                     {[
                       { id: "timeline" as const, label: "Como Funcionava", icon: Target },
                       { id: "condenados" as const, label: "Principais Condenados", icon: UserX },
@@ -430,10 +430,10 @@ export default function InvestigacoesPage() {
                             e.stopPropagation();
                             setAbaAtiva(tab.id);
                           }}
-                          className={`flex items-center gap-2 px-4 py-2 font-black uppercase text-sm border-2 border-b-0 border-black transition-all ${
+                          className={`flex items-center gap-2 px-4 py-2 font-black uppercase text-sm border-2 border-b-0 border-black dark:border-brutal-dark-border transition-all ${
                             abaAtiva === tab.id
-                              ? "bg-black text-white"
-                              : "bg-white hover:bg-black hover:text-white"
+                              ? "bg-black text-white dark:bg-brutal-dark-accent"
+                              : "bg-white dark:bg-brutal-dark-surface dark:text-brutal-dark-text hover:bg-black hover:text-white dark:hover:bg-brutal-dark-accent"
                           }`}
                         >
                           <Icon size={16} />
@@ -446,7 +446,7 @@ export default function InvestigacoesPage() {
                   {/* Tab: Como Funcionava */}
                   {abaAtiva === "timeline" && (
                     <div className="space-y-4">
-                      <h3 className="font-black text-xl uppercase mb-4 flex items-center gap-2">
+                      <h3 className="font-black text-xl uppercase mb-4 flex items-center gap-2 dark:text-brutal-dark-text">
                         <Target size={24} className="text-brutal-red" />
                         O Esquema Passo a Passo
                       </h3>
@@ -454,12 +454,12 @@ export default function InvestigacoesPage() {
                         {escandalo.comoFuncionava.map((passo, idx) => (
                           <div
                             key={idx}
-                            className="flex items-start gap-4 p-4 bg-brutal-bg border-2 border-black"
+                            className="flex items-start gap-4 p-4 bg-brutal-bg dark:bg-brutal-dark-bg border-2 border-black dark:border-brutal-dark-border"
                           >
                             <div className="bg-brutal-red text-white w-8 h-8 flex items-center justify-center font-black shrink-0">
                               {idx + 1}
                             </div>
-                            <p className="font-medium">{passo}</p>
+                            <p className="font-medium dark:text-brutal-dark-text">{passo}</p>
                           </div>
                         ))}
                       </div>
@@ -475,7 +475,7 @@ export default function InvestigacoesPage() {
                   {/* Tab: Condenados */}
                   {abaAtiva === "condenados" && (
                     <div className="space-y-4">
-                      <h3 className="font-black text-xl uppercase mb-4 flex items-center gap-2">
+                      <h3 className="font-black text-xl uppercase mb-4 flex items-center gap-2 dark:text-brutal-dark-text">
                         <UserX size={24} className="text-brutal-red" />
                         Principais Condenados - Onde Estão Hoje?
                       </h3>
@@ -483,12 +483,12 @@ export default function InvestigacoesPage() {
                         {escandalo.principaisCondenados.map((condenado, idx) => (
                           <div
                             key={idx}
-                            className="border-3 border-black p-4 bg-white"
+                            className="border-3 border-black dark:border-brutal-dark-border p-4 bg-white dark:bg-brutal-dark-surface"
                           >
                             <div className="flex items-start justify-between mb-2">
                               <div>
-                                <h4 className="font-black text-lg uppercase">{condenado.nome}</h4>
-                                <p className="text-sm font-bold text-gray-600">
+                                <h4 className="font-black text-lg uppercase dark:text-brutal-dark-text">{condenado.nome}</h4>
+                                <p className="text-sm font-bold text-gray-600 dark:text-brutal-dark-muted">
                                   {condenado.cargo}
                                   {condenado.partido && ` (${condenado.partido})`}
                                 </p>
@@ -501,21 +501,21 @@ export default function InvestigacoesPage() {
                             </div>
 
                             <div className="space-y-2 mt-3">
-                              <div className="flex items-center gap-2 text-sm">
+                              <div className="flex items-center gap-2 text-sm dark:text-brutal-dark-text">
                                 <Gavel size={14} className="text-brutal-red" />
                                 <span className="font-bold">Pena:</span>
                                 <span>{condenado.pena}</span>
                               </div>
-                              <div className="flex items-center gap-2 text-sm">
-                                <Clock size={14} className="text-gray-600" />
+                              <div className="flex items-center gap-2 text-sm dark:text-brutal-dark-text">
+                                <Clock size={14} className="text-gray-600 dark:text-brutal-dark-muted" />
                                 <span className="font-bold">Situação:</span>
                                 <span>{condenado.situacao}</span>
                               </div>
                             </div>
 
                             {condenado.destaque && (
-                              <div className="mt-3 bg-brutal-bg p-3 border-2 border-black">
-                                <p className="text-sm font-medium italic">{condenado.destaque}</p>
+                              <div className="mt-3 bg-brutal-bg dark:bg-brutal-dark-bg p-3 border-2 border-black dark:border-brutal-dark-border">
+                                <p className="text-sm font-medium italic dark:text-brutal-dark-muted">{condenado.destaque}</p>
                               </div>
                             )}
                           </div>
@@ -533,18 +533,18 @@ export default function InvestigacoesPage() {
                   {/* Tab: Números */}
                   {abaAtiva === "numeros" && (
                     <div className="space-y-6">
-                      <h3 className="font-black text-xl uppercase mb-4 flex items-center gap-2">
+                      <h3 className="font-black text-xl uppercase mb-4 flex items-center gap-2 dark:text-brutal-dark-text">
                         <DollarSign size={24} className="text-brutal-red" />
                         Os Números que Você Precisa Saber
                       </h3>
 
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div className="bg-brutal-red text-white p-4 border-2 border-black text-center">
+                        <div className="bg-brutal-red text-white p-4 border-2 border-black dark:border-brutal-red text-center">
                           <DollarSign size={24} className="mx-auto mb-2" />
                           <p className="text-2xl font-black">{escandalo.valorDesviado}</p>
                           <p className="text-xs font-bold uppercase">Desviados</p>
                         </div>
-                        <div className="bg-green-600 text-white p-4 border-2 border-black text-center">
+                        <div className="bg-green-600 text-white p-4 border-2 border-black dark:border-green-600 text-center">
                           <HandCoins size={24} className="mx-auto mb-2" />
                           <p className="text-2xl font-black">{escandalo.valorRecuperado}</p>
                           <p className="text-xs font-bold uppercase">Recuperados</p>
@@ -554,21 +554,21 @@ export default function InvestigacoesPage() {
                           <p className="text-2xl font-black">{escandalo.denunciados}</p>
                           <p className="text-xs font-bold uppercase">Denunciados</p>
                         </div>
-                        <div className="bg-gray-800 text-white p-4 border-2 border-black text-center">
+                        <div className="bg-gray-800 text-white p-4 border-2 border-black dark:border-gray-800 text-center">
                           <Gavel size={24} className="mx-auto mb-2" />
                           <p className="text-2xl font-black">{escandalo.condenados}</p>
                           <p className="text-xs font-bold uppercase">Condenados</p>
                         </div>
                       </div>
 
-                      <div className="bg-brutal-bg border-3 border-black p-6">
-                        <h4 className="font-black text-lg uppercase mb-3">Destaque:</h4>
-                        <p className="font-medium text-lg">{escandalo.destaque}</p>
+                      <div className="bg-brutal-bg dark:bg-brutal-dark-bg border-3 border-black dark:border-brutal-dark-border p-6">
+                        <h4 className="font-black text-lg uppercase mb-3 dark:text-brutal-dark-text">Destaque:</h4>
+                        <p className="font-medium text-lg dark:text-brutal-dark-muted">{escandalo.destaque}</p>
                       </div>
 
                       <div className="grid md:grid-cols-2 gap-4">
-                        <div className="border-2 border-black p-4">
-                          <h4 className="font-black uppercase mb-2 flex items-center gap-2">
+                        <div className="border-2 border-black dark:border-brutal-dark-border p-4 dark:bg-brutal-dark-surface">
+                          <h4 className="font-black uppercase mb-2 flex items-center gap-2 dark:text-brutal-dark-text">
                             <Building2 size={18} />
                             Partidos Envolvidos
                           </h4>
@@ -583,8 +583,8 @@ export default function InvestigacoesPage() {
                             ))}
                           </div>
                         </div>
-                        <div className="border-2 border-black p-4">
-                          <h4 className="font-black uppercase mb-2 flex items-center gap-2">
+                        <div className="border-2 border-black dark:border-brutal-dark-border p-4 dark:bg-brutal-dark-surface">
+                          <h4 className="font-black uppercase mb-2 flex items-center gap-2 dark:text-brutal-dark-text">
                             <Scale size={18} />
                             Fontes Oficiais
                           </h4>
@@ -592,7 +592,7 @@ export default function InvestigacoesPage() {
                             {escandalo.fontes.map((fonte) => (
                               <span
                                 key={fonte}
-                                className="bg-gray-200 px-3 py-1 font-bold text-sm border border-black"
+                                className="bg-gray-200 dark:bg-brutal-dark-bg px-3 py-1 font-bold text-sm border border-black dark:border-brutal-dark-border dark:text-brutal-dark-text"
                               >
                                 {fonte}
                               </span>
@@ -650,13 +650,13 @@ export default function InvestigacoesPage() {
       </div>
 
       {/* MENSAGEM FINAL */}
-      <div className="mt-8 bg-brutal-bg border-3 border-black p-6 md:p-8">
+      <div className="mt-8 bg-brutal-bg dark:bg-brutal-dark-surface border-3 border-black dark:border-brutal-dark-border p-6 md:p-8">
         <div className="text-center">
           <AlertTriangle size={48} className="mx-auto mb-4 text-brutal-red" />
-          <h3 className="text-2xl font-black uppercase mb-4">
+          <h3 className="text-2xl font-black uppercase mb-4 dark:text-brutal-dark-text">
             A História Se Repete. Não Deixe.
           </h3>
-          <p className="font-medium text-lg max-w-2xl mx-auto mb-6">
+          <p className="font-medium text-lg max-w-2xl mx-auto mb-6 dark:text-brutal-dark-muted">
             Mensalão, Petrolão, Lava Jato... Todos envolveram os mesmos partidos que hoje pedem
             seu voto. PT, PMDB, PP, PL... Eles não mudaram. Você é que esqueceu.
           </p>

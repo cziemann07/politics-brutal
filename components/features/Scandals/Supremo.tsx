@@ -6,14 +6,14 @@ export default function Supremo() {
   return (
     <section className="flex flex-col gap-8">
       {/* HEADER DO DOSSIÊ */}
-      <div className="flex flex-col md:flex-row justify-between items-end border-b-3 border-black pb-4 gap-4">
+      <div className="flex flex-col md:flex-row justify-between items-end border-b-3 border-black dark:border-brutal-dark-border pb-4 gap-4">
         <div>
           <div className="bg-brutal-red text-white text-xs font-black px-2 py-1 inline-block mb-2 uppercase tracking-widest transform -rotate-1">
             Dossiê Exclusivo
           </div>
-          <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none">
+          <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none dark:text-brutal-dark-text">
             Os{" "}
-            <span className="text-brutal-red decoration-4 underline decoration-black">
+            <span className="text-brutal-red decoration-4 underline decoration-black dark:decoration-brutal-red">
               Imperadores de Toga
             </span>
           </h2>
@@ -109,7 +109,7 @@ export default function Supremo() {
             <p className="font-bold text-sm bg-black text-white px-3 py-1">
               FONTE: OPERAÇÃO COMPLIANCE ZERO / PF
             </p>
-            <p className="font-mono text-xs mt-1 uppercase">Dados: Dez/2025</p>
+            <p className="font-mono text-xs mt-1 uppercase dark:text-brutal-dark-muted">Dados: Dez/2025</p>
           </div>
         </div>
       </div>
@@ -117,52 +117,52 @@ export default function Supremo() {
       <div className="grid md:grid-cols-12 gap-6">
         {/* COLUNA 1: A GRANDE CONTRADIÇÃO (4 colunas) */}
         <div className="md:col-span-4 flex flex-col gap-6">
-          <div className="bg-white border-3 border-black shadow-hard p-6 relative overflow-hidden">
+          <div className="bg-white dark:bg-brutal-dark-surface border-3 border-black dark:border-brutal-dark-border shadow-hard dark:shadow-none p-6 relative overflow-hidden">
             <div className="absolute top-2 right-2 opacity-10">
-              <XCircle size={100} />
+              <XCircle size={100} className="dark:text-brutal-dark-muted" />
             </div>
-            <h3 className="text-xl font-black uppercase mb-4 border-b-3 border-black pb-2">
+            <h3 className="text-xl font-black uppercase mb-4 border-b-3 border-black dark:border-brutal-dark-border pb-2 dark:text-brutal-dark-text">
               Ética Judicial (Teoria)
             </h3>
-            <blockquote className="font-medium italic text-gray-600 mb-2">
+            <blockquote className="font-medium italic text-gray-600 dark:text-brutal-dark-muted mb-2">
               "O magistrado deve evitar situações que possam comprometer a sua imparcialidade ou
               gerar conflito de interesses."
             </blockquote>
-            <p className="text-xs font-bold text-right">- Código de Ética da Magistratura</p>
+            <p className="text-xs font-bold text-right dark:text-brutal-dark-muted">- Código de Ética da Magistratura</p>
           </div>
 
-          <div className="bg-brutal-yellow border-3 border-black shadow-hard p-6 relative overflow-hidden">
+          <div className="bg-brutal-yellow dark:bg-yellow-900/50 border-3 border-black dark:border-yellow-700 shadow-hard dark:shadow-none p-6 relative overflow-hidden">
             <div className="absolute top-2 right-2 opacity-10">
-              <CheckCircle size={100} />
+              <CheckCircle size={100} className="dark:text-yellow-500" />
             </div>
-            <h3 className="text-xl font-black uppercase mb-4 border-b-3 border-black pb-2 flex items-center gap-2">
+            <h3 className="text-xl font-black uppercase mb-4 border-b-3 border-black dark:border-yellow-700 pb-2 flex items-center gap-2 dark:text-brutal-dark-text">
               A Realidade (Caso Master)
-              <AlertTriangle className="text-black" size={24} />
+              <AlertTriangle className="text-black dark:text-yellow-500" size={24} />
             </h3>
             <div className="flex flex-col gap-1">
-              <span className="text-xs font-bold uppercase">
+              <span className="text-xs font-bold uppercase dark:text-brutal-dark-text">
                 Contrato Escritório de Advocacia de Viviane era de
               </span>
-              <span className="text-4xl font-black tracking-tighter">
+              <span className="text-4xl font-black tracking-tighter dark:text-brutal-dark-text">
                 R$ 129<span className="text-lg"> MILHÕES</span>
               </span>
-              <span className="text-xs font-mono">(R$ 3,6 Mi/mês por 36 meses)</span>
+              <span className="text-xs font-mono dark:text-brutal-dark-muted">(R$ 3,6 Mi/mês por 36 meses)</span>
             </div>
-            <p className="text-xs font-bold mt-4 border-t-2 border-black pt-2">
+            <p className="text-xs font-bold mt-4 border-t-2 border-black dark:border-yellow-700 pt-2 dark:text-brutal-dark-text">
               ESCOPO: Representar o banco "onde for necessário", sem causa específica.
             </p>
           </div>
         </div>
 
         {/* COLUNA 2: A REDE FAMILIAR (8 colunas) */}
-        <div className="md:col-span-8 bg-white border-3 border-black shadow-hard p-6 md:p-8">
+        <div className="md:col-span-8 bg-white dark:bg-brutal-dark-surface border-3 border-black dark:border-brutal-dark-border shadow-hard dark:shadow-none p-6 md:p-8">
           <div className="flex items-center gap-3 mb-6">
             <Users className="w-8 h-8 md:w-10 md:h-10 text-brutal-blue stroke-[2.5px]" />
             <div>
-              <h3 className="text-2xl md:text-3xl font-black uppercase leading-none">
+              <h3 className="text-2xl md:text-3xl font-black uppercase leading-none dark:text-brutal-dark-text">
                 O Escritório de Família
               </h3>
-              <p className="text-sm font-bold text-gray-500 uppercase">
+              <p className="text-sm font-bold text-gray-500 dark:text-brutal-dark-muted uppercase">
                 Contratos Bilionários & Proximidade com o STF
               </p>
             </div>
@@ -170,65 +170,65 @@ export default function Supremo() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* ITEM 1 */}
-            <div className="border-2 border-black p-3 hover:bg-black hover:text-white transition-all group cursor-crosshair">
+            <div className="border-2 border-black dark:border-brutal-dark-border p-3 hover:bg-black hover:text-white dark:hover:bg-brutal-dark-accent transition-all group cursor-crosshair dark:bg-brutal-dark-bg">
               <div className="flex justify-between items-start">
-                <span className="font-black text-lg uppercase group-hover:text-brutal-yellow">
+                <span className="font-black text-lg uppercase group-hover:text-brutal-yellow dark:text-brutal-dark-text">
                   Viviane Barci de Moraes
                 </span>
                 <span className="bg-brutal-red text-white text-xs px-1 font-bold">
                   PROPRIETÁRIA
                 </span>
               </div>
-              <p className="text-xs font-mono mt-1">Esposa do Ministro Alexandre de Moraes</p>
-              <div className="mt-2 text-xs font-bold border-t border-dashed border-gray-400 group-hover:border-white pt-1">
+              <p className="text-xs font-mono mt-1 dark:text-brutal-dark-muted">Esposa do Ministro Alexandre de Moraes</p>
+              <div className="mt-2 text-xs font-bold border-t border-dashed border-gray-400 dark:border-brutal-dark-border group-hover:border-white pt-1 dark:text-brutal-dark-text">
                 CONTRATO MASTER: R$ 3,6 Mi/mês
               </div>
             </div>
 
             {/* ITEM 2 */}
-            <div className="border-2 border-black p-3 hover:bg-black hover:text-white transition-all group cursor-crosshair">
+            <div className="border-2 border-black dark:border-brutal-dark-border p-3 hover:bg-black hover:text-white dark:hover:bg-brutal-dark-accent transition-all group cursor-crosshair dark:bg-brutal-dark-bg">
               <div className="flex justify-between items-start">
-                <span className="font-black text-lg uppercase group-hover:text-brutal-yellow">
+                <span className="font-black text-lg uppercase group-hover:text-brutal-yellow dark:text-brutal-dark-text">
                   Alexandre B. de Moraes
                 </span>
-                <span className="bg-gray-200 text-black text-xs px-1 font-bold group-hover:bg-gray-700 group-hover:text-white">
+                <span className="bg-gray-200 dark:bg-brutal-dark-surface text-black dark:text-brutal-dark-text text-xs px-1 font-bold group-hover:bg-gray-700 group-hover:text-white">
                   SÓCIO/FILHO
                 </span>
               </div>
-              <p className="text-xs font-mono mt-1">Filho do Ministro Alexandre de Moraes</p>
-              <div className="mt-2 text-xs font-bold border-t border-dashed border-gray-400 group-hover:border-white pt-1">
+              <p className="text-xs font-mono mt-1 dark:text-brutal-dark-muted">Filho do Ministro Alexandre de Moraes</p>
+              <div className="mt-2 text-xs font-bold border-t border-dashed border-gray-400 dark:border-brutal-dark-border group-hover:border-white pt-1 dark:text-brutal-dark-text">
                 ATUAÇÃO: Assina ações pelo Master
               </div>
             </div>
 
             {/* ITEM 3 */}
-            <div className="border-2 border-black p-3 hover:bg-black hover:text-white transition-all group cursor-crosshair">
+            <div className="border-2 border-black dark:border-brutal-dark-border p-3 hover:bg-black hover:text-white dark:hover:bg-brutal-dark-accent transition-all group cursor-crosshair dark:bg-brutal-dark-bg">
               <div className="flex justify-between items-start">
-                <span className="font-black text-lg uppercase group-hover:text-brutal-yellow">
+                <span className="font-black text-lg uppercase group-hover:text-brutal-yellow dark:text-brutal-dark-text">
                   Giuliana Barci de Moraes
                 </span>
-                <span className="bg-gray-200 text-black text-xs px-1 font-bold group-hover:bg-gray-700 group-hover:text-white">
+                <span className="bg-gray-200 dark:bg-brutal-dark-surface text-black dark:text-brutal-dark-text text-xs px-1 font-bold group-hover:bg-gray-700 group-hover:text-white">
                   SÓCIA/FILHA
                 </span>
               </div>
-              <p className="text-xs font-mono mt-1">Filha do Ministro Alexandre de Moraes</p>
-              <div className="mt-2 text-xs font-bold border-t border-dashed border-gray-400 group-hover:border-white pt-1">
+              <p className="text-xs font-mono mt-1 dark:text-brutal-dark-muted">Filha do Ministro Alexandre de Moraes</p>
+              <div className="mt-2 text-xs font-bold border-t border-dashed border-gray-400 dark:border-brutal-dark-border group-hover:border-white pt-1 dark:text-brutal-dark-text">
                 ATUAÇÃO: Assina ações pelo Master
               </div>
             </div>
 
             {/* ITEM 4 */}
-            <div className="border-2 border-black p-3 hover:bg-black hover:text-white transition-all group cursor-crosshair">
+            <div className="border-2 border-black dark:border-brutal-dark-border p-3 hover:bg-black hover:text-white dark:hover:bg-brutal-dark-accent transition-all group cursor-crosshair dark:bg-brutal-dark-bg">
               <div className="flex justify-between items-start">
-                <span className="font-black text-lg uppercase group-hover:text-brutal-yellow">
+                <span className="font-black text-lg uppercase group-hover:text-brutal-yellow dark:text-brutal-dark-text">
                   Prioridade Máxima
                 </span>
-                <span className="bg-gray-200 text-black text-xs px-1 font-bold group-hover:bg-gray-700 group-hover:text-white">
+                <span className="bg-gray-200 dark:bg-brutal-dark-surface text-black dark:text-brutal-dark-text text-xs px-1 font-bold group-hover:bg-gray-700 group-hover:text-white">
                   ORDEM DO BANQUEIRO
                 </span>
               </div>
-              <p className="text-xs font-mono mt-1">Daniel Vorcaro (Dono do Master)</p>
-              <div className="mt-2 text-xs font-bold border-t border-dashed border-gray-400 group-hover:border-white pt-1">
+              <p className="text-xs font-mono mt-1 dark:text-brutal-dark-muted">Daniel Vorcaro (Dono do Master)</p>
+              <div className="mt-2 text-xs font-bold border-t border-dashed border-gray-400 dark:border-brutal-dark-border group-hover:border-white pt-1 dark:text-brutal-dark-text">
                 "Pagamentos NÃO PODEM DEIXAR de ser feitos em hipótese alguma"
               </div>
             </div>
@@ -237,17 +237,17 @@ export default function Supremo() {
       </div>
 
       {/* BLOCO INFERIOR 1: O JUÍZO CRUZADO */}
-      <div className="bg-white border-3 border-black shadow-hard p-6 grid md:grid-cols-2 gap-8">
+      <div className="bg-white dark:bg-brutal-dark-surface border-3 border-black dark:border-brutal-dark-border shadow-hard dark:shadow-none p-6 grid md:grid-cols-2 gap-8">
         <div>
-          <h3 className="text-2xl font-black uppercase mb-2 flex items-center gap-2">
+          <h3 className="text-2xl font-black uppercase mb-2 flex items-center gap-2 dark:text-brutal-dark-text">
             <TrendingUp className="text-brutal-red" />O "Jogo de Cadeiras" no STF
           </h3>
-          <p className="font-medium text-sm mb-4">
+          <p className="font-medium text-sm mb-4 dark:text-brutal-dark-muted">
             Como o processo bilionário foi parar nas mãos de um ministro que viajou com advogado da
             defesa.
           </p>
 
-          <div className="space-y-4 font-mono text-sm">
+          <div className="space-y-4 font-mono text-sm dark:text-brutal-dark-text">
             <div className="flex items-center gap-3">
               <div className="bg-black text-white w-6 h-6 rounded-full flex items-center justify-center font-bold">
                 1
@@ -283,33 +283,33 @@ export default function Supremo() {
 
         {/* CARDS DE RELACIONAMENTO */}
         <div className="flex flex-col gap-4">
-          <div className="border-2 border-black p-4">
-            <h4 className="font-black uppercase mb-2">A Viagem "Casual"</h4>
-            <div className="text-xs space-y-1">
+          <div className="border-2 border-black dark:border-brutal-dark-border p-4 dark:bg-brutal-dark-bg">
+            <h4 className="font-black uppercase mb-2 dark:text-brutal-dark-text">A Viagem "Casual"</h4>
+            <div className="text-xs space-y-1 dark:text-brutal-dark-muted">
               <p>
-                <span className="font-bold">Jatinho de:</span> Luiz Oswaldo Pastore (ex-senador, 75
+                <span className="font-bold dark:text-brutal-dark-text">Jatinho de:</span> Luiz Oswaldo Pastore (ex-senador, 75
                 anos)
               </p>
               <p>
-                <span className="font-bold">Passageiros:</span> Toffoli + Adv. Augusto Botelho
+                <span className="font-bold dark:text-brutal-dark-text">Passageiros:</span> Toffoli + Adv. Augusto Botelho
                 (defensor de Luiz Antônio Bull, diretor do Master)
               </p>
               <p>
-                <span className="font-bold">Evento:</span> Final da Libertadores (Flamengo x
+                <span className="font-bold dark:text-brutal-dark-text">Evento:</span> Final da Libertadores (Flamengo x
                 Palmeiras)
               </p>
               <p className="mt-2 italic">"Não conversaram sobre o processo" - segundo Toffoli</p>
             </div>
           </div>
 
-          <div className="border-2 border-black p-4 bg-brutal-bg">
-            <h4 className="font-black uppercase mb-2">A Decisão Estratégica</h4>
-            <div className="text-xs">
-              <p className="font-bold">Toffoli, já como relator:</p>
+          <div className="border-2 border-black dark:border-brutal-dark-border p-4 bg-brutal-bg dark:bg-brutal-dark-bg">
+            <h4 className="font-black uppercase mb-2 dark:text-brutal-dark-text">A Decisão Estratégica</h4>
+            <div className="text-xs dark:text-brutal-dark-muted">
+              <p className="font-bold dark:text-brutal-dark-text">Toffoli, já como relator:</p>
               <ul className="list-disc pl-4 mt-1">
                 <li>Retirou o caso da 1ª instância (que decretou prisões)</li>
                 <li>
-                  Colocou todo o inquérito sob <span className="font-bold">sigilo absoluto</span>
+                  Colocou todo o inquérito sob <span className="font-bold dark:text-brutal-dark-text">sigilo absoluto</span>
                 </li>
                 <li>
                   Justificativa oficial: "envolve questões econômicas que podem ter impacto no
@@ -322,26 +322,26 @@ export default function Supremo() {
       </div>
 
       {/* BLOCO INFERIOR 2: A DIMENSÃO DO ESCÂNDALO */}
-      <div className="bg-brutal-bg border-3 border-black p-6 grid md:grid-cols-2 gap-8 items-start">
+      <div className="bg-brutal-bg dark:bg-brutal-dark-surface border-3 border-black dark:border-brutal-dark-border p-6 grid md:grid-cols-2 gap-8 items-start">
         <div>
-          <h3 className="text-2xl font-black uppercase mb-2 flex items-center gap-2">
+          <h3 className="text-2xl font-black uppercase mb-2 flex items-center gap-2 dark:text-brutal-dark-text">
             <DollarSign className="text-brutal-red" />O Rombo Bilionário (Pano de Fundo)
           </h3>
-          <p className="font-medium text-sm mb-6">
+          <p className="font-medium text-sm mb-6 dark:text-brutal-dark-muted">
             O contrato milionário da família Moraes era com um banco envolvido em uma das maiores
             fraudes do sistema financeiro.
           </p>
 
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-white border-2 border-black p-3 text-center">
-              <span className="block text-xs font-bold text-gray-500">FRAUDE COM CDBs FALSOS</span>
-              <span className="font-black text-xl md:text-2xl">R$ 12 Bi</span>
-              <span className="block text-[10px]">Investigado pela PF</span>
+            <div className="bg-white dark:bg-brutal-dark-bg border-2 border-black dark:border-brutal-dark-border p-3 text-center">
+              <span className="block text-xs font-bold text-gray-500 dark:text-brutal-dark-muted">FRAUDE COM CDBs FALSOS</span>
+              <span className="font-black text-xl md:text-2xl dark:text-brutal-dark-text">R$ 12 Bi</span>
+              <span className="block text-[10px] dark:text-brutal-dark-muted">Investigado pela PF</span>
             </div>
-            <div className="bg-white border-2 border-black p-3 text-center">
-              <span className="block text-xs font-bold text-gray-500">INJEÇÕES DO BRB</span>
-              <span className="font-black text-xl md:text-2xl">R$ 16,7 Bi</span>
-              <span className="block text-[10px]">Entre 2024-2025</span>
+            <div className="bg-white dark:bg-brutal-dark-bg border-2 border-black dark:border-brutal-dark-border p-3 text-center">
+              <span className="block text-xs font-bold text-gray-500 dark:text-brutal-dark-muted">INJEÇÕES DO BRB</span>
+              <span className="font-black text-xl md:text-2xl dark:text-brutal-dark-text">R$ 16,7 Bi</span>
+              <span className="block text-[10px] dark:text-brutal-dark-muted">Entre 2024-2025</span>
             </div>
           </div>
           <p className="text-xs font-mono mt-4 p-2 bg-black text-white">
@@ -352,17 +352,17 @@ export default function Supremo() {
 
         {/* LINHA DO TEMPO DAS "COINCIDÊNCIAS" */}
         <div>
-          <h4 className="font-black text-xl uppercase mb-4 border-b-2 border-black pb-2">
+          <h4 className="font-black text-xl uppercase mb-4 border-b-2 border-black dark:border-brutal-dark-border pb-2 dark:text-brutal-dark-text">
             Linha do Tempo das "Coincidências"
           </h4>
-          <div className="space-y-3 text-sm">
+          <div className="space-y-3 text-sm dark:text-brutal-dark-text">
             <div className="flex items-start gap-2">
               <div className="bg-brutal-red text-white text-xs font-bold px-2 py-1 shrink-0">
                 2024
               </div>
               <div>
                 <p className="font-bold">Início do Contrato Familiar</p>
-                <p className="text-xs">
+                <p className="text-xs dark:text-brutal-dark-muted">
                   Escritório da família Moraes inicia contrato de R$ 3,6 Mi/mês com o Master.
                 </p>
               </div>
@@ -373,7 +373,7 @@ export default function Supremo() {
               </div>
               <div>
                 <p className="font-bold">Operação & Sorteio</p>
-                <p className="text-xs">
+                <p className="text-xs dark:text-brutal-dark-muted">
                   PF prende Vorcaro (Compliance Zero). Toffoli é sorteado relator do caso no STF.
                 </p>
               </div>
@@ -382,7 +382,7 @@ export default function Supremo() {
               <div className="bg-black text-white text-xs font-bold px-2 py-1 shrink-0">29 NOV</div>
               <div>
                 <p className="font-bold">Viagem em Jatinho</p>
-                <p className="text-xs">
+                <p className="text-xs dark:text-brutal-dark-muted">
                   Toffoli viaja com advogado da defesa do Master para final da Libertadores.
                 </p>
               </div>
@@ -393,7 +393,7 @@ export default function Supremo() {
               </div>
               <div>
                 <p className="font-bold">Sigilo & Centralização</p>
-                <p className="text-xs">
+                <p className="text-xs dark:text-brutal-dark-muted">
                   Toffoli decreta sigilo máximo e traz caso para o STF, sob sua relatoria.
                 </p>
               </div>
@@ -403,10 +403,10 @@ export default function Supremo() {
       </div>
 
       {/* RODAPÉ / LEGALIDADES */}
-      <div className="border-t-3 border-black pt-4 text-center">
-        <p className="text-xs font-mono uppercase">
+      <div className="border-t-3 border-black dark:border-brutal-dark-border pt-4 text-center">
+        <p className="text-xs font-mono uppercase dark:text-brutal-dark-muted">
           NOTA CONTEXTUAL: O STF já definiu que ministros{" "}
-          <span className="font-bold">podem julgar processos</span> mesmo quando envolvem
+          <span className="font-bold dark:text-brutal-dark-text">podem julgar processos</span> mesmo quando envolvem
           escritórios de familiares. O interesse de partes em contratar escritórios com proximidade
           ao STF é amplamente documentado.
         </p>

@@ -1,13 +1,11 @@
 import Link from "next/link";
-import { PowerPyramid, LegalDistinction, Supremo } from "@/components/features";
-import { FeatureCard, StatCard, SectionHeader } from "@/components/ui";
+import { PowerPyramid, LegalDistinction, Supremo, DadosQueChocam } from "@/components/features";
+import { FeatureCard, SectionHeader } from "@/components/ui";
 import {
   Users,
   FileText,
   AlertCircle,
   TrendingUp,
-  Trophy,
-  Banknote,
   Shield,
   ChevronDown,
   Database,
@@ -22,28 +20,28 @@ export default function Home() {
       {/* ========== 1. HERO SECTION ========== */}
       <section className="relative min-h-[75vh] flex flex-col justify-center items-center text-center px-4 py-brutal-xl">
         {/* Badge Open Source */}
-        <div className="inline-flex items-center gap-2 bg-white border-2 border-black px-4 py-2 mb-brutal-sm z-10">
-          <Shield className="w-4 h-4" />
-          <span className="font-bold text-xs uppercase">Projeto Open Source</span>
+        <div className="inline-flex items-center gap-2 bg-white dark:bg-brutal-dark-surface border-2 border-black dark:border-brutal-dark-border px-4 py-2 mb-brutal-sm z-10">
+          <Shield className="w-4 h-4 dark:text-brutal-dark-text" />
+          <span className="font-bold text-xs uppercase dark:text-brutal-dark-text">Projeto Open Source</span>
         </div>
 
         {/* Título Principal */}
-        <h1 className="heading-hero mb-brutal-sm z-10 max-w-6xl">
+        <h1 className="heading-hero mb-brutal-sm z-10 max-w-6xl dark:text-brutal-dark-text">
           Política
           <span className="block mt-4">
-            <span className="inline-block bg-brutal-yellow px-6 border-3 border-black shadow-hard transform -rotate-1">
+            <span className="inline-block highlight-brutal px-6 transform -rotate-1">
               Sem Filtro
             </span>
           </span>
         </h1>
 
         {/* Subtítulo */}
-        <p className="heading-subtitle max-w-3xl mb-brutal-md text-gray-800 z-10">
+        <p className="heading-subtitle max-w-3xl mb-brutal-md text-gray-800 dark:text-brutal-dark-text z-10">
           Transparência política radical para formar cidadãos conscientes.
         </p>
 
         {/* Value Proposition */}
-        <p className="text-body max-w-2xl mb-brutal-lg text-gray-600 z-10">
+        <p className="text-body max-w-2xl mb-brutal-lg text-gray-600 dark:text-brutal-dark-muted z-10">
           Combata a desinformação com dados oficiais. Entenda gastos, votações e escândalos
           antes de formar opinião.
         </p>
@@ -145,45 +143,10 @@ export default function Home() {
 
       {/* ========== 4. DADOS IMPACTANTES ========== */}
       <section className="max-w-7xl mx-auto px-4 py-brutal-xl">
-        <div className="bg-brutal-bg border-3 border-black p-8 md:p-12">
+        <div className="bg-brutal-bg dark:bg-brutal-dark-bg border-3 border-black dark:border-brutal-dark-border p-8 md:p-12">
           <SectionHeader title="Dados que Chocam" centered />
 
-          <div className="grid md:grid-cols-3 gap-brutal-md">
-            {/* Top Gastador */}
-            <div className="bg-white border-3 border-black shadow-hard p-6 relative">
-              <div className="absolute -top-3 -right-3 bg-brutal-red text-white text-xs font-black px-3 py-1 border-2 border-black rotate-3">
-                #1 GASTADOR
-              </div>
-              <div className="flex items-center gap-brutal-sm mb-brutal-sm">
-                <Trophy className="w-10 h-10 text-brutal-yellow" />
-                <div>
-                  <h3 className="font-black text-lg uppercase">Gleisi Hoffmann</h3>
-                  <p className="text-xs font-bold text-gray-600">PT · PR</p>
-                </div>
-              </div>
-              <div className="border-t-2 border-black pt-brutal-sm">
-                <p className="text-label text-gray-600 mb-1">CEAP Set/2024</p>
-                <p className="text-4xl font-black text-brutal-red">R$ 31.200</p>
-              </div>
-            </div>
-
-            {/* Investigações */}
-            <StatCard
-              icon={AlertCircle}
-              value="12"
-              description="Investigações ativas contra políticos em exercício"
-              variant="red"
-            />
-
-            {/* Fundão */}
-            <StatCard
-              icon={Banknote}
-              label="Fundo Eleitoral 2024"
-              value="R$ 4.9 BI"
-              description="= 16.300 Ambulâncias que o Brasil precisa"
-              variant="yellow"
-            />
-          </div>
+          <DadosQueChocam />
         </div>
       </section>
 
@@ -288,7 +251,7 @@ export default function Home() {
       </section>
 
       {/* ========== FOOTER ========== */}
-      <footer className="text-center py-brutal-lg border-t-3 border-black font-mono text-xs uppercase max-w-7xl mx-auto px-4">
+      <footer className="text-center py-brutal-lg border-t-3 border-black dark:border-brutal-dark-border font-mono text-xs uppercase max-w-7xl mx-auto px-4 dark:text-brutal-dark-muted">
         <p>Projeto Open Source • Transparência Radical</p>
       </footer>
     </main>

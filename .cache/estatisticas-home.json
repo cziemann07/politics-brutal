@@ -1,0 +1,21 @@
+{
+  "periodo": {
+    "mes": 11,
+    "ano": 2025,
+    "label": "11/2025"
+  },
+  "topGastador": {
+    "id": 220675,
+    "nome": "Antônio Doido",
+    "partido": "MDB",
+    "estado": "PA",
+    "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/220675.jpg",
+    "gastos": 73492.36
+  },
+  "estatisticas": {
+    "totalDeputados": 513,
+    "mediaGastosCeap": 26013.62,
+    "totalGastosMes": 2601361.57
+  },
+  "atualizadoEm": "2025-12-18T19:35:28.888Z"
+}

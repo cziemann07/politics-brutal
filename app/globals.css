@@ -16,7 +16,7 @@
   }
 
   .dark .card-brutal {
-    @apply border-brutal-dark-border bg-brutal-dark-surface shadow-none;
+    @apply border-brutal-dark-border bg-brutal-dark-surface shadow-none text-brutal-dark-text;
   }
 
   /* Tipografia Padronizada */
@@ -47,9 +47,18 @@
   .text-label {
     @apply text-xs font-bold uppercase tracking-wide;
   }
+
+  /* Highlight/Grifado - classe custom para elementos destacados */
+  .highlight-brutal {
+    @apply bg-brutal-yellow text-black border-3 border-black shadow-hard;
+  }
+
+  .dark .highlight-brutal {
+    @apply bg-brutal-dark-accent text-white border-brutal-dark-accent shadow-none;
+  }
 }
 
-/* Light Mode (padrão) */
+/* Light Mode (padrao) */
 body {
   background-color: #F4F4F0;
   color: #000;
@@ -57,63 +66,31 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Dark Mode - inspirado no X (Twitter) */
-.dark body,
+/* Dark Mode */
 html.dark body {
   background-color: #000000;
   color: #E7E9EA;
 }
 
-/* Transições suaves para elementos principais */
+/* CSS Variables para dark mode - usadas em componentes */
+:root {
+  --shadow-hard: 4px 4px 0px 0px #000;
+}
+
 .dark {
-  --brutal-shadow: none;
+  --shadow-hard: none;
 }
 
-/* Override de cores específicas para dark mode */
-.dark .bg-brutal-bg {
-  background-color: #000000;
-}
-
-.dark .bg-white {
+/* Input fields no dark mode - elementos nativos */
+.dark input,
+.dark select,
+.dark textarea {
   background-color: #16181C;
-}
-
-.dark .border-black {
+  color: #E7E9EA;
   border-color: #2F3336;
 }
 
-.dark .text-black {
-  color: #E7E9EA;
-}
-
-.dark .text-gray-600,
-.dark .text-gray-700 {
+.dark input::placeholder,
+.dark textarea::placeholder {
   color: #71767B;
 }
-
-.dark .shadow-hard {
-  box-shadow: none;
-}
-
-.dark .shadow-hard-hover {
-  box-shadow: 0 0 0 1px #1D9BF0;
-}
-
-/* Cores de destaque no dark mode */
-.dark .bg-brutal-yellow {
-  background-color: #1D9BF0;
-}
-
-.dark .text-brutal-yellow {
-  color: #1D9BF0;
-}
-
-.dark .bg-brutal-red {
-  background-color: #F4212E;
-}
-
-.dark .bg-green-500 {
-  background-color: #00BA7C;
-}
-
-/* Hover states customizados para elementos no dark mode sao tratados diretamente nas classes Tailwind */

@@ -19,30 +19,30 @@ export default function Eleicoes2026Page() {
   const [abaAtiva, setAbaAtiva] = useState<"polarizacao" | "mbl" | "alerta">("polarizacao");
 
   return (
-    <main className="min-h-screen bg-brutal-bg p-4 md:p-8 max-w-7xl mx-auto">
+    <main className="min-h-screen bg-brutal-bg dark:bg-brutal-dark-bg p-4 md:p-8 max-w-7xl mx-auto">
       {/* HEADER */}
-      <div className="mb-8 border-b-3 border-black pb-6">
+      <div className="mb-8 border-b-3 border-black dark:border-brutal-dark-border pb-6">
         <div className="flex items-center gap-3 mb-4">
-          <div className="bg-brutal-red p-2 border-2 border-black">
+          <div className="bg-brutal-red p-2 border-2 border-black dark:border-brutal-red">
             <ShieldAlert size={32} className="text-white" />
           </div>
           <div>
             <span className="text-xs font-black uppercase tracking-widest text-brutal-red">
               Alerta Democrático
             </span>
-            <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter leading-none">
+            <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter leading-none dark:text-brutal-dark-text">
               Eleições 2026
             </h1>
           </div>
         </div>
-        <p className="text-lg font-bold text-gray-700 max-w-3xl">
+        <p className="text-lg font-bold text-gray-700 dark:text-brutal-dark-muted max-w-3xl">
           A democracia brasileira está em risco. Não por ameaças externas, mas pela doença interna
           da polarização extrema que transforma cidadãos em fanáticos e políticos em ídolos intocáveis.
         </p>
       </div>
 
       {/* TABS DE NAVEGAÇÃO */}
-      <div className="flex flex-wrap gap-2 mb-8 border-b-3 border-black">
+      <div className="flex flex-wrap gap-2 mb-8 border-b-3 border-black dark:border-brutal-dark-border">
         {[
           { id: "polarizacao" as const, label: "O Câncer da Polarização", icon: Skull },
           { id: "mbl" as const, label: "Caso MBL: Hipocrisia em Pessoa", icon: DollarSign },
@@ -53,8 +53,8 @@ export default function Eleicoes2026Page() {
             <button
               key={tab.id}
               onClick={() => setAbaAtiva(tab.id)}
-              className={`flex items-center gap-2 px-4 md:px-6 py-3 font-black uppercase text-sm border-2 border-b-0 border-black transition-all ${
-                abaAtiva === tab.id ? "bg-black text-white" : "bg-white hover:bg-black hover:text-white"
+              className={`flex items-center gap-2 px-4 md:px-6 py-3 font-black uppercase text-sm border-2 border-b-0 border-black dark:border-brutal-dark-border transition-all ${
+                abaAtiva === tab.id ? "bg-black text-white dark:bg-brutal-dark-accent" : "bg-white dark:bg-brutal-dark-surface dark:text-brutal-dark-text hover:bg-black hover:text-white dark:hover:bg-brutal-dark-accent"
               }`}
             >
               <Icon size={18} />
@@ -91,12 +91,12 @@ export default function Eleicoes2026Page() {
           <div className="grid md:grid-cols-2 gap-6">
             <div className="card-brutal">
               <div className="flex items-center gap-2 mb-4">
-                <div className="bg-red-500 p-2 border-2 border-black">
+                <div className="bg-red-500 p-2 border-2 border-black dark:border-red-500">
                   <XCircle size={24} className="text-white" />
                 </div>
-                <h3 className="text-xl font-black uppercase">O Problema da Esquerda</h3>
+                <h3 className="text-xl font-black uppercase dark:text-brutal-dark-text">O Problema da Esquerda</h3>
               </div>
-              <ul className="space-y-3 font-medium">
+              <ul className="space-y-3 font-medium dark:text-brutal-dark-muted">
                 <li className="flex items-start gap-2">
                   <span className="text-brutal-red font-black">•</span>
                   <span>Idolatria cega a Lula, ignorando escândalos como Mensalão e Petrolão</span>
@@ -118,12 +118,12 @@ export default function Eleicoes2026Page() {
 
             <div className="card-brutal">
               <div className="flex items-center gap-2 mb-4">
-                <div className="bg-blue-500 p-2 border-2 border-black">
+                <div className="bg-blue-500 p-2 border-2 border-black dark:border-blue-500">
                   <XCircle size={24} className="text-white" />
                 </div>
-                <h3 className="text-xl font-black uppercase">O Problema da Direita</h3>
+                <h3 className="text-xl font-black uppercase dark:text-brutal-dark-text">O Problema da Direita</h3>
               </div>
-              <ul className="space-y-3 font-medium">
+              <ul className="space-y-3 font-medium dark:text-brutal-dark-muted">
                 <li className="flex items-start gap-2">
                   <span className="text-brutal-red font-black">•</span>
                   <span>Culto de personalidade a Bolsonaro, ignorando suas falhas</span>
@@ -172,12 +172,12 @@ export default function Eleicoes2026Page() {
           </div>
 
           {/* CITAÇÃO FINAL */}
-          <div className="bg-brutal-bg border-3 border-black p-6 md:p-8 text-center">
-            <blockquote className="text-xl md:text-2xl font-black italic mb-4">
+          <div className="bg-brutal-bg dark:bg-brutal-dark-surface border-3 border-black dark:border-brutal-dark-border p-6 md:p-8 text-center">
+            <blockquote className="text-xl md:text-2xl font-black italic mb-4 dark:text-brutal-dark-text">
               "Quando você defende um político como se fosse seu time de futebol,
               você deixou de ser cidadão e virou torcedor."
             </blockquote>
-            <p className="font-bold text-gray-600">
+            <p className="font-bold text-gray-600 dark:text-brutal-dark-muted">
               Pare de defender políticos. Comece a cobrar todos eles.
             </p>
           </div>
@@ -207,18 +207,18 @@ export default function Eleicoes2026Page() {
 
           {/* CONCLUSÃO */}
           <div className="card-brutal border-brutal-red border-3">
-            <h3 className="text-xl font-black uppercase mb-4 flex items-center gap-2">
+            <h3 className="text-xl font-black uppercase mb-4 flex items-center gap-2 dark:text-brutal-dark-text">
               <Target size={24} className="text-brutal-red" />
               A Lição que Você Deve Aprender
             </h3>
-            <p className="font-medium text-lg mb-4">
+            <p className="font-medium text-lg mb-4 dark:text-brutal-dark-muted">
               O MBL não é pior nem melhor que PT, PSDB, MDB ou qualquer outro partido.
               Eles são IGUAIS. Todos prometem mundos e fundos na oposição, todos viram
               a casaca quando chegam ao poder. A diferença é que o MBL construiu sua
               base exatamente criticando isso — e agora faz o mesmo.
             </p>
-            <div className="bg-brutal-bg p-4 border-2 border-black">
-              <p className="font-black text-center">
+            <div className="bg-brutal-bg dark:bg-brutal-dark-bg p-4 border-2 border-black dark:border-brutal-dark-border">
+              <p className="font-black text-center dark:text-brutal-dark-text">
                 DESCONFIE DE TODO POLÍTICO. INCLUSIVE DESSE.
               </p>
             </div>
@@ -246,18 +246,18 @@ export default function Eleicoes2026Page() {
 
           {/* PSEUDO-CANDIDATOS */}
           <div className="card-brutal">
-            <h3 className="text-xl font-black uppercase mb-6 border-b-3 border-black pb-3">
+            <h3 className="text-xl font-black uppercase mb-6 border-b-3 border-black dark:border-brutal-dark-border pb-3 dark:text-brutal-dark-text">
               Os Tipos de Candidatos que Você VAI Encontrar
             </h3>
 
             <div className="space-y-6">
-              <div className="flex gap-4 items-start p-4 bg-brutal-bg border-2 border-black">
-                <div className="bg-brutal-red text-white p-2 border-2 border-black shrink-0">
+              <div className="flex gap-4 items-start p-4 bg-brutal-bg dark:bg-brutal-dark-bg border-2 border-black dark:border-brutal-dark-border">
+                <div className="bg-brutal-red text-white p-2 border-2 border-black dark:border-brutal-red shrink-0">
                   <Users size={24} />
                 </div>
                 <div>
-                  <h4 className="font-black text-lg uppercase mb-2">O "Outsider" de YouTube</h4>
-                  <p className="font-medium text-gray-700">
+                  <h4 className="font-black text-lg uppercase mb-2 dark:text-brutal-dark-text">O "Outsider" de YouTube</h4>
+                  <p className="font-medium text-gray-700 dark:text-brutal-dark-muted">
                     Faz vídeos criticando políticos, vira político, e faz tudo igual.
                     Exemplo clássico: MBL, Mamãe Falei, e dezenas de influencers que
                     entraram na política "para mudar" e só mudaram de endereço.
@@ -265,13 +265,13 @@ export default function Eleicoes2026Page() {
                 </div>
               </div>
 
-              <div className="flex gap-4 items-start p-4 bg-brutal-bg border-2 border-black">
-                <div className="bg-blue-500 text-white p-2 border-2 border-black shrink-0">
+              <div className="flex gap-4 items-start p-4 bg-brutal-bg dark:bg-brutal-dark-bg border-2 border-black dark:border-brutal-dark-border">
+                <div className="bg-blue-500 text-white p-2 border-2 border-black dark:border-blue-500 shrink-0">
                   <Users size={24} />
                 </div>
                 <div>
-                  <h4 className="font-black text-lg uppercase mb-2">O "Técnico Apolítico"</h4>
-                  <p className="font-medium text-gray-700">
+                  <h4 className="font-black text-lg uppercase mb-2 dark:text-brutal-dark-text">O "Técnico Apolítico"</h4>
+                  <p className="font-medium text-gray-700 dark:text-brutal-dark-muted">
                     Diz que "não é de esquerda nem de direita", mas financia campanha
                     com fundão e se alia com qualquer um para ter poder. Geralmente
                     vem do mercado financeiro ou empresariado.
@@ -279,13 +279,13 @@ export default function Eleicoes2026Page() {
                 </div>
               </div>
 
-              <div className="flex gap-4 items-start p-4 bg-brutal-bg border-2 border-black">
-                <div className="bg-green-500 text-white p-2 border-2 border-black shrink-0">
+              <div className="flex gap-4 items-start p-4 bg-brutal-bg dark:bg-brutal-dark-bg border-2 border-black dark:border-brutal-dark-border">
+                <div className="bg-green-500 text-white p-2 border-2 border-black dark:border-green-500 shrink-0">
                   <Users size={24} />
                 </div>
                 <div>
-                  <h4 className="font-black text-lg uppercase mb-2">O "Salvador da Pátria"</h4>
-                  <p className="font-medium text-gray-700">
+                  <h4 className="font-black text-lg uppercase mb-2 dark:text-brutal-dark-text">O "Salvador da Pátria"</h4>
+                  <p className="font-medium text-gray-700 dark:text-brutal-dark-muted">
                     Usa linguagem messiânica, fala em "salvar o Brasil", e cria culto
                     de personalidade. Pode ser de esquerda ou direita — o padrão é o
                     mesmo: ele é o escolhido, você é o fiel.
@@ -342,11 +342,11 @@ export default function Eleicoes2026Page() {
           </div>
 
           {/* MENSAGEM FINAL */}
-          <div className="bg-brutal-bg border-3 border-black p-6 md:p-8">
-            <h3 className="text-2xl font-black uppercase mb-4 text-center">
+          <div className="bg-brutal-bg dark:bg-brutal-dark-surface border-3 border-black dark:border-brutal-dark-border p-6 md:p-8">
+            <h3 className="text-2xl font-black uppercase mb-4 text-center dark:text-brutal-dark-text">
               O Voto Consciente
             </h3>
-            <p className="font-medium text-lg text-center max-w-2xl mx-auto mb-6">
+            <p className="font-medium text-lg text-center max-w-2xl mx-auto mb-6 dark:text-brutal-dark-muted">
               Não existe político perfeito. Mas existem políticos menos piores.
               Pesquise, compare, cobre. E lembre-se: seu voto é uma ferramenta,
               não uma declaração de amor.

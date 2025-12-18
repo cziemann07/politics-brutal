@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -11,11 +11,18 @@ import {
   FileText,
   TrendingUp,
   Newspaper,
-  Search,
   BarChart3,
   AlertCircle,
   Sun,
   Moon,
+  User,
+  Heart,
+  Settings,
+  Bell,
+  Crown,
+  ChevronRight,
+  LogIn,
+  LogOut,
 } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 
@@ -32,8 +39,28 @@ const navItems = [
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const profileRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const { theme, toggleTheme, isDark } = useTheme();
+
+  // Carregar estado de login do localStorage
+  useEffect(() => {
+    const loggedIn = localStorage.getItem("psf_logged_in") === "true";
+    setIsLoggedIn(loggedIn);
+  }, []);
+
+  const handleLogin = () => {
+    localStorage.setItem("psf_logged_in", "true");
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("psf_logged_in");
+    setIsLoggedIn(false);
+    setIsProfileOpen(false);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,6 +68,17 @@ export default function Navigation() {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Fechar popup ao clicar fora
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
+        setIsProfileOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const isActive = (href: string) => {
@@ -89,7 +127,7 @@ export default function Navigation() {
               })}
             </nav>
 
-            {/* Theme Toggle & Mobile Menu */}
+            {/* Theme Toggle, Profile & Mobile Menu */}
             <div className="flex items-center gap-2">
               {/* Theme Toggle Button */}
               <button
@@ -100,6 +138,124 @@ export default function Navigation() {
               >
                 {isDark ? <Sun size={20} /> : <Moon size={20} />}
               </button>
+
+              {/* Profile Button with Popup */}
+              <div className="relative" ref={profileRef}>
+                <button
+                  onClick={() => setIsProfileOpen(!isProfileOpen)}
+                  className="p-2 border-2 border-black dark:border-brutal-dark-border bg-white dark:bg-brutal-dark-surface font-bold transition-all hover:bg-black hover:text-white dark:hover:bg-brutal-dark-accent"
+                  aria-label="Meu perfil"
+                  title="Meu perfil"
+                >
+                  <User size={20} />
+                </button>
+
+                {/* Profile Popup */}
+                {isProfileOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-64 bg-white dark:bg-brutal-dark-surface border-3 border-black dark:border-brutal-dark-border shadow-hard dark:shadow-none z-50">
+                    {!isLoggedIn ? (
+                      /* Estado Deslogado */
+                      <div className="p-4">
+                        <div className="text-center mb-4">
+                          <div className="w-14 h-14 bg-gray-100 dark:bg-brutal-dark-bg border-2 border-black dark:border-brutal-dark-border mx-auto flex items-center justify-center mb-3">
+                            <User size={28} className="text-gray-400 dark:text-brutal-dark-muted" />
+                          </div>
+                          <p className="font-black text-sm uppercase dark:text-brutal-dark-text">Visitante</p>
+                          <p className="text-xs text-gray-500 dark:text-brutal-dark-muted">Faça login para salvar favoritos</p>
+                        </div>
+                        <button
+                          onClick={handleLogin}
+                          className="w-full flex items-center justify-center gap-2 p-3 bg-black text-white font-bold text-sm uppercase hover:bg-gray-800 transition-colors"
+                        >
+                          <LogIn size={16} />
+                          Entrar
+                        </button>
+                      </div>
+                    ) : (
+                      /* Estado Logado */
+                      <>
+                        {/* Header */}
+                        <div className="p-4 border-b-2 border-black dark:border-brutal-dark-border">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 bg-gray-100 dark:bg-brutal-dark-bg border-2 border-black dark:border-brutal-dark-border flex items-center justify-center">
+                              <User size={20} className="text-gray-600 dark:text-brutal-dark-muted" />
+                            </div>
+                            <div>
+                              <p className="font-black text-sm dark:text-brutal-dark-text">Cidadão</p>
+                              <p className="text-xs text-gray-500 dark:text-brutal-dark-muted">Plano Gratuito</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Menu Items */}
+                        <div className="p-2">
+                          <Link
+                            href="/perfil"
+                            onClick={() => setIsProfileOpen(false)}
+                            className="flex items-center justify-between p-3 hover:bg-gray-100 dark:hover:bg-brutal-dark-bg transition-colors"
+                          >
+                            <div className="flex items-center gap-3">
+                              <Heart size={16} className="text-gray-600 dark:text-brutal-dark-muted" />
+                              <span className="font-bold text-sm dark:text-brutal-dark-text">Meus Deputados</span>
+                            </div>
+                            <ChevronRight size={14} className="text-gray-400" />
+                          </Link>
+
+                          <Link
+                            href="/perfil#notificacoes"
+                            onClick={() => setIsProfileOpen(false)}
+                            className="flex items-center justify-between p-3 hover:bg-gray-100 dark:hover:bg-brutal-dark-bg transition-colors"
+                          >
+                            <div className="flex items-center gap-3">
+                              <Bell size={16} className="text-gray-600 dark:text-brutal-dark-muted" />
+                              <span className="font-bold text-sm dark:text-brutal-dark-text">Notificações</span>
+                            </div>
+                            <ChevronRight size={14} className="text-gray-400" />
+                          </Link>
+
+                          <Link
+                            href="/perfil#configuracoes"
+                            onClick={() => setIsProfileOpen(false)}
+                            className="flex items-center justify-between p-3 hover:bg-gray-100 dark:hover:bg-brutal-dark-bg transition-colors"
+                          >
+                            <div className="flex items-center gap-3">
+                              <Settings size={16} className="text-gray-600 dark:text-brutal-dark-muted" />
+                              <span className="font-bold text-sm dark:text-brutal-dark-text">Configurações</span>
+                            </div>
+                            <ChevronRight size={14} className="text-gray-400" />
+                          </Link>
+                        </div>
+
+                        {/* PRO Upgrade */}
+                        <div className="p-2 border-t border-gray-200 dark:border-brutal-dark-border">
+                          <Link
+                            href="/perfil#premium"
+                            onClick={() => setIsProfileOpen(false)}
+                            className="flex items-center justify-between p-3 border-2 border-black dark:border-brutal-dark-border hover:bg-gray-50 dark:hover:bg-brutal-dark-bg transition-colors"
+                          >
+                            <div className="flex items-center gap-3">
+                              <Crown size={16} className="text-gray-600 dark:text-brutal-dark-muted" />
+                              <span className="font-bold text-sm dark:text-brutal-dark-text">Vigilante PRO</span>
+                            </div>
+                            <span className="font-bold text-xs text-gray-500 dark:text-brutal-dark-muted">R$19,99</span>
+                          </Link>
+                        </div>
+
+                        {/* Logout */}
+                        <div className="p-2 border-t border-gray-200 dark:border-brutal-dark-border">
+                          <button
+                            onClick={handleLogout}
+                            className="w-full flex items-center gap-3 p-3 text-gray-600 dark:text-brutal-dark-muted hover:bg-gray-100 dark:hover:bg-brutal-dark-bg transition-colors"
+                          >
+                            <LogOut size={16} />
+                            <span className="font-bold text-sm">Sair</span>
+                          </button>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
 
               {/* Mobile Menu Button */}
               <button

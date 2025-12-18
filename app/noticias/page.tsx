@@ -205,23 +205,23 @@ export default function NoticiasPage() {
     filtro === "todas" ? noticias : noticias.filter((n) => n.categoria === filtro);
 
   return (
-    <main className="min-h-screen bg-brutal-bg p-4 md:p-8 max-w-7xl mx-auto">
+    <main className="min-h-screen bg-brutal-bg dark:bg-brutal-dark-bg p-4 md:p-8 max-w-7xl mx-auto">
       {/* HEADER */}
-      <div className="mb-8 border-b-3 border-black pb-6">
+      <div className="mb-8 border-b-3 border-black dark:border-brutal-dark-border pb-6">
         <div className="flex items-center gap-3 mb-4">
-          <div className="bg-black p-2 border-2 border-black">
+          <div className="bg-black dark:bg-brutal-dark-accent p-2 border-2 border-black dark:border-brutal-dark-accent">
             <Newspaper size={32} className="text-white" />
           </div>
           <div>
-            <span className="text-xs font-black uppercase tracking-widest text-gray-500">
+            <span className="text-xs font-black uppercase tracking-widest text-gray-500 dark:text-brutal-dark-muted">
               Curadoria Crítica
             </span>
-            <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter leading-none">
+            <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter leading-none dark:text-brutal-dark-text">
               Notícias Sem Filtro
             </h1>
           </div>
         </div>
-        <p className="text-lg font-bold text-gray-700 max-w-3xl">
+        <p className="text-lg font-bold text-gray-700 dark:text-brutal-dark-muted max-w-3xl">
           Não reproduzimos manchetes. Contextualizamos, criticamos e expomos a hipocrisia de
           todos os lados. Cada notícia aqui pode ser compartilhada como card no Instagram.
         </p>
@@ -246,17 +246,17 @@ export default function NoticiasPage() {
       {/* FILTROS */}
       <div className="flex flex-wrap items-center gap-2 mb-8">
         <div className="flex items-center gap-2 mr-4">
-          <Filter size={18} className="text-gray-600" />
-          <span className="font-bold text-sm uppercase text-gray-600">Filtrar:</span>
+          <Filter size={18} className="text-gray-600 dark:text-brutal-dark-muted" />
+          <span className="font-bold text-sm uppercase text-gray-600 dark:text-brutal-dark-muted">Filtrar:</span>
         </div>
         {categorias.map((cat) => (
           <button
             key={cat.id}
             onClick={() => setFiltro(cat.id)}
-            className={`px-4 py-2 font-bold uppercase text-sm border-2 border-black transition-all ${
+            className={`px-4 py-2 font-bold uppercase text-sm border-2 border-black dark:border-brutal-dark-border transition-all ${
               filtro === cat.id
-                ? "bg-black text-white"
-                : "bg-white hover:bg-black hover:text-white"
+                ? "bg-black text-white dark:bg-brutal-dark-accent"
+                : "bg-white dark:bg-brutal-dark-surface dark:text-brutal-dark-text hover:bg-black hover:text-white dark:hover:bg-brutal-dark-accent"
             }`}
           >
             {cat.label}
@@ -283,7 +283,7 @@ export default function NoticiasPage() {
           return (
             <article
               key={noticia.id}
-              className="card-brutal hover:shadow-hard-hover transition-all"
+              className="card-brutal hover:shadow-hard-hover dark:hover:shadow-none transition-all"
             >
               <div className="flex flex-col lg:flex-row lg:items-start gap-6">
                 {/* CONTEÚDO */}
@@ -296,7 +296,7 @@ export default function NoticiasPage() {
                       <CatIcon size={14} />
                       {catConfig.label}
                     </span>
-                    <span className="text-xs font-bold text-gray-500 flex items-center gap-1">
+                    <span className="text-xs font-bold text-gray-500 dark:text-brutal-dark-muted flex items-center gap-1">
                       <Calendar size={12} />
                       {noticia.data}
                     </span>
@@ -309,26 +309,26 @@ export default function NoticiasPage() {
                   </div>
 
                   {/* TÍTULO */}
-                  <h2 className="font-black text-xl md:text-2xl uppercase mb-3 leading-tight">
+                  <h2 className="font-black text-xl md:text-2xl uppercase mb-3 leading-tight dark:text-brutal-dark-text">
                     {noticia.titulo}
                   </h2>
 
                   {/* SUBTÍTULO */}
-                  <p className="font-medium text-gray-700 mb-4 leading-relaxed">
+                  <p className="font-medium text-gray-700 dark:text-brutal-dark-muted mb-4 leading-relaxed">
                     {noticia.subtitulo}
                   </p>
 
                   {/* DESTAQUE */}
                   {noticia.destaque && (
-                    <div className="bg-brutal-red text-white p-4 mb-4 border-2 border-black">
+                    <div className="bg-brutal-red text-white p-4 mb-4 border-2 border-black dark:border-brutal-red">
                       <p className="font-black text-sm md:text-base">{noticia.destaque}</p>
                     </div>
                   )}
 
                   {/* CONTEXTO */}
                   {noticia.contexto && (
-                    <div className="bg-gray-100 p-4 mb-4 border-2 border-black">
-                      <p className="font-medium text-sm text-gray-700">{noticia.contexto}</p>
+                    <div className="bg-gray-100 dark:bg-brutal-dark-bg p-4 mb-4 border-2 border-black dark:border-brutal-dark-border">
+                      <p className="font-medium text-sm text-gray-700 dark:text-brutal-dark-muted">{noticia.contexto}</p>
                     </div>
                   )}
 
@@ -337,7 +337,7 @@ export default function NoticiasPage() {
                     {noticia.tags.map((tag, idx) => (
                       <span
                         key={idx}
-                        className="text-xs font-bold bg-white border border-black px-2 py-1"
+                        className="text-xs font-bold bg-white dark:bg-brutal-dark-surface border border-black dark:border-brutal-dark-border px-2 py-1 dark:text-brutal-dark-text"
                       >
                         {tag}
                       </span>
@@ -356,7 +356,7 @@ export default function NoticiasPage() {
                       href={noticia.fonteUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-black transition-colors"
+                      className="flex items-center gap-2 text-sm font-bold text-gray-600 dark:text-brutal-dark-muted hover:text-black dark:hover:text-brutal-dark-text transition-colors"
                     >
                       <span className="hidden sm:inline">Ver fonte</span>
                       <ExternalLink size={16} />
@@ -366,11 +366,11 @@ export default function NoticiasPage() {
               </div>
 
               {/* FONTE */}
-              <div className="mt-4 pt-4 border-t-2 border-gray-200 flex items-center justify-between">
-                <span className="text-xs font-bold text-gray-500">
+              <div className="mt-4 pt-4 border-t-2 border-gray-200 dark:border-brutal-dark-border flex items-center justify-between">
+                <span className="text-xs font-bold text-gray-500 dark:text-brutal-dark-muted">
                   FONTE: {noticia.fonte}
                 </span>
-                <span className="text-xs font-medium text-gray-400">
+                <span className="text-xs font-medium text-gray-400 dark:text-brutal-dark-muted">
                   Verifique. Não confie.
                 </span>
               </div>
@@ -405,8 +405,8 @@ export default function NoticiasPage() {
       </div>
 
       {/* MENSAGEM FINAL */}
-      <div className="mt-8 bg-brutal-bg border-3 border-black p-6 text-center">
-        <p className="font-black text-lg uppercase">
+      <div className="mt-8 bg-brutal-bg dark:bg-brutal-dark-surface border-3 border-black dark:border-brutal-dark-border p-6 text-center">
+        <p className="font-black text-lg uppercase dark:text-brutal-dark-text">
           Política Sem Filtro: Expondo a hipocrisia de esquerda, direita e centro desde 2025.
         </p>
       </div>

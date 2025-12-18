@@ -30,7 +30,7 @@ interface Votacao {
   aprovado: boolean;
   votos: {
     sim: number;
-    nao: number;
+    não: number;
     total: number;
   } | null;
 }
@@ -42,18 +42,18 @@ interface VotacaoDetalhes {
   aprovado: boolean;
   resumo: {
     sim: number;
-    nao: number;
-    abstencao: number;
-    obstrucao: number;
+    não: number;
+    abstenção: number;
+    obstrução: number;
     outros: number;
     total: number;
   };
   votosPorPartido: Array<{
     partido: string;
     sim: number;
-    nao: number;
-    abstencao: number;
-    obstrucao: number;
+    não: number;
+    abstenção: number;
+    obstrução: number;
     total: number;
   }>;
   votosIndividuais: Array<{
@@ -135,23 +135,23 @@ export default function VotacoesPage() {
   );
 
   return (
-    <main className="min-h-screen bg-brutal-bg p-4 md:p-8 max-w-7xl mx-auto">
+    <main className="min-h-screen bg-brutal-bg dark:bg-brutal-dark-bg p-4 md:p-8 max-w-7xl mx-auto">
       {/* HEADER */}
-      <div className="mb-8 border-b-3 border-black pb-6">
+      <div className="mb-8 border-b-3 border-black dark:border-brutal-dark-border pb-6">
         <div className="flex items-center gap-3 mb-4">
-          <div className="bg-black p-2 border-2 border-black">
+          <div className="bg-black dark:bg-brutal-dark-accent p-2 border-2 border-black dark:border-brutal-dark-accent">
             <Vote size={32} className="text-white" />
           </div>
           <div>
-            <span className="text-xs font-black uppercase tracking-widest text-gray-500">
+            <span className="text-xs font-black uppercase tracking-widest text-gray-500 dark:text-brutal-dark-muted">
               Dados em Tempo Real
             </span>
-            <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter leading-none">
+            <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter leading-none dark:text-brutal-dark-text">
               Votações do Plenário
             </h1>
           </div>
         </div>
-        <p className="text-lg font-bold text-gray-700 max-w-3xl">
+        <p className="text-lg font-bold text-gray-700 dark:text-brutal-dark-muted max-w-3xl">
           Acompanhe as votações da Câmara dos Deputados em tempo real. Veja como cada partido
           e cada deputado votou. Dados diretos da API oficial.
         </p>
@@ -176,15 +176,15 @@ export default function VotacoesPage() {
       {/* CONTROLES */}
       <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
         <div className="flex items-center gap-2">
-          <FileText size={18} className="text-gray-600" />
-          <span className="font-bold text-sm uppercase text-gray-600">
+          <FileText size={18} className="text-gray-600 dark:text-brutal-dark-muted" />
+          <span className="font-bold text-sm uppercase text-gray-600 dark:text-brutal-dark-muted">
             {votacoes.length} votações do Plenário
           </span>
         </div>
         <button
           onClick={fetchVotacoes}
           disabled={loading}
-          className="flex items-center gap-2 px-4 py-2 font-bold uppercase text-sm border-2 border-black bg-white hover:bg-black hover:text-white transition-all disabled:opacity-50"
+          className="flex items-center gap-2 px-4 py-2 font-bold uppercase text-sm border-2 border-black dark:border-brutal-dark-border bg-white dark:bg-brutal-dark-surface dark:text-brutal-dark-text hover:bg-black hover:text-white dark:hover:bg-brutal-dark-accent transition-all disabled:opacity-50"
         >
           <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
           Atualizar
@@ -207,8 +207,8 @@ export default function VotacoesPage() {
       {/* LOADING */}
       {loading && (
         <div className="card-brutal text-center py-12">
-          <Loader2 size={48} className="animate-spin mx-auto mb-4 text-gray-400" />
-          <p className="font-bold text-gray-600">Buscando votações da Câmara...</p>
+          <Loader2 size={48} className="animate-spin mx-auto mb-4 text-gray-400 dark:text-brutal-dark-muted" />
+          <p className="font-bold text-gray-600 dark:text-brutal-dark-muted">Buscando votações da Câmara...</p>
         </div>
       )}
 
@@ -238,7 +238,7 @@ export default function VotacoesPage() {
                       {/* Status */}
                       <div className="flex flex-wrap items-center gap-3 mb-3">
                         <span
-                          className={`px-3 py-1 font-black text-xs uppercase border-2 border-black ${
+                          className={`px-3 py-1 font-black text-xs uppercase border-2 border-black dark:border-transparent ${
                             votacao.aprovado
                               ? "bg-green-400 text-black"
                               : "bg-brutal-red text-white"
@@ -246,12 +246,12 @@ export default function VotacoesPage() {
                         >
                           {votacao.aprovado ? "Aprovado" : "Rejeitado"}
                         </span>
-                        <span className="text-xs font-bold text-gray-500 flex items-center gap-1">
+                        <span className="text-xs font-bold text-gray-500 dark:text-brutal-dark-muted flex items-center gap-1">
                           <Calendar size={12} />
                           {new Date(votacao.data).toLocaleDateString("pt-BR")}
                         </span>
                         {votacao.votos && (
-                          <span className="text-xs font-bold text-gray-500 flex items-center gap-1">
+                          <span className="text-xs font-bold text-gray-500 dark:text-brutal-dark-muted flex items-center gap-1">
                             <Users size={12} />
                             {votacao.votos.total} votos
                           </span>
@@ -259,7 +259,7 @@ export default function VotacoesPage() {
                       </div>
 
                       {/* Descrição */}
-                      <h3 className="font-black text-lg uppercase leading-tight">
+                      <h3 className="font-black text-lg uppercase leading-tight dark:text-brutal-dark-text">
                         {votacao.descricao.length > 200
                           ? votacao.descricao.slice(0, 200) + "..."
                           : votacao.descricao}
@@ -269,7 +269,7 @@ export default function VotacoesPage() {
                     {/* Ações */}
                     <div className="flex items-center gap-3 shrink-0">
                       {shareData && <VotacaoShareButton data={shareData} />}
-                      <button className="p-2 border-2 border-black hover:bg-black hover:text-white transition-all">
+                      <button className="p-2 border-2 border-black dark:border-brutal-dark-border dark:text-brutal-dark-text hover:bg-black hover:text-white dark:hover:bg-brutal-dark-accent transition-all">
                         {isSelected ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                       </button>
                     </div>
@@ -278,26 +278,26 @@ export default function VotacoesPage() {
                   {/* Resultado resumido */}
                   {votacao.votos && (
                     <div className="grid grid-cols-3 gap-2">
-                      <div className="bg-green-100 border-2 border-black p-3 text-center">
+                      <div className="bg-green-100 dark:bg-green-900/30 border-2 border-black dark:border-green-600 p-3 text-center">
                         <CheckCircle2 size={18} className="mx-auto mb-1 text-green-600" />
-                        <p className="text-xs font-bold">SIM</p>
-                        <p className="text-xl font-black">{votacao.votos.sim}</p>
+                        <p className="text-xs font-bold dark:text-green-400">SIM</p>
+                        <p className="text-xl font-black dark:text-green-400">{votacao.votos.sim}</p>
                       </div>
-                      <div className="bg-red-100 border-2 border-black p-3 text-center">
+                      <div className="bg-red-100 dark:bg-red-900/30 border-2 border-black dark:border-red-600 p-3 text-center">
                         <XCircle size={18} className="mx-auto mb-1 text-red-600" />
-                        <p className="text-xs font-bold">NÃO</p>
-                        <p className="text-xl font-black">{votacao.votos.nao}</p>
+                        <p className="text-xs font-bold dark:text-red-400">NÃO</p>
+                        <p className="text-xl font-black dark:text-red-400">{votacao.votos.não}</p>
                       </div>
-                      <div className="bg-gray-100 border-2 border-black p-3 text-center">
-                        <Minus size={18} className="mx-auto mb-1 text-gray-600" />
-                        <p className="text-xs font-bold">TOTAL</p>
-                        <p className="text-xl font-black">{votacao.votos.total}</p>
+                      <div className="bg-gray-100 dark:bg-brutal-dark-bg border-2 border-black dark:border-brutal-dark-border p-3 text-center">
+                        <Minus size={18} className="mx-auto mb-1 text-gray-600 dark:text-brutal-dark-muted" />
+                        <p className="text-xs font-bold dark:text-brutal-dark-muted">TOTAL</p>
+                        <p className="text-xl font-black dark:text-brutal-dark-text">{votacao.votos.total}</p>
                       </div>
                     </div>
                   )}
 
                   {!votacao.votos && (
-                    <p className="text-sm font-medium text-gray-500 italic">
+                    <p className="text-sm font-medium text-gray-500 dark:text-brutal-dark-muted italic">
                       Votação simbólica (sem registro nominal)
                     </p>
                   )}
@@ -305,11 +305,11 @@ export default function VotacoesPage() {
 
                 {/* DETALHES EXPANDIDOS */}
                 {isSelected && (
-                  <div className="mt-6 pt-6 border-t-3 border-black">
+                  <div className="mt-6 pt-6 border-t-3 border-black dark:border-brutal-dark-border">
                     {loadingDetalhes ? (
                       <div className="text-center py-8">
-                        <Loader2 size={32} className="animate-spin mx-auto mb-2 text-gray-400" />
-                        <p className="font-bold text-gray-600">Carregando detalhes...</p>
+                        <Loader2 size={32} className="animate-spin mx-auto mb-2 text-gray-400 dark:text-brutal-dark-muted" />
+                        <p className="font-bold text-gray-600 dark:text-brutal-dark-muted">Carregando detalhes...</p>
                       </div>
                     ) : detalhes ? (
                       <div className="space-y-6">
@@ -325,7 +325,7 @@ export default function VotacoesPage() {
 
                         {/* Votos por Partido - Grid */}
                         <div>
-                          <h4 className="font-black text-lg uppercase mb-4 flex items-center gap-2">
+                          <h4 className="font-black text-lg uppercase mb-4 flex items-center gap-2 dark:text-brutal-dark-text">
                             <TrendingUp size={20} />
                             Votos por Partido (Detalhado)
                           </h4>
@@ -335,10 +335,10 @@ export default function VotacoesPage() {
                                 key={p.partido}
                                 className="border-2 border-black dark:border-brutal-dark-border p-3 text-center bg-white dark:bg-brutal-dark-surface"
                               >
-                                <span className="font-black text-lg block">{p.partido}</span>
+                                <span className="font-black text-lg block dark:text-brutal-dark-text">{p.partido}</span>
                                 <div className="flex justify-center gap-2 mt-2 text-xs font-bold">
-                                  <span className="text-green-600">{p.sim}S</span>
-                                  <span className="text-red-600">{p.nao}N</span>
+                                  <span className="text-green-600 dark:text-green-400">{p.sim}S</span>
+                                  <span className="text-red-600 dark:text-red-400">{p.não}N</span>
                                 </div>
                               </div>
                             ))}
@@ -348,14 +348,14 @@ export default function VotacoesPage() {
                         {/* Filtro de Deputados */}
                         <div>
                           <div className="flex flex-wrap items-center gap-4 mb-4">
-                            <h4 className="font-black text-lg uppercase flex items-center gap-2">
+                            <h4 className="font-black text-lg uppercase flex items-center gap-2 dark:text-brutal-dark-text">
                               <Users size={20} />
                               Votos Individuais
                             </h4>
                             <select
                               value={filtroPartido}
                               onChange={(e) => setFiltroPartido(e.target.value)}
-                              className="px-3 py-2 border-2 border-black font-bold text-sm bg-white"
+                              className="px-3 py-2 border-2 border-black dark:border-brutal-dark-border font-bold text-sm bg-white dark:bg-brutal-dark-surface dark:text-brutal-dark-text"
                             >
                               <option value="todos">Todos os Partidos</option>
                               {partidosUnicos.map((p) => (
@@ -364,7 +364,7 @@ export default function VotacoesPage() {
                                 </option>
                               ))}
                             </select>
-                            <span className="text-sm font-medium text-gray-500">
+                            <span className="text-sm font-medium text-gray-500 dark:text-brutal-dark-muted">
                               {votosFiltrados?.length} deputados
                             </span>
                           </div>
@@ -374,26 +374,26 @@ export default function VotacoesPage() {
                             {votosFiltrados?.slice(0, 60).map((v, idx) => (
                               <div
                                 key={idx}
-                                className={`flex items-center gap-3 p-3 border-2 border-black ${
+                                className={`flex items-center gap-3 p-3 border-2 border-black dark:border-brutal-dark-border ${
                                   v.tipoVoto === "Sim"
-                                    ? "bg-green-50"
+                                    ? "bg-green-50 dark:bg-green-900/20"
                                     : v.tipoVoto === "Não"
-                                    ? "bg-red-50"
-                                    : "bg-gray-50"
+                                    ? "bg-red-50 dark:bg-red-900/20"
+                                    : "bg-gray-50 dark:bg-brutal-dark-bg"
                                 }`}
                               >
                                 <img
                                   src={v.deputado.foto}
                                   alt={v.deputado.nome}
-                                  className="w-10 h-10 border-2 border-black object-cover"
+                                  className="w-10 h-10 border-2 border-black dark:border-brutal-dark-border object-cover"
                                   onError={(e) => {
                                     (e.target as HTMLImageElement).src =
                                       "https://www.camara.leg.br/tema/img/icon-dep-sem-foto.png";
                                   }}
                                 />
                                 <div className="flex-1 min-w-0">
-                                  <p className="font-bold text-sm truncate">{v.deputado.nome}</p>
-                                  <p className="text-xs text-gray-600">
+                                  <p className="font-bold text-sm truncate dark:text-brutal-dark-text">{v.deputado.nome}</p>
+                                  <p className="text-xs text-gray-600 dark:text-brutal-dark-muted">
                                     {v.deputado.partido}/{v.deputado.uf}
                                   </p>
                                 </div>
@@ -412,7 +412,7 @@ export default function VotacoesPage() {
                             ))}
                           </div>
                           {votosFiltrados && votosFiltrados.length > 60 && (
-                            <p className="text-sm font-medium text-gray-500 mt-3 text-center">
+                            <p className="text-sm font-medium text-gray-500 dark:text-brutal-dark-muted mt-3 text-center">
                               Mostrando 60 de {votosFiltrados.length} deputados
                             </p>
                           )}
@@ -420,10 +420,10 @@ export default function VotacoesPage() {
                       </div>
                     ) : (
                       <div className="text-center py-8">
-                        <p className="font-bold text-gray-600">
+                        <p className="font-bold text-gray-600 dark:text-brutal-dark-muted">
                           Não foi possível carregar os detalhes desta votação.
                         </p>
-                        <p className="text-sm text-gray-500 mt-2">
+                        <p className="text-sm text-gray-500 dark:text-brutal-dark-muted mt-2">
                           Algumas votações não possuem registro nominal dos votos.
                         </p>
                       </div>
@@ -439,8 +439,8 @@ export default function VotacoesPage() {
       {/* SEM VOTAÇÕES */}
       {!loading && votacoes.length === 0 && !error && (
         <div className="card-brutal text-center py-12">
-          <Vote size={48} className="mx-auto mb-4 text-gray-400" />
-          <p className="font-bold text-gray-600">Nenhuma votação encontrada no período.</p>
+          <Vote size={48} className="mx-auto mb-4 text-gray-400 dark:text-brutal-dark-muted" />
+          <p className="font-bold text-gray-600 dark:text-brutal-dark-muted">Nenhuma votação encontrada no período.</p>
         </div>
       )}
 
@@ -470,8 +470,8 @@ export default function VotacoesPage() {
       </div>
 
       {/* MENSAGEM FINAL */}
-      <div className="mt-8 bg-brutal-bg border-3 border-black p-6 text-center">
-        <p className="font-black text-lg uppercase">
+      <div className="mt-8 bg-brutal-bg dark:bg-brutal-dark-surface border-3 border-black dark:border-brutal-dark-border p-6 text-center">
+        <p className="font-black text-lg uppercase dark:text-brutal-dark-text">
           Cobre seu deputado. Veja como ele votou. Dados públicos da Câmara dos Deputados.
         </p>
       </div>

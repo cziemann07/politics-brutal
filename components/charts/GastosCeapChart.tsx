@@ -358,7 +358,7 @@ export default function GastosCeapChart({
           {/* FOOTER */}
           <div className="bg-black text-white p-6 flex items-center justify-between">
             <p className="font-bold text-lg uppercase tracking-wide">
-              Seu dinheiro. Seus impostos. Cobre transparencia.
+              Seu dinheiro. Seus impostos. Cobre transparência.
             </p>
             <div className="bg-white text-black px-4 py-2 font-black text-xl">
               @PSF

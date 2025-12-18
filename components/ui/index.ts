@@ -6,3 +6,4 @@ export { default as EscandaloShareButton } from "./EscandaloShareButton";
 export { default as FeatureCard } from "./FeatureCard";
 export { default as StatCard } from "./StatCard";
 export { default as SectionHeader } from "./SectionHeader";
+export { default as PedirExplicacaoButton } from "./PedirExplicacaoButton";
