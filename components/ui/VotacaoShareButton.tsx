@@ -79,10 +79,10 @@ export default function VotacaoShareButton({ data }: { data: VotacaoShareData })
           <div className={`${data.aprovado ? "bg-green-600" : "bg-brutal-red"} text-white p-8 pb-12`}>
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
-                <div className="bg-white text-black px-4 py-2 font-black text-2xl">
-                  PSF
+                <div className="bg-brutal-yellow text-black px-4 py-2 font-black text-2xl">
+                  PB
                 </div>
-                <span className="font-bold text-lg opacity-80">POLÍTICA SEM FILTRO</span>
+                <span className="font-bold text-lg opacity-80">POLITICS BRUTAL</span>
               </div>
               <span className="font-mono text-lg opacity-70">{data.data}</span>
             </div>
@@ -98,8 +98,8 @@ export default function VotacaoShareButton({ data }: { data: VotacaoShareData })
           {/* CONTEÚDO PRINCIPAL */}
           <div className="flex-1 p-10 flex flex-col">
             {/* DESCRIÇÃO */}
-            <h1 className="text-4xl font-black uppercase leading-[1.2] tracking-tight mb-8 border-b-[6px] border-black pb-8">
-              {data.descricao.length > 200 ? data.descricao.slice(0, 200) + "..." : data.descricao}
+            <h1 className="text-3xl font-black uppercase leading-[1.3] tracking-tight mb-8 border-b-[6px] border-black pb-8 break-words">
+              {data.descricao.length > 250 ? data.descricao.slice(0, 250) + "..." : data.descricao}
             </h1>
 
             {/* RESULTADO VISUAL */}
@@ -189,8 +189,8 @@ export default function VotacaoShareButton({ data }: { data: VotacaoShareData })
             <p className="font-bold text-lg uppercase tracking-wide">
               Acompanhe como seu deputado vota.
             </p>
-            <div className="bg-white text-black px-4 py-2 font-black text-xl">
-              @PSF
+            <div className="bg-brutal-yellow text-black px-4 py-2 font-black text-xl">
+              politicsbrutal.com.br
             </div>
           </div>
         </div>

@@ -70,10 +70,10 @@ export default function EscandaloShareButton({ data }: { data: EscandaloShareDat
           <div className="bg-brutal-red text-white p-8 pb-12">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
-                <div className="bg-white text-black px-4 py-2 font-black text-2xl">
-                  PSF
+                <div className="bg-brutal-yellow text-black px-4 py-2 font-black text-2xl">
+                  PB
                 </div>
-                <span className="font-bold text-lg opacity-80">POLÍTICA SEM FILTRO</span>
+                <span className="font-bold text-lg opacity-80">POLITICS BRUTAL</span>
               </div>
               <span className="font-mono text-lg opacity-70">{data.periodo}</span>
             </div>
@@ -89,7 +89,7 @@ export default function EscandaloShareButton({ data }: { data: EscandaloShareDat
           {/* CONTEÚDO PRINCIPAL */}
           <div className="flex-1 p-10 flex flex-col">
             {/* NOME DO ESCÂNDALO */}
-            <h1 className="text-7xl font-black uppercase leading-[1] tracking-tight mb-8 border-b-[6px] border-black pb-8">
+            <h1 className="text-6xl font-black uppercase leading-[1.1] tracking-tight mb-8 border-b-[6px] border-black pb-8 break-words">
               {data.nome}
             </h1>
 
@@ -151,8 +151,8 @@ export default function EscandaloShareButton({ data }: { data: EscandaloShareDat
             <p className="font-bold text-lg uppercase tracking-wide">
               Eles querem que você esqueça. Não deixe.
             </p>
-            <div className="bg-white text-black px-4 py-2 font-black text-xl">
-              @PSF
+            <div className="bg-brutal-yellow text-black px-4 py-2 font-black text-xl">
+              politicsbrutal.com.br
             </div>
           </div>
         </div>

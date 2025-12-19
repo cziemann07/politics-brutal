@@ -254,6 +254,16 @@ export default function InstaShareButton({ data }: { data: InstaShareComplexProp
               </div>
             </div>
           </section>
+
+          {/* FOOTER */}
+          <div className="bg-black text-white p-6 flex items-center justify-between mt-8">
+            <p className="font-bold text-lg uppercase tracking-wide">
+              Dados crus. Sem filtro. Sem idolatria.
+            </p>
+            <div className="bg-brutal-yellow text-black px-4 py-2 font-black text-xl">
+              politicsbrutal.com.br
+            </div>
+          </div>
         </div>
       </div>
     </>

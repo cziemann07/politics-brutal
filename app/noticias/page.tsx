@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import {
   Newspaper,
   ExternalLink,
@@ -11,8 +11,12 @@ import {
   Users,
   Scale,
   Filter,
+  LogIn,
 } from "lucide-react";
+import Link from "next/link";
 import NewsShareButton, { NewsShareData } from "@/components/ui/NewsShareButton";
+import { VoteButtons } from "@/components/ui";
+import { useVotes } from "@/hooks/useVotes";
 
 interface Noticia {
   id: number;
@@ -193,6 +197,10 @@ const categoriaLabels = {
 export default function NoticiasPage() {
   const [filtro, setFiltro] = useState<string>("todas");
 
+  // IDs das notícias para o hook de votos
+  const noticiaIds = useMemo(() => noticias.map((n) => n.id), []);
+  const { votes, vote, isLoading: votesLoading, requiresLogin } = useVotes(noticiaIds);
+
   const categorias = [
     { id: "todas", label: "Todas" },
     { id: "hipocrisia", label: "Hipocrisia" },
@@ -242,6 +250,29 @@ export default function NoticiasPage() {
           </div>
         </div>
       </div>
+
+      {/* AVISO DE LOGIN */}
+      {requiresLogin && (
+        <div className="card-brutal bg-brutal-red text-white mb-8 animate-pulse">
+          <div className="flex items-center justify-between gap-4 flex-wrap">
+            <div className="flex items-center gap-3">
+              <LogIn size={24} />
+              <div>
+                <p className="font-black">Faça login para votar!</p>
+                <p className="text-sm font-medium opacity-90">
+                  Você precisa estar logado para dar upvote ou downvote nas notícias.
+                </p>
+              </div>
+            </div>
+            <Link
+              href="/login"
+              className="bg-white text-brutal-red px-6 py-3 font-black uppercase border-2 border-white hover:bg-black hover:text-white hover:border-black transition-all"
+            >
+              Fazer Login
+            </Link>
+          </div>
+        </div>
+      )}
 
       {/* FILTROS */}
       <div className="flex flex-wrap items-center gap-2 mb-8">
@@ -365,14 +396,31 @@ export default function NoticiasPage() {
                 </div>
               </div>
 
-              {/* FONTE */}
-              <div className="mt-4 pt-4 border-t-2 border-gray-200 dark:border-brutal-dark-border flex items-center justify-between">
-                <span className="text-xs font-bold text-gray-500 dark:text-brutal-dark-muted">
-                  FONTE: {noticia.fonte}
-                </span>
-                <span className="text-xs font-medium text-gray-400 dark:text-brutal-dark-muted">
-                  Verifique. Não confie.
-                </span>
+              {/* FOOTER COM VOTOS */}
+              <div className="mt-4 pt-4 border-t-2 border-gray-200 dark:border-brutal-dark-border flex flex-wrap items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <span className="text-xs font-bold text-gray-500 dark:text-brutal-dark-muted">
+                    FONTE: {noticia.fonte}
+                  </span>
+                  <span className="text-xs font-medium text-gray-400 dark:text-brutal-dark-muted hidden sm:inline">
+                    Verifique. Não confie.
+                  </span>
+                </div>
+
+                {/* VOTOS */}
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-bold text-gray-500 dark:text-brutal-dark-muted uppercase hidden sm:inline">
+                    Sua opinião:
+                  </span>
+                  <VoteButtons
+                    upvotes={votes[noticia.id]?.upvotes || 0}
+                    downvotes={votes[noticia.id]?.downvotes || 0}
+                    userVote={votes[noticia.id]?.userVote || null}
+                    onVote={(type) => vote(noticia.id, type)}
+                    disabled={votesLoading}
+                    size="sm"
+                  />
+                </div>
               </div>
             </article>
           );

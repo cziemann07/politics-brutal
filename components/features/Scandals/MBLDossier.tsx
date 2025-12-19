@@ -6,14 +6,14 @@ export default function MBLDossier() {
   return (
     <section className="flex flex-col gap-8">
       {/* HEADER DO DOSSIÊ */}
-      <div className="flex flex-col md:flex-row justify-between items-end border-b-3 border-black pb-4 gap-4">
+      <div className="flex flex-col md:flex-row justify-between items-end border-b-3 border-black dark:border-brutal-dark-border pb-4 gap-4">
         <div>
           <div className="bg-brutal-red text-white text-xs font-black px-2 py-1 inline-block mb-2 uppercase tracking-widest transform -rotate-1">
             Dossiê Exclusivo
           </div>
-          <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none">
+          <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none dark:text-brutal-dark-text">
             Missão{" "}
-            <span className="text-brutal-red decoration-4 underline decoration-black">Mamata</span>
+            <span className="text-brutal-red decoration-4 underline decoration-black dark:decoration-brutal-dark-border">Mamata</span>
           </h2>
         </div>
 
@@ -116,48 +116,48 @@ export default function MBLDossier() {
       <div className="grid md:grid-cols-12 gap-6">
         {/* COLUNA 1: A GRANDE CONTRADIÇÃO (4 colunas) */}
         <div className="md:col-span-4 flex flex-col gap-6">
-          <div className="bg-white border-3 border-black shadow-hard p-6 relative overflow-hidden">
-            <div className="absolute top-2 right-2 opacity-10">
-              <XCircle size={100} />
+          <div className="bg-white dark:bg-brutal-dark-surface border-3 border-black dark:border-brutal-dark-border shadow-hard p-6 relative overflow-hidden">
+            <div className="absolute top-2 right-2 opacity-10 dark:opacity-20">
+              <XCircle size={100} className="dark:text-brutal-dark-muted" />
             </div>
-            <h3 className="text-xl font-black uppercase mb-4 border-b-3 border-black pb-2">
+            <h3 className="text-xl font-black uppercase mb-4 border-b-3 border-black dark:border-brutal-dark-border pb-2 dark:text-brutal-dark-text">
               O Discurso (Antes)
             </h3>
-            <blockquote className="font-medium italic text-gray-600 mb-2">
+            <blockquote className="font-medium italic text-gray-600 dark:text-brutal-dark-muted mb-2">
               "Não usarei fundão nem se for de 20 trilhões. A palavra de um homem basta.""
             </blockquote>
-            <p className="text-xs font-bold text-right">- Arthur do Val</p>
+            <p className="text-xs font-bold text-right dark:text-brutal-dark-text">- Arthur do Val</p>
           </div>
 
-          <div className="bg-brutal-yellow border-3 border-black shadow-hard p-6 relative overflow-hidden">
-            <div className="absolute top-2 right-2 opacity-10">
+          <div className="bg-brutal-yellow dark:bg-yellow-500/90 border-3 border-black dark:border-brutal-dark-border shadow-hard p-6 relative overflow-hidden">
+            <div className="absolute top-2 right-2 opacity-10 dark:opacity-20">
               <CheckCircle size={100} />
             </div>
-            <h3 className="text-xl font-black uppercase mb-4 border-b-3 border-black pb-2 flex items-center gap-2">
+            <h3 className="text-xl font-black uppercase mb-4 border-b-3 border-black dark:border-black pb-2 flex items-center gap-2 text-black">
               A Realidade (2025)
               <AlertTriangle className="text-black" size={24} />
             </h3>
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 text-black">
               <span className="text-xs font-bold uppercase">Total Recebido (Membros)</span>
               <span className="text-4xl font-black tracking-tighter">
                 R$ 315.679<span className="text-lg">,66</span>
               </span>
             </div>
-            <p className="text-xs font-bold mt-4 border-t-2 border-black pt-2">
+            <p className="text-xs font-bold mt-4 border-t-2 border-black pt-2 text-black">
               JUSTIFICATIVA: "O valor aumentou, então agora vale a pena pegar."
             </p>
           </div>
         </div>
 
         {/* COLUNA 2: ESTRUTURA FAMILIAR (8 colunas) */}
-        <div className="md:col-span-8 bg-white border-3 border-black shadow-hard p-6 md:p-8">
+        <div className="md:col-span-8 bg-white dark:bg-brutal-dark-surface border-3 border-black dark:border-brutal-dark-border shadow-hard p-6 md:p-8">
           <div className="flex items-center gap-3 mb-6">
             <Users className="w-8 h-8 md:w-10 md:h-10 text-brutal-blue stroke-[2.5px]" />
             <div>
-              <h3 className="text-2xl md:text-3xl font-black uppercase leading-none">
+              <h3 className="text-2xl md:text-3xl font-black uppercase leading-none dark:text-brutal-dark-text">
                 A Árvore Genealógica
               </h3>
-              <p className="text-sm font-bold text-gray-500 uppercase">
+              <p className="text-sm font-bold text-gray-500 dark:text-brutal-dark-muted uppercase">
                 Nepotismo Cruzado & Cargos no Partido
               </p>
             </div>
@@ -165,65 +165,65 @@ export default function MBLDossier() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* ITEM 1 */}
-            <div className="border-2 border-black p-3 hover:bg-black hover:text-white transition-all group cursor-crosshair">
+            <div className="border-2 border-black dark:border-brutal-dark-border p-3 hover:bg-black hover:text-white dark:hover:bg-brutal-dark-accent transition-all group cursor-crosshair dark:text-brutal-dark-text">
               <div className="flex justify-between items-start">
-                <span className="font-black text-lg uppercase group-hover:text-brutal-yellow">
+                <span className="font-black text-lg uppercase group-hover:text-brutal-yellow dark:group-hover:text-yellow-300">
                   "Salsicha"
                 </span>
                 <span className="bg-brutal-red text-white text-xs px-1 font-bold">R$ 86k</span>
               </div>
-              <p className="text-xs font-mono mt-1">Alexandre Henrique (Irmão Renan Santos)</p>
-              <div className="mt-2 text-xs font-bold border-t border-dashed border-gray-400 group-hover:border-white pt-1">
+              <p className="text-xs font-mono mt-1 dark:text-brutal-dark-muted group-hover:text-white">Alexandre Henrique (Irmão Renan Santos)</p>
+              <div className="mt-2 text-xs font-bold border-t border-dashed border-gray-400 dark:border-brutal-dark-border group-hover:border-white pt-1">
                 CARGO: Vice-Pres. (SP)
               </div>
             </div>
 
             {/* ITEM 2 */}
-            <div className="border-2 border-black p-3 hover:bg-black hover:text-white transition-all group cursor-crosshair">
+            <div className="border-2 border-black dark:border-brutal-dark-border p-3 hover:bg-black hover:text-white dark:hover:bg-brutal-dark-accent transition-all group cursor-crosshair dark:text-brutal-dark-text">
               <div className="flex justify-between items-start">
-                <span className="font-black text-lg uppercase group-hover:text-brutal-yellow">
+                <span className="font-black text-lg uppercase group-hover:text-brutal-yellow dark:group-hover:text-yellow-300">
                   Sueli Lipor
                 </span>
-                <span className="bg-gray-200 text-black text-xs px-1 font-bold group-hover:bg-gray-700 group-hover:text-white">
+                <span className="bg-gray-200 dark:bg-brutal-dark-bg text-black dark:text-brutal-dark-text text-xs px-1 font-bold group-hover:bg-gray-700 group-hover:text-white">
                   CARGO
                 </span>
               </div>
-              <p className="text-xs font-mono mt-1">Mãe de Renan Santos</p>
-              <div className="mt-2 text-xs font-bold border-t border-dashed border-gray-400 group-hover:border-white pt-1">
+              <p className="text-xs font-mono mt-1 dark:text-brutal-dark-muted group-hover:text-white">Mãe de Renan Santos</p>
+              <div className="mt-2 text-xs font-bold border-t border-dashed border-gray-400 dark:border-brutal-dark-border group-hover:border-white pt-1">
                 CARGO: Sec. Geral (BA){" "}
                 <span className="block text-[10px] font-normal opacity-70">*Mora em SP</span>
               </div>
             </div>
 
             {/* ITEM 3 */}
-            <div className="border-2 border-black p-3 hover:bg-black hover:text-white transition-all group cursor-crosshair">
+            <div className="border-2 border-black dark:border-brutal-dark-border p-3 hover:bg-black hover:text-white dark:hover:bg-brutal-dark-accent transition-all group cursor-crosshair dark:text-brutal-dark-text">
               <div className="flex justify-between items-start">
-                <span className="font-black text-lg uppercase group-hover:text-brutal-yellow">
+                <span className="font-black text-lg uppercase group-hover:text-brutal-yellow dark:group-hover:text-yellow-300">
                   Mário Jorge
                 </span>
-                <span className="bg-gray-200 text-black text-xs px-1 font-bold group-hover:bg-gray-700 group-hover:text-white">
+                <span className="bg-gray-200 dark:bg-brutal-dark-bg text-black dark:text-brutal-dark-text text-xs px-1 font-bold group-hover:bg-gray-700 group-hover:text-white">
                   CARGO
                 </span>
               </div>
-              <p className="text-xs font-mono mt-1">Pai de Renan Santos</p>
-              <div className="mt-2 text-xs font-bold border-t border-dashed border-gray-400 group-hover:border-white pt-1">
+              <p className="text-xs font-mono mt-1 dark:text-brutal-dark-muted group-hover:text-white">Pai de Renan Santos</p>
+              <div className="mt-2 text-xs font-bold border-t border-dashed border-gray-400 dark:border-brutal-dark-border group-hover:border-white pt-1">
                 CARGO: Pres. (RN){" "}
                 <span className="block text-[10px] font-normal opacity-70">*Mora em SP</span>
               </div>
             </div>
 
             {/* ITEM 4 */}
-            <div className="border-2 border-black p-3 hover:bg-black hover:text-white transition-all group cursor-crosshair">
+            <div className="border-2 border-black dark:border-brutal-dark-border p-3 hover:bg-black hover:text-white dark:hover:bg-brutal-dark-accent transition-all group cursor-crosshair dark:text-brutal-dark-text">
               <div className="flex justify-between items-start">
-                <span className="font-black text-lg uppercase group-hover:text-brutal-yellow">
+                <span className="font-black text-lg uppercase group-hover:text-brutal-yellow dark:group-hover:text-yellow-300">
                   Família Do Val
                 </span>
-                <span className="bg-gray-200 text-black text-xs px-1 font-bold group-hover:bg-gray-700 group-hover:text-white">
+                <span className="bg-gray-200 dark:bg-brutal-dark-bg text-black dark:text-brutal-dark-text text-xs px-1 font-bold group-hover:bg-gray-700 group-hover:text-white">
                   CLÃ
                 </span>
               </div>
-              <p className="text-xs font-mono mt-1">Gustavo (Irmão) & Manuel (Pai)</p>
-              <div className="mt-2 text-xs font-bold border-t border-dashed border-gray-400 group-hover:border-white pt-1">
+              <p className="text-xs font-mono mt-1 dark:text-brutal-dark-muted group-hover:text-white">Gustavo (Irmão) & Manuel (Pai)</p>
+              <div className="mt-2 text-xs font-bold border-t border-dashed border-gray-400 dark:border-brutal-dark-border group-hover:border-white pt-1">
                 CARGOS: Membro & Pres. (MG)
               </div>
             </div>
@@ -232,36 +232,36 @@ export default function MBLDossier() {
       </div>
 
       {/* BLOCO INFERIOR: O MILAGRE DAS ASSINATURAS */}
-      <div className="bg-brutal-bg border-3 border-black p-4 md:p-6 grid md:grid-cols-2 gap-8 items-center">
+      <div className="bg-brutal-bg dark:bg-brutal-dark-bg border-3 border-black dark:border-brutal-dark-border p-4 md:p-6 grid md:grid-cols-2 gap-8 items-center">
         <div>
-          <h3 className="text-2xl font-black uppercase mb-2 flex items-center gap-2">
+          <h3 className="text-2xl font-black uppercase mb-2 flex items-center gap-2 dark:text-brutal-dark-text">
             <TrendingUp className="text-brutal-red" />O Milagre das Assinaturas
           </h3>
-          <p className="font-medium text-sm mb-4">
+          <p className="font-medium text-sm mb-4 dark:text-brutal-dark-muted">
             Como o dinheiro do fundão (que eles juraram não usar) acelerou a criação do partido em
             velocidade recorde.
           </p>
           <div className="flex gap-2">
-            <div className="bg-white border-2 border-black p-2 flex-1 text-center">
-              <span className="block text-xs font-bold text-gray-500">GASTO ADS (FB/INSTA)</span>
-              <span className="font-black text-xl md:text-2xl">+R$ 400 Mil</span>
+            <div className="bg-white dark:bg-brutal-dark-surface border-2 border-black dark:border-brutal-dark-border p-2 flex-1 text-center">
+              <span className="block text-xs font-bold text-gray-500 dark:text-brutal-dark-muted">GASTO ADS (FB/INSTA)</span>
+              <span className="font-black text-xl md:text-2xl dark:text-brutal-dark-text">+R$ 400 Mil</span>
             </div>
-            <div className="bg-white border-2 border-black p-2 flex-1 text-center">
-              <span className="block text-xs font-bold text-gray-500">TEMPO RECORD</span>
-              <span className="font-black text-xl md:text-2xl">1 Mês</span>
+            <div className="bg-white dark:bg-brutal-dark-surface border-2 border-black dark:border-brutal-dark-border p-2 flex-1 text-center">
+              <span className="block text-xs font-bold text-gray-500 dark:text-brutal-dark-muted">TEMPO RECORD</span>
+              <span className="font-black text-xl md:text-2xl dark:text-brutal-dark-text">1 Mês</span>
             </div>
           </div>
         </div>
 
         {/* GRÁFICO BARRAS */}
-        <div className="flex flex-col gap-4 font-mono text-xs font-bold">
+        <div className="flex flex-col gap-4 font-mono text-xs font-bold dark:text-brutal-dark-text">
           <div className="w-full">
             <div className="flex justify-between mb-1">
               <span>SEM FUNDÃO (8 Meses)</span>
               <span>32.000 Assinaturas</span>
             </div>
-            <div className="w-full bg-white border-2 border-black h-6">
-              <div className="bg-gray-400 h-full w-[35%] border-r-2 border-black"></div>
+            <div className="w-full bg-white dark:bg-brutal-dark-surface border-2 border-black dark:border-brutal-dark-border h-6">
+              <div className="bg-gray-400 dark:bg-gray-600 h-full w-[35%] border-r-2 border-black dark:border-brutal-dark-border"></div>
             </div>
           </div>
 
@@ -270,9 +270,9 @@ export default function MBLDossier() {
               <span>COM FUNDÃO (1 Mês)</span>
               <span>70.000+ Assinaturas</span>
             </div>
-            <div className="w-full bg-white border-2 border-black h-6 relative">
+            <div className="w-full bg-white dark:bg-brutal-dark-surface border-2 border-black dark:border-brutal-dark-border h-6 relative">
               {/* Pattern para o gráfico crescido */}
-              <div className="bg-brutal-red h-full w-[85%] border-r-2 border-black flex items-center justify-end px-2 text-white">
+              <div className="bg-brutal-red h-full w-[85%] border-r-2 border-black dark:border-brutal-dark-border flex items-center justify-end px-2 text-white">
                 $$$
               </div>
             </div>

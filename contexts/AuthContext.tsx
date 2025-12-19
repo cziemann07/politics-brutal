@@ -5,6 +5,8 @@ import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 import type { User as SupabaseUser, Session } from "@supabase/supabase-js";
 import type { User } from "@/types/database";
 
+type SubscriptionPlan = "gratuito" | "basico" | "pro";
+
 type AuthUser = {
   id: string;
   email: string | null;
@@ -12,6 +14,9 @@ type AuthUser = {
   avatarUrl: string | null;
   isAnonymous: boolean;
   isPremium: boolean;
+  isAdmin: boolean;
+  subscriptionPlan: SubscriptionPlan;
+  subscriptionExpiresAt: string | null;
   quizStreak: number;
   totalQuizzesCompleted: number;
 };
@@ -33,6 +38,14 @@ function mapSupabaseUserToAuthUser(
   supabaseUser: SupabaseUser,
   dbUser: User | null
 ): AuthUser {
+  // Verifica se a assinatura ainda é válida
+  const subscriptionValid = dbUser?.subscription_expires_at
+    ? new Date(dbUser.subscription_expires_at) > new Date()
+    : false;
+
+  const subscriptionPlan: SubscriptionPlan =
+    (subscriptionValid && dbUser?.subscription_plan) || "gratuito";
+
   return {
     id: supabaseUser.id,
     email: supabaseUser.email || null,
@@ -47,7 +60,10 @@ function mapSupabaseUserToAuthUser(
       supabaseUser.user_metadata?.avatar_url ||
       null,
     isAnonymous: false,
-    isPremium: dbUser?.is_premium || false,
+    isPremium: dbUser?.is_admin || subscriptionPlan !== "gratuito", // Admin sempre é premium
+    isAdmin: dbUser?.is_admin || false,
+    subscriptionPlan: dbUser?.is_admin ? "pro" : subscriptionPlan, // Admin sempre tem PRO
+    subscriptionExpiresAt: dbUser?.subscription_expires_at || null,
     quizStreak: dbUser?.quiz_streak || 0,
     totalQuizzesCompleted: dbUser?.total_quizzes_completed || 0,
   };

@@ -2,21 +2,24 @@
 
 import React, { useMemo, useRef, useState } from "react";
 import {
-  PieChart,
-  Pie,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
   Cell,
   ResponsiveContainer,
-  Legend,
   Tooltip,
+  CartesianGrid,
 } from "recharts";
 import { toPng } from "html-to-image";
 import download from "downloadjs";
-import { Share2, Loader2, PieChartIcon } from "lucide-react";
+import { Share2, Loader2, BarChart3, Eye, EyeOff, RotateCcw } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface PartidoData {
   partido: string;
   quantidade: number;
-  [key: string]: string | number; // Index signature para compatibilidade com Recharts
+  [key: string]: string | number;
 }
 
 interface PartidoDistribuicaoChartProps {
@@ -55,10 +58,12 @@ const CORES_FALLBACK = [
 
 export default function PartidoDistribuicaoChart({
   dados,
-  titulo = "Distribuicao por Partido",
+  titulo = "Distribuição por Partido",
 }: PartidoDistribuicaoChartProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(false);
+  const [hiddenPartidos, setHiddenPartidos] = useState<Set<string>>(new Set());
+  const { isDark } = useTheme();
 
   // Agrupa e ordena os dados
   const dadosProcessados = useMemo(() => {
@@ -73,15 +78,40 @@ export default function PartidoDistribuicaoChart({
 
     return Object.values(agrupado)
       .sort((a, b) => b.quantidade - a.quantidade)
-      .slice(0, 15); // Top 15 partidos
+      .slice(0, 15);
   }, [dados]);
+
+  // Dados filtrados (exclui partidos ocultos)
+  const dadosFiltrados = useMemo(() => {
+    return dadosProcessados.filter(d => !hiddenPartidos.has(d.partido));
+  }, [dadosProcessados, hiddenPartidos]);
 
   const total = useMemo(() => {
     return dadosProcessados.reduce((sum, d) => sum + d.quantidade, 0);
   }, [dadosProcessados]);
 
+  const totalVisivel = useMemo(() => {
+    return dadosFiltrados.reduce((sum, d) => sum + d.quantidade, 0);
+  }, [dadosFiltrados]);
+
   const getCor = (partido: string, index: number) => {
     return CORES_PARTIDOS[partido] || CORES_FALLBACK[index % CORES_FALLBACK.length];
+  };
+
+  const togglePartido = (partido: string) => {
+    setHiddenPartidos(prev => {
+      const next = new Set(prev);
+      if (next.has(partido)) {
+        next.delete(partido);
+      } else {
+        next.add(partido);
+      }
+      return next;
+    });
+  };
+
+  const resetFiltros = () => {
+    setHiddenPartidos(new Set());
   };
 
   const handleShare = async () => {
@@ -94,7 +124,7 @@ export default function PartidoDistribuicaoChart({
         pixelRatio: 3,
         skipFonts: true,
       });
-      const filename = `psf-distribuicao-partidos-${new Date().toISOString().split("T")[0]}.png`;
+      const filename = `politics-brutal-bancada-${new Date().toISOString().split("T")[0]}.png`;
       download(dataUrl, filename);
     } catch (err) {
       console.error("Erro ao gerar imagem:", err);
@@ -106,11 +136,11 @@ export default function PartidoDistribuicaoChart({
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
-      const percentual = ((data.quantidade / total) * 100).toFixed(1);
+      const percentual = ((data.quantidade / totalVisivel) * 100).toFixed(1);
       return (
-        <div className="bg-white border-2 border-black p-3 shadow-hard">
-          <p className="font-black text-lg">{data.partido}</p>
-          <p className="font-bold">
+        <div className={`${isDark ? 'bg-brutal-dark-surface border-brutal-dark-border' : 'bg-white border-black'} border-2 p-3 shadow-lg`}>
+          <p className={`font-black text-lg ${isDark ? 'text-brutal-dark-text' : ''}`}>{data.partido}</p>
+          <p className={`font-bold ${isDark ? 'text-brutal-dark-muted' : ''}`}>
             {data.quantidade} deputados ({percentual}%)
           </p>
         </div>
@@ -119,78 +149,171 @@ export default function PartidoDistribuicaoChart({
     return null;
   };
 
+  // Cores baseadas no tema
+  const colors = isDark ? {
+    bg: "#0f0f0f",
+    surface: "#1a1a1a",
+    text: "#f5f5f5",
+    textMuted: "#a0a0a0",
+    border: "#333333",
+    grid: "#333333",
+    accent: "#facc15",
+  } : {
+    bg: "#ffffff",
+    surface: "#f5f5f5",
+    text: "#000000",
+    textMuted: "#666666",
+    border: "#000000",
+    grid: "#e5e5e5",
+    accent: "#facc15",
+  };
+
   return (
     <div className="w-full">
-      {/* Header com titulo e botao de compartilhar */}
-      <div className="flex items-center justify-between mb-4">
+      {/* Header com titulo e acoes */}
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
         <div className="flex items-center gap-3">
-          <div className="bg-black p-2 border-2 border-black dark:bg-brutal-dark-surface dark:border-brutal-dark-border">
-            <PieChartIcon size={20} className="text-white" />
+          <div className="bg-gradient-to-br from-blue-500 to-purple-600 p-2.5 border-2 border-black dark:border-brutal-dark-border rounded-lg shadow-lg">
+            <BarChart3 size={22} className="text-white" />
           </div>
-          <h3 className="font-black text-lg uppercase">{titulo}</h3>
+          <div>
+            <h3 className="font-black text-lg uppercase dark:text-brutal-dark-text">{titulo}</h3>
+            <p className="text-xs text-gray-500 dark:text-brutal-dark-muted">
+              Clique nos partidos para filtrar
+            </p>
+          </div>
         </div>
-        <button
-          onClick={handleShare}
-          disabled={loading}
-          title="Baixar grafico para Instagram"
-          className="flex items-center gap-2 bg-black text-white px-3 py-2 font-bold uppercase text-xs border-2 border-black hover:bg-white hover:text-black transition-all active:translate-y-1 dark:bg-brutal-dark-surface dark:border-brutal-dark-border dark:hover:bg-brutal-dark-accent dark:hover:text-white"
-        >
-          {loading ? <Loader2 className="animate-spin w-4 h-4" /> : <Share2 className="w-4 h-4" />}
-          <span className="hidden sm:inline">{loading ? "Gerando..." : "Compartilhar"}</span>
-        </button>
+        <div className="flex gap-2">
+          {hiddenPartidos.size > 0 && (
+            <button
+              onClick={resetFiltros}
+              className="flex items-center gap-1.5 bg-gray-200 dark:bg-brutal-dark-bg text-gray-700 dark:text-brutal-dark-text px-3 py-2 font-bold text-xs border-2 border-black dark:border-brutal-dark-border hover:bg-gray-300 dark:hover:bg-brutal-dark-surface transition-all active:translate-y-0.5 rounded"
+            >
+              <RotateCcw size={14} />
+              Resetar
+            </button>
+          )}
+          <button
+            onClick={handleShare}
+            disabled={loading}
+            title="Baixar gráfico"
+            className="flex items-center gap-2 bg-black dark:bg-brutal-dark-accent text-white px-3 py-2 font-bold uppercase text-xs border-2 border-black dark:border-brutal-dark-border hover:bg-gray-800 dark:hover:bg-brutal-dark-surface transition-all active:translate-y-0.5 rounded"
+          >
+            {loading ? <Loader2 className="animate-spin w-4 h-4" /> : <Share2 className="w-4 h-4" />}
+            <span className="hidden sm:inline">{loading ? "Gerando..." : "Compartilhar"}</span>
+          </button>
+        </div>
       </div>
 
-      {/* Grafico visivel */}
-      <div className="card-brutal p-4">
-        <div className="h-[350px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={dadosProcessados}
-                cx="50%"
-                cy="50%"
-                outerRadius={120}
-                innerRadius={60}
-                dataKey="quantidade"
-                nameKey="partido"
-                label={(props: any) => `${props.name || ''}: ${props.value || 0}`}
-                labelLine={true}
+      {/* Legenda interativa */}
+      <div className="card-brutal p-4 mb-4 bg-white dark:bg-brutal-dark-surface">
+        <div className="flex flex-wrap gap-2">
+          {dadosProcessados.map((item, index) => {
+            const isHidden = hiddenPartidos.has(item.partido);
+            const percentual = ((item.quantidade / total) * 100).toFixed(1);
+            return (
+              <button
+                key={item.partido}
+                onClick={() => togglePartido(item.partido)}
+                className={`
+                  flex items-center gap-2 px-3 py-1.5 border-2 font-bold text-sm transition-all
+                  ${isHidden
+                    ? 'bg-gray-100 dark:bg-brutal-dark-bg border-gray-300 dark:border-brutal-dark-border opacity-50'
+                    : 'border-black dark:border-brutal-dark-border hover:scale-105 active:scale-95'
+                  }
+                  rounded cursor-pointer
+                `}
+                style={{
+                  backgroundColor: isHidden ? undefined : `${getCor(item.partido, index)}20`,
+                }}
               >
-                {dadosProcessados.map((entry, index) => (
+                <div
+                  className={`w-4 h-4 rounded-sm border-2 ${isHidden ? 'border-gray-400' : 'border-black dark:border-white'}`}
+                  style={{ backgroundColor: isHidden ? '#ccc' : getCor(item.partido, index) }}
+                />
+                <span className={`${isHidden ? 'text-gray-400 line-through' : 'dark:text-brutal-dark-text'}`}>
+                  {item.partido}
+                </span>
+                <span className={`text-xs ${isHidden ? 'text-gray-400' : 'text-gray-500 dark:text-brutal-dark-muted'}`}>
+                  ({item.quantidade} • {percentual}%)
+                </span>
+                {isHidden ? (
+                  <EyeOff size={14} className="text-gray-400" />
+                ) : (
+                  <Eye size={14} className="text-gray-500 dark:text-brutal-dark-muted" />
+                )}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Grafico */}
+      <div className="card-brutal p-4 bg-white dark:bg-brutal-dark-surface">
+        <div className="h-[400px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={dadosFiltrados}
+              layout="vertical"
+              margin={{ top: 5, right: 30, left: 80, bottom: 5 }}
+            >
+              <CartesianGrid
+                strokeDasharray="3 3"
+                horizontal={true}
+                vertical={false}
+                stroke={colors.grid}
+              />
+              <XAxis
+                type="number"
+                tick={{ fill: colors.text, fontWeight: 700, fontSize: 12 }}
+                axisLine={{ stroke: colors.border, strokeWidth: 2 }}
+              />
+              <YAxis
+                type="category"
+                dataKey="partido"
+                tick={{ fill: colors.text, fontWeight: 900, fontSize: 13 }}
+                axisLine={{ stroke: colors.border, strokeWidth: 2 }}
+                width={70}
+              />
+              <Tooltip content={<CustomTooltip />} cursor={{ fill: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)' }} />
+              <Bar
+                dataKey="quantidade"
+                radius={[0, 4, 4, 0]}
+                animationDuration={500}
+              >
+                {dadosFiltrados.map((entry, index) => (
                   <Cell
-                    key={`cell-${index}`}
-                    fill={getCor(entry.partido, index)}
-                    stroke="#000"
+                    key={`cell-${entry.partido}`}
+                    fill={getCor(entry.partido, dadosProcessados.findIndex(d => d.partido === entry.partido))}
+                    stroke={colors.border}
                     strokeWidth={2}
                   />
                 ))}
-              </Pie>
-              <Tooltip content={<CustomTooltip />} />
-            </PieChart>
+              </Bar>
+            </BarChart>
           </ResponsiveContainer>
         </div>
 
-        {/* Legenda customizada */}
-        <div className="mt-4 grid grid-cols-3 md:grid-cols-5 gap-2">
-          {dadosProcessados.slice(0, 10).map((item, index) => (
-            <div key={item.partido} className="flex items-center gap-2">
-              <div
-                className="w-4 h-4 border border-black shrink-0"
-                style={{ backgroundColor: getCor(item.partido, index) }}
-              />
-              <span className="text-xs font-bold truncate">
-                {item.partido} ({item.quantidade})
-              </span>
-            </div>
-          ))}
-        </div>
-
-        {/* Total */}
-        <div className="mt-4 pt-4 border-t-2 border-black dark:border-brutal-dark-border text-center">
-          <span className="font-black text-xl">{total}</span>
-          <span className="font-bold text-gray-600 dark:text-brutal-dark-muted ml-2">
-            deputados no total
-          </span>
+        {/* Estatísticas */}
+        <div className="mt-4 pt-4 border-t-2 border-black dark:border-brutal-dark-border grid grid-cols-3 gap-4">
+          <div className="text-center">
+            <span className="block text-2xl font-black dark:text-brutal-dark-text">{totalVisivel}</span>
+            <span className="text-xs font-bold text-gray-500 dark:text-brutal-dark-muted uppercase">
+              Visíveis
+            </span>
+          </div>
+          <div className="text-center border-x-2 border-black dark:border-brutal-dark-border">
+            <span className="block text-2xl font-black dark:text-brutal-dark-text">{dadosFiltrados.length}</span>
+            <span className="text-xs font-bold text-gray-500 dark:text-brutal-dark-muted uppercase">
+              Partidos
+            </span>
+          </div>
+          <div className="text-center">
+            <span className="block text-2xl font-black dark:text-brutal-dark-text">{total}</span>
+            <span className="text-xs font-bold text-gray-500 dark:text-brutal-dark-muted uppercase">
+              Total
+            </span>
+          </div>
         </div>
       </div>
 
@@ -204,84 +327,126 @@ export default function PartidoDistribuicaoChart({
       >
         <div
           ref={ref}
-          className="bg-white flex flex-col font-sans text-black box-border relative overflow-hidden"
           style={{
             width: "1080px",
             height: "1350px",
+            backgroundColor: colors.bg,
+            display: "flex",
+            flexDirection: "column",
+            fontFamily: "system-ui, -apple-system, sans-serif",
+            color: colors.text,
           }}
         >
           {/* HEADER */}
-          <div className="bg-black text-white p-8 pb-10">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-3">
-                <div className="bg-white text-black px-4 py-2 font-black text-2xl">
-                  PSF
+          <div style={{
+            backgroundColor: isDark ? "#1a1a1a" : "#000",
+            color: "white",
+            padding: "32px",
+          }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                <div style={{
+                  backgroundColor: colors.accent,
+                  color: "#000",
+                  padding: "8px 16px",
+                  fontWeight: 900,
+                  fontSize: "24px",
+                }}>
+                  PB
                 </div>
-                <span className="font-bold text-lg opacity-80">POLITICA SEM FILTRO</span>
+                <span style={{ fontWeight: 700, fontSize: "18px", opacity: 0.8 }}>POLITICS BRUTAL</span>
               </div>
-              <span className="font-mono text-lg opacity-70">
+              <span style={{ fontFamily: "monospace", fontSize: "18px", opacity: 0.7 }}>
                 {new Date().toLocaleDateString("pt-BR")}
               </span>
             </div>
 
-            <div className="flex items-center gap-4">
-              <PieChartIcon size={36} strokeWidth={2.5} />
-              <span className="font-black text-2xl uppercase tracking-wider">
+            <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+              <BarChart3 size={36} strokeWidth={2.5} />
+              <span style={{ fontWeight: 900, fontSize: "24px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
                 BANCADA FEDERAL
               </span>
             </div>
           </div>
 
           {/* TITULO */}
-          <div className="px-10 pt-8 pb-6 border-b-[6px] border-black">
-            <h1 className="text-4xl font-black uppercase leading-[1.2] tracking-tight">
+          <div style={{
+            padding: "32px 40px",
+            borderBottom: `6px solid ${colors.border}`,
+          }}>
+            <h1 style={{
+              fontSize: "36px",
+              fontWeight: 900,
+              textTransform: "uppercase",
+              letterSpacing: "-0.02em",
+            }}>
               {titulo}
             </h1>
-            <p className="text-xl font-bold text-gray-600 mt-3">
-              Camara dos Deputados - 57a Legislatura
+            <p style={{ fontSize: "20px", fontWeight: 700, color: colors.textMuted, marginTop: "8px" }}>
+              Câmara dos Deputados - 57ª Legislatura
             </p>
           </div>
 
           {/* GRAFICO */}
-          <div className="flex-1 p-8 flex items-center justify-center">
-            <div style={{ width: "900px", height: "500px" }}>
+          <div style={{ flex: 1, padding: "32px" }}>
+            <div style={{ width: "100%", height: "100%" }}>
               <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={dadosProcessados}
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={200}
-                    innerRadius={100}
-                    dataKey="quantidade"
-                    nameKey="partido"
-                    label={(props: any) => `${props.name || ''}: ${props.value || 0}`}
-                    labelLine={true}
-                  >
-                    {dadosProcessados.map((entry, index) => (
+                <BarChart
+                  data={dadosFiltrados}
+                  layout="vertical"
+                  margin={{ top: 5, right: 50, left: 100, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} stroke={colors.grid} />
+                  <XAxis type="number" tick={{ fill: colors.text, fontWeight: 700, fontSize: 16 }} />
+                  <YAxis
+                    type="category"
+                    dataKey="partido"
+                    tick={{ fill: colors.text, fontWeight: 900, fontSize: 18 }}
+                    width={90}
+                  />
+                  <Bar dataKey="quantidade" radius={[0, 4, 4, 0]}>
+                    {dadosFiltrados.map((entry, index) => (
                       <Cell
-                        key={`cell-share-${index}`}
-                        fill={getCor(entry.partido, index)}
-                        stroke="#000"
+                        key={`cell-share-${entry.partido}`}
+                        fill={getCor(entry.partido, dadosProcessados.findIndex(d => d.partido === entry.partido))}
+                        stroke={colors.border}
                         strokeWidth={3}
                       />
                     ))}
-                  </Pie>
-                </PieChart>
+                  </Bar>
+                </BarChart>
               </ResponsiveContainer>
             </div>
           </div>
 
           {/* LEGENDA */}
-          <div className="px-10 pb-6">
-            <div className="grid grid-cols-5 gap-3 mb-6">
-              {dadosProcessados.slice(0, 10).map((item, index) => (
-                <div key={item.partido} className="flex items-center gap-2 border-2 border-black p-2">
+          <div style={{ padding: "0 40px 24px" }}>
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(5, 1fr)",
+              gap: "12px",
+            }}>
+              {dadosFiltrados.slice(0, 10).map((item, index) => (
+                <div
+                  key={item.partido}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    border: `2px solid ${colors.border}`,
+                    padding: "8px",
+                  }}
+                >
                   <div
-                    className="w-6 h-6 border-2 border-black shrink-0"
-                    style={{ backgroundColor: getCor(item.partido, index) }}
+                    style={{
+                      width: "24px",
+                      height: "24px",
+                      backgroundColor: getCor(item.partido, dadosProcessados.findIndex(d => d.partido === item.partido)),
+                      border: `2px solid ${colors.border}`,
+                      flexShrink: 0,
+                    }}
                   />
-                  <span className="text-sm font-black">
+                  <span style={{ fontSize: "14px", fontWeight: 900 }}>
                     {item.partido}: {item.quantidade}
                   </span>
                 </div>
@@ -289,33 +454,39 @@ export default function PartidoDistribuicaoChart({
             </div>
 
             {/* TOTAL */}
-            <div className="bg-black text-white p-4 text-center">
-              <span className="font-black text-3xl">{total}</span>
-              <span className="font-bold text-xl ml-3">DEPUTADOS FEDERAIS</span>
-            </div>
-          </div>
-
-          {/* FONTE */}
-          <div className="px-10 pb-6">
-            <div className="flex items-center justify-between pt-4 border-t-[4px] border-black">
-              <div>
-                <span className="text-sm font-bold uppercase text-gray-500 block mb-1">FONTE</span>
-                <span className="text-xl font-black">Camara dos Deputados</span>
-              </div>
-              <div className="text-right">
-                <span className="text-sm font-bold uppercase text-gray-500 block mb-1">DADOS ABERTOS</span>
-                <span className="text-lg font-bold text-gray-600">dadosabertos.camara.leg.br</span>
-              </div>
+            <div style={{
+              backgroundColor: isDark ? "#1a1a1a" : "#000",
+              color: "white",
+              padding: "16px",
+              textAlign: "center",
+              marginTop: "24px",
+            }}>
+              <span style={{ fontWeight: 900, fontSize: "32px" }}>{total}</span>
+              <span style={{ fontWeight: 700, fontSize: "20px", marginLeft: "12px" }}>DEPUTADOS FEDERAIS</span>
             </div>
           </div>
 
           {/* FOOTER */}
-          <div className="bg-black text-white p-6 flex items-center justify-between">
-            <p className="font-bold text-lg uppercase tracking-wide">
-              Quem realmente manda no Congresso?
-            </p>
-            <div className="bg-white text-black px-4 py-2 font-black text-xl">
-              @PSF
+          <div style={{
+            backgroundColor: isDark ? "#1a1a1a" : "#000",
+            color: "white",
+            padding: "24px 40px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}>
+            <div>
+              <p style={{ fontWeight: 700, fontSize: "14px", textTransform: "uppercase", color: "#999", marginBottom: "4px" }}>FONTE</p>
+              <p style={{ fontWeight: 900, fontSize: "18px" }}>Câmara dos Deputados - Dados Abertos</p>
+            </div>
+            <div style={{
+              backgroundColor: colors.accent,
+              color: "#000",
+              padding: "8px 16px",
+              fontWeight: 900,
+              fontSize: "18px",
+            }}>
+              politicsbrutal.com.br
             </div>
           </div>
         </div>

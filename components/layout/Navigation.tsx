@@ -24,6 +24,7 @@ import {
   LogIn,
   LogOut,
   Brain,
+  Shield,
 } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "@/contexts/AuthContext";
@@ -51,8 +52,15 @@ export default function Navigation() {
   const isLoggedIn = !!user;
 
   const handleLogout = async () => {
-    await signOut();
-    setIsProfileOpen(false);
+    try {
+      await signOut();
+    } catch (error) {
+      console.error("Erro ao fazer logout:", error);
+    } finally {
+      setIsProfileOpen(false);
+      // Força reload da página para limpar estado
+      window.location.href = "/";
+    }
   };
 
   useEffect(() => {
@@ -224,22 +232,39 @@ export default function Navigation() {
                             </div>
                             <ChevronRight size={14} className="text-gray-400" />
                           </Link>
+
+                          {/* Admin Panel - só mostra se for admin */}
+                          {user.isAdmin && (
+                            <Link
+                              href="/admin"
+                              onClick={() => setIsProfileOpen(false)}
+                              className="flex items-center justify-between p-3 bg-brutal-red/10 hover:bg-brutal-red/20 transition-colors"
+                            >
+                              <div className="flex items-center gap-3">
+                                <Shield size={16} className="text-brutal-red" />
+                                <span className="font-bold text-sm text-brutal-red">Painel Admin</span>
+                              </div>
+                              <ChevronRight size={14} className="text-brutal-red" />
+                            </Link>
+                          )}
                         </div>
 
-                        {/* PRO Upgrade */}
-                        <div className="p-2 border-t border-gray-200 dark:border-brutal-dark-border">
-                          <Link
-                            href="/perfil#premium"
-                            onClick={() => setIsProfileOpen(false)}
-                            className="flex items-center justify-between p-3 border-2 border-black dark:border-brutal-dark-border hover:bg-gray-50 dark:hover:bg-brutal-dark-bg transition-colors"
-                          >
-                            <div className="flex items-center gap-3">
-                              <Crown size={16} className="text-gray-600 dark:text-brutal-dark-muted" />
-                              <span className="font-bold text-sm dark:text-brutal-dark-text">Vigilante PRO</span>
-                            </div>
-                            <span className="font-bold text-xs text-gray-500 dark:text-brutal-dark-muted">R$19,99</span>
-                          </Link>
-                        </div>
+                        {/* PRO Upgrade - só mostra se não for premium */}
+                        {!user.isPremium && (
+                          <div className="p-2 border-t border-gray-200 dark:border-brutal-dark-border">
+                            <Link
+                              href="/perfil#premium"
+                              onClick={() => setIsProfileOpen(false)}
+                              className="flex items-center justify-between p-3 border-2 border-black dark:border-brutal-dark-border hover:bg-gray-50 dark:hover:bg-brutal-dark-bg transition-colors"
+                            >
+                              <div className="flex items-center gap-3">
+                                <Crown size={16} className="text-gray-600 dark:text-brutal-dark-muted" />
+                                <span className="font-bold text-sm dark:text-brutal-dark-text">Assinar PRO</span>
+                              </div>
+                              <span className="font-bold text-xs text-green-600 dark:text-green-400">a partir de R$0,99</span>
+                            </Link>
+                          </div>
+                        )}
 
                         {/* Logout */}
                         <div className="p-2 border-t border-gray-200 dark:border-brutal-dark-border">

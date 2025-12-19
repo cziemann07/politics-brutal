@@ -20,7 +20,12 @@ CREATE TABLE IF NOT EXISTS users (
   quiz_streak INT DEFAULT 0,
   last_quiz_date DATE,
   total_quizzes_completed INT DEFAULT 0,
-  is_premium BOOLEAN DEFAULT FALSE
+  is_premium BOOLEAN DEFAULT FALSE,
+  is_admin BOOLEAN DEFAULT FALSE,
+  -- Plano de assinatura
+  subscription_plan TEXT DEFAULT 'gratuito' CHECK (subscription_plan IN ('gratuito', 'basico', 'pro')),
+  subscription_expires_at TIMESTAMPTZ,
+  subscription_pix_id TEXT -- ID do pagamento PIX
 );
 
 -- =============================================
@@ -400,3 +405,82 @@ GRANT SELECT ON political_dimensions TO anon;
 GRANT SELECT ON quiz_categories TO anon;
 GRANT SELECT ON quiz_questions TO anon;
 GRANT SELECT ON politician_profiles TO anon;
+
+-- =============================================
+-- TABELA: news_votes (votos em notícias)
+-- =============================================
+CREATE TABLE IF NOT EXISTS news_votes (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  noticia_id INT NOT NULL,
+  vote_type TEXT NOT NULL CHECK (vote_type IN ('up', 'down')),
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(user_id, noticia_id)
+);
+
+-- Índices para performance
+CREATE INDEX IF NOT EXISTS idx_news_votes_noticia ON news_votes(noticia_id);
+CREATE INDEX IF NOT EXISTS idx_news_votes_user ON news_votes(user_id);
+
+-- Habilitar RLS
+ALTER TABLE news_votes ENABLE ROW LEVEL SECURITY;
+
+-- Políticas RLS
+-- Qualquer um pode ver todos os votos (para contagem)
+CREATE POLICY "Qualquer um pode ver votos" ON news_votes
+  FOR SELECT USING (true);
+
+-- Usuários autenticados podem inserir seus próprios votos
+CREATE POLICY "Users podem inserir próprios votos" ON news_votes
+  FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+-- Usuários podem atualizar seus próprios votos
+CREATE POLICY "Users podem atualizar próprios votos" ON news_votes
+  FOR UPDATE USING (auth.uid() = user_id);
+
+-- Usuários podem deletar seus próprios votos
+CREATE POLICY "Users podem deletar próprios votos" ON news_votes
+  FOR DELETE USING (auth.uid() = user_id);
+
+-- Permissões
+GRANT SELECT ON news_votes TO anon;
+GRANT ALL ON news_votes TO authenticated;
+
+-- =============================================
+-- TABELA: payments (histórico de pagamentos)
+-- =============================================
+CREATE TABLE IF NOT EXISTS payments (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  tx_id TEXT UNIQUE NOT NULL,
+  plan_id TEXT NOT NULL CHECK (plan_id IN ('basico', 'pro')),
+  amount DECIMAL(10, 2) NOT NULL,
+  status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'confirmed', 'failed', 'expired', 'refunded')),
+  payment_method TEXT NOT NULL DEFAULT 'pix',
+  pix_code TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  confirmed_at TIMESTAMPTZ,
+  expires_at TIMESTAMPTZ DEFAULT NOW() + INTERVAL '15 minutes',
+  metadata JSONB
+);
+
+-- Índices para performance
+CREATE INDEX IF NOT EXISTS idx_payments_user ON payments(user_id);
+CREATE INDEX IF NOT EXISTS idx_payments_tx_id ON payments(tx_id);
+CREATE INDEX IF NOT EXISTS idx_payments_status ON payments(status);
+
+-- Habilitar RLS
+ALTER TABLE payments ENABLE ROW LEVEL SECURITY;
+
+-- Políticas RLS
+-- Usuários podem ver seus próprios pagamentos
+CREATE POLICY "Users podem ver próprios pagamentos" ON payments
+  FOR SELECT USING (auth.uid() = user_id);
+
+-- Service role pode gerenciar todos os pagamentos
+CREATE POLICY "Service role gerencia pagamentos" ON payments
+  FOR ALL USING (true);
+
+-- Permissões
+GRANT SELECT ON payments TO authenticated;

@@ -10,11 +10,11 @@ import {
   Flame,
   Trophy,
   RotateCcw,
-  Share2,
   ArrowRight,
   CheckCircle,
   Lock,
 } from "lucide-react";
+import QuizShareButton from "@/components/ui/QuizShareButton";
 import { QuizCard, QuizProgress, PoliticalValuesResult } from "@/components/quiz";
 import { useQuiz } from "@/hooks/useQuiz";
 import type { QuizQuestion, UserPoliticalValue } from "@/types/database";
@@ -191,6 +191,264 @@ const LOCAL_VALUES_QUESTIONS: QuizQuestion[] = [
     source_url: null,
     difficulty: 1,
     dimension_impacts: [{ dimension_id: "transparencia", left_weight: 1, right_weight: 0 }],
+    is_active: true,
+    is_daily: false,
+    daily_date: null,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  // NOVAS PERGUNTAS - Liberalismo vs Conservadorismo de costumes
+  {
+    id: "val_11",
+    category_id: "valores",
+    question_text:
+      "A mulher deve ter o direito de decidir sobre a interrupção da gravidez nos primeiros meses de gestação.",
+    question_type: "agree_disagree",
+    options: null,
+    correct_answer: null,
+    explanation: "Esta questão mede sua posição sobre autonomia corporal e aborto.",
+    source_url: null,
+    difficulty: 1,
+    dimension_impacts: [{ dimension_id: "liberdades", left_weight: 1, right_weight: 0 }],
+    is_active: true,
+    is_daily: false,
+    daily_date: null,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: "val_12",
+    category_id: "valores",
+    question_text:
+      "O uso recreativo de drogas como maconha deveria ser legalizado e regulamentado.",
+    question_type: "agree_disagree",
+    options: null,
+    correct_answer: null,
+    explanation: "Esta questão mede sua posição sobre liberalização de drogas.",
+    source_url: null,
+    difficulty: 1,
+    dimension_impacts: [{ dimension_id: "liberdades", left_weight: 1, right_weight: 0 }],
+    is_active: true,
+    is_daily: false,
+    daily_date: null,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: "val_13",
+    category_id: "valores",
+    question_text:
+      "Símbolos e valores cristãos devem ter presença oficial em escolas e repartições públicas.",
+    question_type: "agree_disagree",
+    options: null,
+    correct_answer: null,
+    explanation: "Esta questão mede sua posição sobre laicidade do Estado.",
+    source_url: null,
+    difficulty: 1,
+    dimension_impacts: [{ dimension_id: "social", left_weight: 0, right_weight: 1 }],
+    is_active: true,
+    is_daily: false,
+    daily_date: null,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  // Autoritarismo vs Liberdade
+  {
+    id: "val_14",
+    category_id: "valores",
+    question_text:
+      "Em situações de crise, o governo deve poder restringir temporariamente liberdades individuais para garantir a ordem.",
+    question_type: "agree_disagree",
+    options: null,
+    correct_answer: null,
+    explanation: "Esta questão mede sua posição sobre autoritarismo vs liberdade.",
+    source_url: null,
+    difficulty: 1,
+    dimension_impacts: [{ dimension_id: "autoridade", left_weight: 1, right_weight: 1 }],
+    is_active: true,
+    is_daily: false,
+    daily_date: null,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: "val_15",
+    category_id: "valores",
+    question_text:
+      "A censura de discursos de ódio e fake news nas redes sociais é necessária e deve ser ampliada.",
+    question_type: "agree_disagree",
+    options: null,
+    correct_answer: null,
+    explanation: "Esta questão mede sua posição sobre liberdade de expressão.",
+    source_url: null,
+    difficulty: 1,
+    dimension_impacts: [{ dimension_id: "autoridade", left_weight: 1, right_weight: 0 }],
+    is_active: true,
+    is_daily: false,
+    daily_date: null,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  // Nacionalismo vs Globalismo
+  {
+    id: "val_16",
+    category_id: "valores",
+    question_text:
+      "O Brasil deveria priorizar acordos comerciais nacionais e proteger a indústria brasileira da competição estrangeira.",
+    question_type: "agree_disagree",
+    options: null,
+    correct_answer: null,
+    explanation: "Esta questão mede sua posição sobre protecionismo econômico.",
+    source_url: null,
+    difficulty: 1,
+    dimension_impacts: [{ dimension_id: "nacionalismo", left_weight: 0.5, right_weight: 0.5 }],
+    is_active: true,
+    is_daily: false,
+    daily_date: null,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: "val_17",
+    category_id: "valores",
+    question_text:
+      "Organismos internacionais como ONU e OMS interferem demais na soberania brasileira.",
+    question_type: "agree_disagree",
+    options: null,
+    correct_answer: null,
+    explanation: "Esta questão mede sua posição sobre soberania nacional.",
+    source_url: null,
+    difficulty: 1,
+    dimension_impacts: [{ dimension_id: "nacionalismo", left_weight: 0, right_weight: 1 }],
+    is_active: true,
+    is_daily: false,
+    daily_date: null,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  // Esquerda Radical vs Moderada
+  {
+    id: "val_18",
+    category_id: "valores",
+    question_text:
+      "O sistema capitalista precisa ser completamente substituído, não apenas reformado.",
+    question_type: "agree_disagree",
+    options: null,
+    correct_answer: null,
+    explanation: "Esta questão mede sua posição sobre radicalismo econômico.",
+    source_url: null,
+    difficulty: 1,
+    dimension_impacts: [{ dimension_id: "economia", left_weight: 1, right_weight: 0 }],
+    is_active: true,
+    is_daily: false,
+    daily_date: null,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: "val_19",
+    category_id: "valores",
+    question_text:
+      "Grandes fortunas e heranças deveriam ser fortemente taxadas ou até mesmo abolidas para garantir igualdade.",
+    question_type: "agree_disagree",
+    options: null,
+    correct_answer: null,
+    explanation: "Esta questão mede sua posição sobre redistribuição de riqueza.",
+    source_url: null,
+    difficulty: 1,
+    dimension_impacts: [{ dimension_id: "economia", left_weight: 1, right_weight: 0 }],
+    is_active: true,
+    is_daily: false,
+    daily_date: null,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  // Pergunta histórica - Partido Nacional Socialista
+  {
+    id: "val_20",
+    category_id: "valores",
+    question_text:
+      "O Partido Nacional Socialista dos Trabalhadores Alemães (NSDAP) era um movimento de extrema-esquerda, dado seu nome e políticas de controle estatal.",
+    question_type: "agree_disagree",
+    options: null,
+    correct_answer: null,
+    explanation: "Esta questão mede sua interpretação sobre espectro político histórico. Historiadores classificam o nazismo como extrema-direita devido ao ultranacionalismo, anticomunismo e hierarquia racial, apesar do nome 'socialista'.",
+    source_url: null,
+    difficulty: 2,
+    dimension_impacts: [{ dimension_id: "ideologia", left_weight: 0, right_weight: 1 }],
+    is_active: true,
+    is_daily: false,
+    daily_date: null,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  // Mais perguntas de costumes e economia
+  {
+    id: "val_21",
+    category_id: "valores",
+    question_text:
+      "A educação sexual nas escolas, incluindo temas de identidade de gênero, é importante para o desenvolvimento das crianças.",
+    question_type: "agree_disagree",
+    options: null,
+    correct_answer: null,
+    explanation: "Esta questão mede sua posição sobre educação e costumes.",
+    source_url: null,
+    difficulty: 1,
+    dimension_impacts: [{ dimension_id: "social", left_weight: 1, right_weight: 0 }],
+    is_active: true,
+    is_daily: false,
+    daily_date: null,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: "val_22",
+    category_id: "valores",
+    question_text:
+      "A reforma agrária com desapropriação de terras improdutivas é justa e necessária.",
+    question_type: "agree_disagree",
+    options: null,
+    correct_answer: null,
+    explanation: "Esta questão mede sua posição sobre propriedade privada e reforma agrária.",
+    source_url: null,
+    difficulty: 1,
+    dimension_impacts: [{ dimension_id: "economia", left_weight: 1, right_weight: 0 }],
+    is_active: true,
+    is_daily: false,
+    daily_date: null,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: "val_23",
+    category_id: "valores",
+    question_text:
+      "Impostos são, em sua essência, uma forma de roubo estatal e deveriam ser minimizados ao máximo.",
+    question_type: "agree_disagree",
+    options: null,
+    correct_answer: null,
+    explanation: "Esta questão mede sua posição sobre Estado mínimo e tributação.",
+    source_url: null,
+    difficulty: 1,
+    dimension_impacts: [{ dimension_id: "economia", left_weight: 0, right_weight: 1 }],
+    is_active: true,
+    is_daily: false,
+    daily_date: null,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: "val_24",
+    category_id: "valores",
+    question_text:
+      "O serviço militar obrigatório é importante para formar o caráter e a disciplina dos jovens.",
+    question_type: "agree_disagree",
+    options: null,
+    correct_answer: null,
+    explanation: "Esta questão mede sua posição sobre militarismo e tradição.",
+    source_url: null,
+    difficulty: 1,
+    dimension_impacts: [{ dimension_id: "autoridade", left_weight: 0, right_weight: 1 }],
     is_active: true,
     is_daily: false,
     daily_date: null,
@@ -565,16 +823,11 @@ export default function QuizPage() {
               <RotateCcw size={18} className="inline mr-2" />
               Refazer Quiz
             </button>
-            <button
-              onClick={() => {
-                // TODO: Implementar compartilhamento
-                alert("Compartilhamento em breve!");
-              }}
-              className="btn-brutal bg-black dark:bg-brutal-dark-accent text-white flex-1"
-            >
-              <Share2 size={18} className="inline mr-2" />
-              Compartilhar
-            </button>
+            {selectedType === "valores" && politicalValues && (
+              <div className="flex-1">
+                <QuizShareButton values={politicalValues} />
+              </div>
+            )}
           </div>
 
           {selectedType === "valores" && (

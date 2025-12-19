@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Search, Filter, AlertCircle, User, X, Building2, Phone, Mail, Users, MapPin, BarChart3, Heart } from "lucide-react";
-import { PartidoDistribuicaoChart, GastosCeapChart } from "@/components/charts";
+import { PartidoDistribuicaoChart, GastosCeapChart, OrientacaoIdeologicaChart } from "@/components/charts";
 import { PedirExplicacaoButton } from "@/components/ui";
 
 /* =========================
@@ -380,11 +380,17 @@ export default function BancadaPage() {
       {/* GRAFICOS */}
       {showCharts && !isLoadingBase && (
         <div className="mb-8 space-y-6">
+          {/* Gráfico de Orientação Ideológica */}
+          <OrientacaoIdeologicaChart
+            dados={dadosDistribuicaoPartido}
+            titulo="Orientação Ideológica da Câmara"
+          />
+
           <div className="grid lg:grid-cols-2 gap-6">
             {/* Grafico de Distribuicao por Partido */}
             <PartidoDistribuicaoChart
               dados={dadosDistribuicaoPartido}
-              titulo="Distribuicao por Partido"
+              titulo="Distribuição por Partido"
             />
 
             {/* Grafico de Gastos CEAP (so aparece se tiver dados) */}
@@ -400,7 +406,7 @@ export default function BancadaPage() {
           {dadosGastosCeap.length === 0 && (
             <div className="card-brutal bg-brutal-yellow text-black p-4 text-center">
               <p className="font-bold">
-                Clique em "Carregar CEAP" para ver o grafico de gastos dos deputados.
+                Clique em "Carregar CEAP" para ver o gráfico de gastos dos deputados.
               </p>
             </div>
           )}

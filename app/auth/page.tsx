@@ -22,7 +22,7 @@ type AuthMode = "login" | "register" | "forgot";
 function AuthContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirectTo = searchParams.get("redirect") || "/quiz";
+  const redirectTo = searchParams.get("redirect") || "/";
 
   const [mode, setMode] = useState<AuthMode>("login");
   const [email, setEmail] = useState("");

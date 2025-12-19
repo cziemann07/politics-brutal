@@ -18,6 +18,10 @@ export interface Database {
           last_quiz_date: string | null;
           total_quizzes_completed: number;
           is_premium: boolean;
+          is_admin: boolean;
+          subscription_plan: "gratuito" | "basico" | "pro";
+          subscription_expires_at: string | null;
+          subscription_pix_id: string | null;
         };
         Insert: {
           id?: string;
@@ -30,6 +34,10 @@ export interface Database {
           last_quiz_date?: string | null;
           total_quizzes_completed?: number;
           is_premium?: boolean;
+          is_admin?: boolean;
+          subscription_plan?: "gratuito" | "basico" | "pro";
+          subscription_expires_at?: string | null;
+          subscription_pix_id?: string | null;
         };
         Update: {
           id?: string;
@@ -42,6 +50,10 @@ export interface Database {
           last_quiz_date?: string | null;
           total_quizzes_completed?: number;
           is_premium?: boolean;
+          is_admin?: boolean;
+          subscription_plan?: "gratuito" | "basico" | "pro";
+          subscription_expires_at?: string | null;
+          subscription_pix_id?: string | null;
         };
       };
       political_dimensions: {

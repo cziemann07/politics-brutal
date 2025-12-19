@@ -101,10 +101,10 @@ export default function NewsShareButton({ data }: { data: NewsShareData }) {
           <div className={`${config.bg} text-white p-8 pb-12`}>
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
-                <div className="bg-white text-black px-4 py-2 font-black text-2xl">
-                  PSF
+                <div className="bg-brutal-yellow text-black px-4 py-2 font-black text-2xl">
+                  PB
                 </div>
-                <span className="font-bold text-lg opacity-80">POLÍTICA SEM FILTRO</span>
+                <span className="font-bold text-lg opacity-80">POLITICS BRUTAL</span>
               </div>
               <span className="font-mono text-lg opacity-70">{data.data}</span>
             </div>
@@ -120,13 +120,13 @@ export default function NewsShareButton({ data }: { data: NewsShareData }) {
           {/* CONTEÚDO PRINCIPAL */}
           <div className="flex-1 p-10 flex flex-col">
             {/* TÍTULO */}
-            <h1 className="text-6xl font-black uppercase leading-[1.1] tracking-tight mb-8 border-b-[6px] border-black pb-8">
-              {data.titulo}
+            <h1 className="text-5xl font-black uppercase leading-[1.15] tracking-tight mb-8 border-b-[6px] border-black pb-8 break-words">
+              {data.titulo.length > 80 ? data.titulo.slice(0, 80) + "..." : data.titulo}
             </h1>
 
             {/* SUBTÍTULO */}
-            <p className="text-3xl font-medium leading-snug text-gray-700 mb-10">
-              {data.subtitulo}
+            <p className="text-2xl font-medium leading-snug text-gray-700 mb-10 break-words">
+              {data.subtitulo.length > 200 ? data.subtitulo.slice(0, 200) + "..." : data.subtitulo}
             </p>
 
             {/* DESTAQUE (se houver) */}
@@ -168,8 +168,8 @@ export default function NewsShareButton({ data }: { data: NewsShareData }) {
             <p className="font-bold text-lg uppercase tracking-wide">
               Desconfie de todo político. Inclusive do seu favorito.
             </p>
-            <div className="bg-white text-black px-4 py-2 font-black text-xl">
-              @PSF
+            <div className="bg-brutal-yellow text-black px-4 py-2 font-black text-xl">
+              politicsbrutal.com.br
             </div>
           </div>
         </div>

@@ -73,10 +73,10 @@ export default function ChartShareButton({ data, children }: ChartShareButtonPro
           <div className="bg-black text-white p-8 pb-10">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
-                <div className="bg-white text-black px-4 py-2 font-black text-2xl">
-                  PSF
+                <div className="bg-brutal-yellow text-black px-4 py-2 font-black text-2xl">
+                  PB
                 </div>
-                <span className="font-bold text-lg opacity-80">POLITICA SEM FILTRO</span>
+                <span className="font-bold text-lg opacity-80">POLITICS BRUTAL</span>
               </div>
               <span className="font-mono text-lg opacity-70">{data.data}</span>
             </div>
@@ -84,18 +84,18 @@ export default function ChartShareButton({ data, children }: ChartShareButtonPro
             <div className="flex items-center gap-4 mb-4">
               <BarChart3 size={36} strokeWidth={2.5} />
               <span className="font-black text-2xl uppercase tracking-wider">
-                DADOS & GRAFICOS
+                DADOS & GRÁFICOS
               </span>
             </div>
           </div>
 
           {/* TITULO */}
           <div className="px-10 pt-8 pb-6 border-b-[6px] border-black">
-            <h1 className="text-4xl font-black uppercase leading-[1.2] tracking-tight">
+            <h1 className="text-4xl font-black uppercase leading-[1.2] tracking-tight break-words">
               {data.titulo}
             </h1>
             {data.subtitulo && (
-              <p className="text-xl font-bold text-gray-600 mt-3">{data.subtitulo}</p>
+              <p className="text-xl font-bold text-gray-600 mt-3 break-words">{data.subtitulo}</p>
             )}
           </div>
 
@@ -125,8 +125,8 @@ export default function ChartShareButton({ data, children }: ChartShareButtonPro
             <p className="font-bold text-lg uppercase tracking-wide">
               Dados crus. Sem filtro. Sem idolatria.
             </p>
-            <div className="bg-white text-black px-4 py-2 font-black text-xl">
-              @PSF
+            <div className="bg-brutal-yellow text-black px-4 py-2 font-black text-xl">
+              politicsbrutal.com.br
             </div>
           </div>
         </div>
