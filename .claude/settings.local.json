@@ -10,7 +10,8 @@
       "WebSearch",
       "WebFetch(domain:dadosabertos.camara.leg.br)",
       "Bash(cat:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(npm install:*)"
     ]
   }
 }

@@ -222,7 +222,11 @@ export default function VotacoesPage() {
                   descricao: votacao.descricao,
                   data: new Date(votacao.data).toLocaleDateString("pt-BR"),
                   aprovado: votacao.aprovado,
-                  votos: votacao.votos,
+                  votos: {
+                    sim: votacao.votos.sim,
+                    nao: votacao.votos.não,
+                    total: votacao.votos.total,
+                  },
                 }
               : null;
 
@@ -316,7 +320,12 @@ export default function VotacoesPage() {
                         {/* GRAFICO DE VOTOS POR PARTIDO */}
                         {detalhes.votosPorPartido.length > 0 && (
                           <VotacaoBarChart
-                            dados={detalhes.votosPorPartido}
+                            dados={detalhes.votosPorPartido.map((p) => ({
+                              partido: p.partido,
+                              sim: p.sim,
+                              nao: p.não,
+                              total: p.total,
+                            }))}
                             titulo={votacao.descricao}
                             descricao={`Votacao de ${new Date(votacao.data).toLocaleDateString("pt-BR")}`}
                             aprovado={votacao.aprovado}

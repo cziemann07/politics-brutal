@@ -23,11 +23,14 @@ import {
   ChevronRight,
   LogIn,
   LogOut,
+  Brain,
 } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useAuth } from "@/contexts/AuthContext";
 
 const navItems = [
   { href: "/", label: "Início", icon: Home },
+  { href: "/quiz", label: "Quiz", icon: Brain },
   { href: "/bancada", label: "Bancada", icon: Users },
   { href: "/votacoes", label: "Votações", icon: FileText },
   { href: "/noticias", label: "Notícias", icon: Newspaper },
@@ -40,25 +43,15 @@ export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const { theme, toggleTheme, isDark } = useTheme();
+  const { user, signOut, isLoading: authLoading } = useAuth();
 
-  // Carregar estado de login do localStorage
-  useEffect(() => {
-    const loggedIn = localStorage.getItem("psf_logged_in") === "true";
-    setIsLoggedIn(loggedIn);
-  }, []);
+  const isLoggedIn = !!user;
 
-  const handleLogin = () => {
-    localStorage.setItem("psf_logged_in", "true");
-    setIsLoggedIn(true);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("psf_logged_in");
-    setIsLoggedIn(false);
+  const handleLogout = async () => {
+    await signOut();
     setIsProfileOpen(false);
   };
 
@@ -163,13 +156,14 @@ export default function Navigation() {
                           <p className="font-black text-sm uppercase dark:text-brutal-dark-text">Visitante</p>
                           <p className="text-xs text-gray-500 dark:text-brutal-dark-muted">Faça login para salvar favoritos</p>
                         </div>
-                        <button
-                          onClick={handleLogin}
+                        <Link
+                          href="/auth"
+                          onClick={() => setIsProfileOpen(false)}
                           className="w-full flex items-center justify-center gap-2 p-3 bg-black text-white font-bold text-sm uppercase hover:bg-gray-800 transition-colors"
                         >
                           <LogIn size={16} />
                           Entrar
-                        </button>
+                        </Link>
                       </div>
                     ) : (
                       /* Estado Logado */
@@ -177,12 +171,18 @@ export default function Navigation() {
                         {/* Header */}
                         <div className="p-4 border-b-2 border-black dark:border-brutal-dark-border">
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-gray-100 dark:bg-brutal-dark-bg border-2 border-black dark:border-brutal-dark-border flex items-center justify-center">
-                              <User size={20} className="text-gray-600 dark:text-brutal-dark-muted" />
+                            <div className="w-10 h-10 bg-gray-100 dark:bg-brutal-dark-bg border-2 border-black dark:border-brutal-dark-border flex items-center justify-center overflow-hidden">
+                              {user.avatarUrl ? (
+                                <img src={user.avatarUrl} alt={user.displayName || ""} className="w-full h-full object-cover" />
+                              ) : (
+                                <User size={20} className="text-gray-600 dark:text-brutal-dark-muted" />
+                              )}
                             </div>
                             <div>
-                              <p className="font-black text-sm dark:text-brutal-dark-text">Cidadão</p>
-                              <p className="text-xs text-gray-500 dark:text-brutal-dark-muted">Plano Gratuito</p>
+                              <p className="font-black text-sm dark:text-brutal-dark-text">{user.displayName || "Cidadão"}</p>
+                              <p className="text-xs text-gray-500 dark:text-brutal-dark-muted">
+                                {user.isPremium ? "Vigilante PRO" : "Plano Gratuito"}
+                              </p>
                             </div>
                           </div>
                         </div>

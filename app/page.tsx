@@ -240,7 +240,7 @@ export default function Home() {
             própria opinião.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/bancada" className="btn-brutal bg-brutal-yellow text-black text-lg px-8 py-4">
+            <Link href="/auth" className="btn-brutal bg-brutal-yellow text-black text-lg px-8 py-4">
               Começar Agora
             </Link>
             <Link href="/metodologia" className="btn-brutal bg-white text-black text-lg px-8 py-4">
