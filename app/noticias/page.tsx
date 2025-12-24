@@ -35,6 +35,96 @@ interface Noticia {
 // Notícias reais e atuais - Dezembro 2025
 const noticias: Noticia[] = [
   {
+    id: 11,
+    titulo: "Câmara Aprova Flexibilização do Licenciamento Ambiental",
+    subtitulo:
+      "PL 1.159/2024 reduz exigências para obras obterem autorização. Ambientalistas alertam para risco de mais desmatamento.",
+    fonte: "Câmara dos Deputados",
+    fonteUrl: "https://www.camara.leg.br/noticias/",
+    data: "22/12/2025",
+    categoria: "alerta",
+    tags: ["Licenciamento Ambiental", "Câmara", "Meio Ambiente", "Agronegócio"],
+    destaque: "Ruralistas celebram, ambientalistas protestam. O de sempre.",
+    contexto:
+      "O projeto segue para o Senado. Se aprovado, dependerá de sanção ou veto de Lula. Bancada ruralista votou em bloco a favor.",
+    relevancia: "alta",
+  },
+  {
+    id: 12,
+    titulo: "Isenção de IR até R$ 5 Mil: Promessa ou Realidade?",
+    subtitulo:
+      "Governo anuncia isenção do Imposto de Renda para rendimentos até R$ 5 mil, mas medida só vale a partir de 2026.",
+    fonte: "Ministério da Fazenda",
+    fonteUrl: "https://www.gov.br/fazenda/",
+    data: "21/12/2025",
+    categoria: "fato",
+    tags: ["Imposto de Renda", "Classe Média", "Economia", "Lula"],
+    destaque: "Promessa de campanha de 2022. Implementação só em 2026.",
+    contexto:
+      "O pacote fiscal inclui também taxação de super-ricos e fundos exclusivos. Oposição critica timing eleitoral da medida.",
+    relevancia: "alta",
+  },
+  {
+    id: 13,
+    titulo: "Salário Mínimo Sobe para R$ 1.518 em Janeiro",
+    subtitulo:
+      "Aumento de R$ 106 representa reposição da inflação mais ganho real de 2,5%. Empresários reclamam de custos.",
+    fonte: "Governo Federal",
+    fonteUrl: "https://www.gov.br/trabalho-e-emprego/",
+    data: "20/12/2025",
+    categoria: "fato",
+    tags: ["Salário Mínimo", "Economia", "Trabalhadores", "2025"],
+    destaque: "Ganho real de 2,5% - melhor que muitos esperavam.",
+    contexto:
+      "Impacto nas contas da Previdência estimado em R$ 14 bilhões. Benefícios atrelados ao mínimo também serão reajustados.",
+    relevancia: "media",
+  },
+  {
+    id: 14,
+    titulo: "Brasil x EUA: Crise Comercial se Arrasta e Tensão Aumenta",
+    subtitulo:
+      "Trump aplica sanções a produtos brasileiros. Governo brasileiro contesta na OMC e aprova contra-tarifas.",
+    fonte: "Ministério das Relações Exteriores",
+    fonteUrl: "https://www.gov.br/mre/",
+    data: "19/12/2025",
+    categoria: "alerta",
+    tags: ["EUA", "Trump", "Comércio", "Diplomacia", "OMC"],
+    destaque: "Guerra comercial esquenta. Exportadores brasileiros no prejuízo.",
+    contexto:
+      "Sanções americanas atingem principalmente aço, alumínio e produtos agrícolas. Brasil retalia com tarifas sobre produtos tech.",
+    relevancia: "alta",
+  },
+  {
+    id: 15,
+    titulo: "Mercosul-UE: Lula Dá Ultimato à União Europeia",
+    subtitulo:
+      "Presidente afirma que não haverá nova negociação se acordo atual não for aprovado até o final de 2025.",
+    fonte: "R7 Notícias",
+    fonteUrl: "https://noticias.r7.com/brasilia/lula-diz-que-brasil-nao-fara-acordo-mercosulue-se-pacto-nao-for-aprovado-em-2025-17122025/",
+    data: "17/12/2025",
+    categoria: "fato",
+    tags: ["Mercosul", "União Europeia", "Comércio", "Diplomacia"],
+    destaque: "25 anos de negociação. França e Itália ainda resistem.",
+    contexto:
+      "Macron e Meloni lideram oposição ao acordo por questões agrícolas. Agronegócio brasileiro perde mercado potencial de 450 milhões de consumidores.",
+    relevancia: "alta",
+  },
+  {
+    id: 16,
+    titulo: "Investimento Estrangeiro Bate Recorde de 10 Anos",
+    subtitulo:
+      "Brasil recebe US$ 84,1 bilhões em investimentos diretos até novembro. Maior valor desde 2014.",
+    fonte: "MDIC",
+    fonteUrl: "https://www.gov.br/mdic/",
+    data: "18/12/2025",
+    categoria: "fato",
+    tags: ["Investimento", "Economia", "PIB", "Estrangeiros"],
+    destaque: "Dado positivo que governo vai explorar eleitoralmente.",
+    contexto:
+      "Setor de energia e mineração lidera os aportes. Críticos apontam que volume está concentrado em poucos setores.",
+    relevancia: "media",
+  },
+  {
     id: 1,
     titulo: "Zezé Di Camargo: Do Palanque de Lula ao Moralismo de Ocasião",
     subtitulo:

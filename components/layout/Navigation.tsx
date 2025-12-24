@@ -99,13 +99,6 @@ export default function Navigation() {
       >
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 group">
-              <div className="bg-black text-white border-2 border-black px-3 py-1 font-black text-xl transform group-hover:scale-105 transition-transform">
-                PSF
-              </div>
-            </Link>
-
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-1">
               {navItems.map((item) => {
@@ -115,13 +108,13 @@ export default function Navigation() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`flex items-center gap-2 px-4 py-2 font-bold text-sm uppercase transition-all ${
+                    className={`flex items-center gap-2 px-3 py-2 font-bold text-xs uppercase transition-all whitespace-nowrap ${
                       active
                         ? "bg-black text-white border-2 border-black dark:bg-brutal-dark-accent dark:border-brutal-dark-accent"
-                        : "hover:bg-black hover:text-white border-2 border-transparent hover:border-black dark:hover:bg-brutal-dark-accent dark:hover:border-brutal-dark-accent"
+                        : "hover:bg-black hover:text-white border-2 border-transparent hover:border-black dark:hover:bg-brutal-dark-accent dark:hover:border-brutal-dark-accent dark:text-brutal-dark-text"
                     }`}
                   >
-                    <Icon size={16} />
+                    <Icon size={14} />
                     <span>{item.label}</span>
                   </Link>
                 );

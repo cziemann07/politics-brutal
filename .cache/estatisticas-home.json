@@ -10,12 +10,12 @@
     "partido": "MDB",
     "estado": "PA",
     "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/220675.jpg",
-    "gastos": 73492.36
+    "gastos": 98492.36
   },
   "estatisticas": {
     "totalDeputados": 512,
-    "mediaGastosCeap": 26167.4,
-    "totalGastosMes": 2616739.98
+    "mediaGastosCeap": 28147.55,
+    "totalGastosMes": 2814754.65
   },
-  "atualizadoEm": "2025-12-19T18:48:28.472Z"
+  "atualizadoEm": "2025-12-24T12:45:36.639Z"
 }

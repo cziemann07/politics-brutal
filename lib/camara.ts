@@ -366,3 +366,265 @@ export async function getVotacaoCompleta(votacaoId: string): Promise<VotacaoComV
     return null;
   }
 }
+
+// ========== EVENTOS E PRESENÇA ==========
+
+export type EventoBasic = {
+  id: number;
+  uri: string;
+  dataHoraInicio: string;
+  dataHoraFim: string | null;
+  situacao: string; // "Encerrada", "Convocada", "Em Andamento", etc
+  descricaoTipo: string; // "Sessão Deliberativa", "Reunião Deliberativa", etc
+  descricao: string;
+  localExterno: string | null;
+  orgaos: Array<{
+    id: number;
+    sigla: string;
+    nome: string;
+    apelido: string;
+    uri: string;
+  }>;
+  localCamara: {
+    nome: string | null;
+    predio: string | null;
+    sala: string | null;
+    andar: string | null;
+  } | null;
+  urlRegistro: string | null;
+};
+
+export type DeputadoEvento = {
+  id: number;
+  uri: string;
+  nome: string;
+  siglaPartido: string;
+  uriPartido: string;
+  siglaUf: string;
+  idLegislatura: number;
+  urlFoto: string;
+  email: string;
+};
+
+export type PresencaDeputado = {
+  deputado: DeputadoEvento;
+  presente: boolean;
+  justificativa: string | null;
+};
+
+/**
+ * Lista eventos (sessões, reuniões) da Câmara
+ */
+export async function listEventos(params?: {
+  dataInicio?: string; // YYYY-MM-DD
+  dataFim?: string;    // YYYY-MM-DD
+  tipoPauta?: string;  // "votacao", "deliberacao", etc
+  situacao?: string;   // "Encerrada", "Convocada", etc
+  itens?: number;
+  pagina?: number;
+}): Promise<EventoBasic[]> {
+  const q = new URLSearchParams();
+  q.set("ordem", "DESC");
+  q.set("ordenarPor", "dataHoraInicio");
+  q.set("itens", String(params?.itens ?? 30));
+
+  if (params?.pagina) q.set("pagina", String(params.pagina));
+  if (params?.dataInicio) q.set("dataInicio", params.dataInicio);
+  if (params?.dataFim) q.set("dataFim", params.dataFim);
+  if (params?.tipoPauta) q.set("tipoPauta", params.tipoPauta);
+  if (params?.situacao) q.set("situacao", params.situacao);
+
+  const url = `${BASE}/eventos?${q.toString()}`;
+  const response = await fetchJson<Paged<EventoBasic>>(url);
+
+  return response.dados ?? [];
+}
+
+/**
+ * Busca detalhes de um evento específico
+ */
+export async function getEvento(eventoId: number): Promise<EventoBasic | null> {
+  try {
+    const url = `${BASE}/eventos/${eventoId}`;
+    const response = await fetchJson<{ dados: EventoBasic }>(url);
+    return response.dados ?? null;
+  } catch (error) {
+    console.error(`Erro ao buscar evento ${eventoId}:`, error);
+    return null;
+  }
+}
+
+/**
+ * Lista deputados que participaram de um evento
+ */
+export async function getDeputadosEvento(eventoId: number): Promise<DeputadoEvento[]> {
+  try {
+    const url = `${BASE}/eventos/${eventoId}/deputados`;
+    const response = await fetchJson<Paged<DeputadoEvento>>(url);
+    return response.dados ?? [];
+  } catch (error) {
+    console.error(`Erro ao buscar deputados do evento ${eventoId}:`, error);
+    return [];
+  }
+}
+
+/**
+ * Busca votações associadas a um evento
+ */
+export async function getVotacoesEvento(eventoId: number): Promise<VotacaoBasic[]> {
+  try {
+    const url = `${BASE}/eventos/${eventoId}/votacoes`;
+    const response = await fetchJson<Paged<VotacaoBasic>>(url);
+    return response.dados ?? [];
+  } catch (error) {
+    console.error(`Erro ao buscar votações do evento ${eventoId}:`, error);
+    return [];
+  }
+}
+
+/**
+ * Verifica quais deputados faltaram em uma votação específica
+ * Compara a lista de todos os deputados em exercício com os que votaram
+ */
+export async function getAusentesVotacao(votacaoId: string): Promise<DeputyBasic[]> {
+  try {
+    // Busca todos os deputados em exercício
+    const todosDeputados = await listDeputies({ emExercicio: true });
+    
+    // Busca votos da votação
+    const votos = await getVotacaoVotos(votacaoId);
+    const idsQueVotaram = new Set(votos.map(v => v.deputado_.id));
+    
+    // Filtra os que não votaram
+    const ausentes = todosDeputados.filter(d => !idsQueVotaram.has(d.id));
+    
+    return ausentes;
+  } catch (error) {
+    console.error(`Erro ao buscar ausentes da votação ${votacaoId}:`, error);
+    return [];
+  }
+}
+
+/**
+ * Busca histórico de faltas de um deputado específico
+ * Analisa as votações recentes e verifica ausências
+ */
+export async function getFaltasDeputado(params: {
+  deputadoId: number;
+  dataInicio?: string;
+  dataFim?: string;
+  limite?: number;
+}): Promise<{
+  votacao: VotacaoBasic;
+  presente: boolean;
+  tipoVoto: string | null;
+}[]> {
+  try {
+    // Busca votações recentes
+    const votacoes = await listVotacoes({
+      dataInicio: params.dataInicio,
+      dataFim: params.dataFim,
+      itens: params.limite ?? 50,
+    });
+    
+    const resultado: {
+      votacao: VotacaoBasic;
+      presente: boolean;
+      tipoVoto: string | null;
+    }[] = [];
+    
+    // Para cada votação, verifica se o deputado votou
+    for (const votacao of votacoes) {
+      const votos = await getVotacaoVotos(votacao.id);
+      const votoDeputado = votos.find(v => v.deputado_.id === params.deputadoId);
+      
+      resultado.push({
+        votacao,
+        presente: !!votoDeputado,
+        tipoVoto: votoDeputado?.tipoVoto ?? null,
+      });
+      
+      // Pequeno delay para não sobrecarregar a API
+      await delay(100);
+    }
+    
+    return resultado;
+  } catch (error) {
+    console.error(`Erro ao buscar faltas do deputado ${params.deputadoId}:`, error);
+    return [];
+  }
+}
+
+/**
+ * Busca eventos recentes com votação
+ */
+export async function getEventosComVotacao(params?: {
+  dataInicio?: string;
+  dataFim?: string;
+  limite?: number;
+}): Promise<Array<EventoBasic & { votacoes: VotacaoBasic[] }>> {
+  try {
+    const eventos = await listEventos({
+      dataInicio: params?.dataInicio,
+      dataFim: params?.dataFim,
+      situacao: "Encerrada",
+      itens: params?.limite ?? 20,
+    });
+    
+    const eventosComVotacao: Array<EventoBasic & { votacoes: VotacaoBasic[] }> = [];
+    
+    for (const evento of eventos) {
+      const votacoes = await getVotacoesEvento(evento.id);
+      if (votacoes.length > 0) {
+        eventosComVotacao.push({ ...evento, votacoes });
+      }
+      await delay(100);
+    }
+    
+    return eventosComVotacao;
+  } catch (error) {
+    console.error("Erro ao buscar eventos com votação:", error);
+    return [];
+  }
+}
+
+/**
+ * Calcula estatísticas de presença de um deputado
+ */
+export async function getEstatisticasPresenca(params: {
+  deputadoId: number;
+  dataInicio?: string;
+  dataFim?: string;
+}): Promise<{
+  totalVotacoes: number;
+  presencas: number;
+  ausencias: number;
+  percentualPresenca: number;
+  ultimasVotacoes: Array<{
+    votacao: VotacaoBasic;
+    presente: boolean;
+    tipoVoto: string | null;
+  }>;
+}> {
+  const faltas = await getFaltasDeputado({
+    deputadoId: params.deputadoId,
+    dataInicio: params.dataInicio,
+    dataFim: params.dataFim,
+    limite: 100,
+  });
+  
+  const presencas = faltas.filter(f => f.presente).length;
+  const ausencias = faltas.filter(f => !f.presente).length;
+  const totalVotacoes = faltas.length;
+  const percentualPresenca = totalVotacoes > 0 
+    ? Math.round((presencas / totalVotacoes) * 100) 
+    : 100;
+  
+  return {
+    totalVotacoes,
+    presencas,
+    ausencias,
+    percentualPresenca,
+    ultimasVotacoes: faltas.slice(0, 10),
+  };
+}

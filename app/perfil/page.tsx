@@ -12,16 +12,16 @@ import {
   ExternalLink,
   Check,
   X,
-  Twitter,
-  Instagram,
   MessageCircle,
   AlertCircle,
   Sparkles,
   Zap,
   Shield,
+  BellRing,
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import PixPayment from "@/components/payment/PixPayment";
+import { NotificationSettings, NotificationsList } from "@/components/notifications";
 
 interface DeputadoFavorito {
   id: number;
@@ -104,6 +104,7 @@ export default function PerfilPage() {
   const [currentPlan, setCurrentPlan] = useState<PlanType>("gratuito");
   const [notificacoesAtivas, setNotificacoesAtivas] = useState(true);
   const [activeTab, setActiveTab] = useState("favoritos");
+  const [notificacoesView, setNotificacoesView] = useState<"alertas" | "config">("alertas");
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [selectedPlanForPayment, setSelectedPlanForPayment] = useState<PlanInfo | null>(null);
 
@@ -384,53 +385,47 @@ export default function PerfilPage() {
               Notificações
             </h2>
 
-            <div className="space-y-4">
-              <div className="flex items-center justify-between p-4 border-3 border-black dark:border-brutal-dark-border">
-                <div className="flex items-center gap-3">
-                  <Bell className="w-6 h-6 text-gray-600 dark:text-brutal-dark-muted" />
-                  <div>
-                    <h3 className="font-bold dark:text-brutal-dark-text">Alertas de Gastos</h3>
-                    <p className="text-sm text-gray-600 dark:text-brutal-dark-muted">
-                      Receba alertas sobre gastos suspeitos
-                    </p>
-                  </div>
-                </div>
-                <button
-                  onClick={toggleNotificacoes}
-                  className={`w-16 h-8 border-2 border-black dark:border-brutal-dark-border transition-colors relative flex items-center ${
-                    notificacoesAtivas
-                      ? "bg-green-500"
-                      : "bg-gray-200 dark:bg-brutal-dark-bg"
-                  }`}
-                >
-                  <span
-                    className={`w-6 h-6 bg-white dark:bg-brutal-dark-surface border-2 border-black dark:border-brutal-dark-border transition-all ${
-                      notificacoesAtivas ? "ml-auto mr-0.5" : "ml-0.5"
-                    }`}
-                  />
-                </button>
-              </div>
-
-              {!isPremium && (
-                <div className="p-4 bg-gray-100 dark:bg-brutal-dark-bg border-2 border-dashed border-gray-300 dark:border-brutal-dark-border">
-                  <p className="text-sm text-gray-600 dark:text-brutal-dark-muted">
-                    <Crown className="w-4 h-4 inline mr-1" />
-                    <strong>Recurso PRO:</strong> Notificações por e-mail e push estarão
-                    disponíveis no plano Vigilante PRO.
-                  </p>
-                </div>
-              )}
-
-              <div className="mt-8">
-                <h3 className="font-black text-lg mb-4 dark:text-brutal-dark-text">
-                  Histórico de Alertas
-                </h3>
-                <div className="text-center py-8 text-gray-500 dark:text-brutal-dark-muted">
-                  <AlertCircle className="w-12 h-12 mx-auto mb-2 opacity-50" />
-                  <p>Nenhum alerta recente</p>
-                </div>
-              </div>
+            {/* Toggle entre Alertas e Configurações */}
+            <div className="flex gap-2 mb-6">
+              <button
+                onClick={() => setNotificacoesView("alertas")}
+                className={`px-4 py-2 font-bold text-sm border-2 transition-all ${
+                  notificacoesView === "alertas"
+                    ? "bg-black dark:bg-brutal-dark-accent text-white border-black dark:border-brutal-dark-accent"
+                    : "bg-white dark:bg-brutal-dark-surface text-black dark:text-brutal-dark-text border-black dark:border-brutal-dark-border"
+                }`}
+              >
+                <BellRing size={16} className="inline mr-2" />
+                Alertas
+              </button>
+              <button
+                onClick={() => setNotificacoesView("config")}
+                className={`px-4 py-2 font-bold text-sm border-2 transition-all ${
+                  notificacoesView === "config"
+                    ? "bg-black dark:bg-brutal-dark-accent text-white border-black dark:border-brutal-dark-accent"
+                    : "bg-white dark:bg-brutal-dark-surface text-black dark:text-brutal-dark-text border-black dark:border-brutal-dark-border"
+                }`}
+              >
+                <Settings size={16} className="inline mr-2" />
+                Configurações
+              </button>
             </div>
+
+            {!isPremium && (
+              <div className="p-4 mb-6 bg-brutal-yellow/20 dark:bg-brutal-dark-accent/20 border-2 border-brutal-yellow dark:border-brutal-dark-accent">
+                <p className="text-sm dark:text-brutal-dark-text">
+                  <Crown className="w-4 h-4 inline mr-1" />
+                  <strong>Recurso Premium:</strong> Notificações por e-mail estão disponíveis
+                  nos planos Vigilante. <button onClick={() => setActiveTab("premium")} className="underline font-bold">Assine agora</button>
+                </p>
+              </div>
+            )}
+
+            {notificacoesView === "alertas" ? (
+              <NotificationsList />
+            ) : (
+              <NotificationSettings />
+            )}
           </div>
         )}
 

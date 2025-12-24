@@ -1,3 +1,4 @@
+export * from "./Absences";
 export * from "./Blocks";
 export * from "./Cost";
 export * from "./DadosQueChocam";

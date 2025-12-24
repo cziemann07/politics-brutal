@@ -212,19 +212,63 @@ Calcula CEAP para todos os deputados de um mês específico.
 
 4. **Página do político usava dados mock**: **Corrigido**: Agora busca dados reais da API da Câmara.
 
+## 🔔 Sistema de Notificações
+
+O projeto inclui um sistema completo de notificações para alertar usuários sobre atividades dos deputados que eles seguem.
+
+### Funcionalidades
+
+- **Alertas de Faltas**: Notifica quando um deputado falta em votações
+- **Alertas de Gastos**: Notifica quando gastos excedem o teto CEAP
+- **Resumo Semanal**: Digest com resumo das atividades
+- **Configurações Personalizáveis**: Usuário escolhe quais alertas receber
+
+### Configuração
+
+1. **Supabase**: Execute o schema em `supabase/notifications-schema.sql`
+2. **Resend**: Configure a API key para envio de e-mails
+3. **Cron Jobs**: Configure para chamar `/api/absences/check` periodicamente
+
+### Variáveis de Ambiente
+
+```bash
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+
+# Resend (e-mails)
+RESEND_API_KEY=re_xxxxxxxxxxxx
+FROM_EMAIL=Política Sem Filtro <noreply@seudominio.com.br>
+
+# Aplicação
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+
+# Segurança (cron jobs)
+CRON_SECRET=your-secret-token
+```
+
+### APIs de Notificação
+
+- `GET /api/absences/check` - Verifica faltas e envia notificações (cron)
+- `POST /api/absences/check` - Verifica faltas de um deputado específico
+- `GET /api/absences/[deputadoId]` - Histórico de faltas do deputado
+- `GET/PUT /api/notifications` - Lista e marca notificações como lidas
+- `GET/PUT /api/notifications/settings` - Configurações de notificação
+- `GET/POST/DELETE /api/followed-deputies` - Deputados seguidos
+
 ## 🔄 Próximos Passos Sugeridos
 
 1. **Atualizar dados de processos/escândalos**: A página do político ainda não busca processos reais. Considere integrar com APIs de processos judiciais.
 
-2. **Adicionar histórico de votos**: Mostrar como cada deputado votou em projetos importantes.
+2. ~~**Adicionar histórico de votos**: Mostrar como cada deputado votou em projetos importantes.~~ ✅ Implementado
 
-3. **Sistema de notificações**: Alertar quando um deputado ultrapassar o teto.
+3. ~~**Sistema de notificações**: Alertar quando um deputado ultrapassar o teto.~~ ✅ Implementado
 
 4. **Comparações**: Permitir comparar gastos entre deputados, partidos, estados.
 
 5. **Gráficos e visualizações**: Adicionar mais visualizações de dados.
 
-6. **Atualizar mês padrão**: O mês padrão está fixo em setembro/2024. Considere usar o mês atual ou permitir seleção.
+6. **Notificações por WhatsApp**: Integrar com WhatsApp Business API.
 
 ## 📝 Notas Importantes
 

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ArrowLeft, Scale, Siren, Share2, Heart } from "lucide-react";
-import { PoliticianInvoice } from "@/components/features";
+import { PoliticianInvoice, DeputyAbsencesCard } from "@/components/features";
 import { PedirExplicacaoButton } from "@/components/ui";
 
 type PoliticianData = {
@@ -217,6 +217,12 @@ export default function PoliticianProfile({ params }: { params: { id: string } }
               advisors: politician.advisors || 25,
               cabinet_budget: politician.cabinet_budget || 111000,
             }}
+          />
+
+          {/* Card de Presença em Votações */}
+          <DeputyAbsencesCard
+            deputadoId={politician.id}
+            deputadoNome={politician.name}
           />
 
           <div className="flex flex-col gap-3">
