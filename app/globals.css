@@ -3,249 +3,94 @@
 @tailwind utilities;
 
 @layer components {
-  /* Botões */
-  .btn-primary {
-    @apply px-6 py-3 bg-radar-accent text-white font-semibold rounded-lg
-           hover:bg-radar-accent/90 transition-colors duration-200;
-  }
-
-  .btn-secondary {
-    @apply px-6 py-3 bg-radar-surface dark:bg-radar-dark-surface
-           text-radar-text dark:text-radar-dark-text font-semibold rounded-lg
-           border border-radar-border dark:border-radar-dark-border
-           hover:bg-radar-bg dark:hover:bg-radar-dark-bg transition-colors duration-200;
-  }
-
-  .btn-outline {
-    @apply px-6 py-3 bg-transparent text-radar-accent font-semibold rounded-lg
-           border-2 border-radar-accent hover:bg-radar-accent hover:text-white
-           transition-colors duration-200;
-  }
-
-  /* Cards */
-  .card {
-    @apply bg-radar-surface dark:bg-radar-dark-surface rounded-lg
-           border border-radar-border dark:border-radar-dark-border
-           shadow-card hover:shadow-card-hover transition-shadow duration-200;
-  }
-
-  .card-interactive {
-    @apply card cursor-pointer hover:border-radar-secondary
-           dark:hover:border-radar-dark-secondary;
-  }
-
-  /* Tipografia */
-  .text-headline-xl {
-    @apply text-4xl md:text-5xl font-bold leading-tight tracking-tight;
-  }
-
-  .text-headline-lg {
-    @apply text-3xl md:text-4xl font-bold leading-tight;
-  }
-
-  .text-headline-md {
-    @apply text-2xl md:text-3xl font-semibold leading-snug;
-  }
-
-  .text-headline-sm {
-    @apply text-xl md:text-2xl font-semibold;
-  }
-
-  .text-body-lg {
-    @apply text-lg leading-relaxed;
-  }
-
-  .text-body-md {
-    @apply text-base leading-relaxed;
-  }
-
-  .text-body-sm {
-    @apply text-sm leading-normal;
-  }
-
-  .text-caption {
-    @apply text-xs leading-tight text-radar-muted dark:text-radar-dark-muted;
-  }
-
-  /* Badges */
-  .badge {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
-  }
-
-  .badge-accent {
-    @apply badge bg-radar-accent/10 text-radar-accent;
-  }
-
-  .badge-success {
-    @apply badge bg-radar-success/10 text-radar-success;
-  }
-
-  .badge-warning {
-    @apply badge bg-radar-warning/10 text-radar-warning;
-  }
-
-  .badge-error {
-    @apply badge bg-radar-error/10 text-radar-error;
-  }
-
-  .badge-info {
-    @apply badge bg-radar-info/10 text-radar-info;
-  }
-
-  /* Inputs */
-  .input {
-    @apply w-full px-4 py-3 bg-radar-surface dark:bg-radar-dark-surface
-           text-radar-text dark:text-radar-dark-text
-           border border-radar-border dark:border-radar-dark-border rounded-lg
-           placeholder:text-radar-muted dark:placeholder:text-radar-dark-muted
-           focus:outline-none focus:ring-2 focus:ring-radar-secondary/50
-           focus:border-radar-secondary transition-colors duration-200;
-  }
-
-  /* Seções */
-  .section {
-    @apply py-12 md:py-16 lg:py-20;
-  }
-
-  .section-header {
-    @apply mb-8 md:mb-12;
-  }
-
-  /* Container */
-  .container-main {
-    @apply max-w-7xl mx-auto px-4 md:px-6 lg:px-8;
-  }
-
-  /* Links */
-  .link {
-    @apply text-radar-secondary dark:text-radar-dark-secondary
-           hover:text-radar-accent transition-colors duration-200;
-  }
-
-  /* Dividers */
-  .divider {
-    @apply border-t border-radar-border dark:border-radar-dark-border;
-  }
-
-  /* ============================================
-     COMPATIBILIDADE COM CÓDIGO ANTIGO (brutal)
-     TODO: Remover após migração completa
-     ============================================ */
-
   .btn-brutal {
-    @apply btn-secondary;
+    @apply font-sans border-3 border-black shadow-hard transition-all duration-100 bg-white px-6 py-3 font-bold uppercase tracking-wide text-black hover:bg-black hover:text-white hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-hard-hover active:shadow-hard-active active:translate-x-[4px] active:translate-y-[4px];
+  }
+
+  .dark .btn-brutal {
+    @apply border-brutal-dark-border bg-brutal-dark-surface text-brutal-dark-text shadow-none hover:bg-brutal-dark-accent hover:text-white hover:border-brutal-dark-accent;
   }
 
   .card-brutal {
-    @apply card p-6;
+    @apply border-3 border-black shadow-hard bg-white p-6;
   }
 
-  .highlight-brutal {
-    @apply bg-radar-accent/10 text-radar-accent border border-radar-accent rounded-md;
+  .dark .card-brutal {
+    @apply border-brutal-dark-border bg-brutal-dark-surface shadow-none text-brutal-dark-text;
   }
 
+  /* Tipografia Padronizada */
   .heading-hero {
-    @apply text-headline-xl;
+    @apply text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter leading-[0.9];
   }
 
   .heading-section {
-    @apply text-headline-lg;
+    @apply text-3xl md:text-4xl font-black uppercase tracking-tight;
   }
 
   .heading-card {
-    @apply text-headline-sm;
+    @apply text-xl md:text-2xl font-black uppercase;
   }
 
   .heading-subtitle {
-    @apply text-headline-sm font-medium;
+    @apply text-lg md:text-xl font-bold;
   }
 
   .text-body {
-    @apply text-body-md;
+    @apply text-base leading-relaxed font-medium;
   }
 
   .text-small {
-    @apply text-body-sm;
+    @apply text-sm leading-tight font-medium;
   }
 
   .text-label {
-    @apply text-caption uppercase tracking-wide font-semibold;
+    @apply text-xs font-bold uppercase tracking-wide;
+  }
+
+  /* Highlight/Grifado - classe custom para elementos destacados */
+  .highlight-brutal {
+    @apply bg-brutal-yellow text-black border-3 border-black shadow-hard;
+  }
+
+  .dark .highlight-brutal {
+    @apply bg-brutal-dark-accent text-white border-brutal-dark-accent shadow-none;
   }
 }
 
-/* Light Mode (padrão) */
+/* Light Mode (padrao) */
 body {
-  background-color: #FAFAFA;
-  color: #1A1A2E;
-  font-size: 16px;
-  line-height: 1.6;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  background-color: #F4F4F0;
+  color: #000;
+  font-size: 18px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Dark Mode */
 html.dark body {
-  background-color: #0F0F0F;
-  color: #E5E5E5;
+  background-color: #000000;
+  color: #E7E9EA;
 }
 
-/* CSS Variables */
+/* CSS Variables para dark mode - usadas em componentes */
 :root {
-  --radar-accent: #E63946;
-  --radar-secondary: #457B9D;
-  --shadow-card: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-hard: 4px 4px 0px 0px #000;
 }
 
 .dark {
-  --shadow-card: 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-hard: none;
 }
 
-/* Input fields no dark mode */
+/* Input fields no dark mode - elementos nativos */
 .dark input,
 .dark select,
 .dark textarea {
-  background-color: #1A1A1A;
-  color: #E5E5E5;
-  border-color: #2D2D2D;
+  background-color: #16181C;
+  color: #E7E9EA;
+  border-color: #2F3336;
 }
 
 .dark input::placeholder,
 .dark textarea::placeholder {
   color: #71767B;
-}
-
-/* Scrollbar customizada */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #FAFAFA;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
-}
-
-.dark ::-webkit-scrollbar-track {
-  background: #0F0F0F;
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  background: #2D2D2D;
-}
-
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: #404040;
-}
-
-/* Seleção de texto */
-::selection {
-  background-color: #E63946;
-  color: white;
 }

@@ -1,26 +1,23 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/layout";
+import { Navigation } from "@/components/layout";
 import { ThemeProvider, AuthProvider } from "@/contexts";
 
-const inter = Inter({
-  variable: "--font-inter",
+const geistSans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
-  display: "swap",
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Radar sem Filtro - Acompanhe seus políticos",
+  title: "Política Sem Filtro - Dados Crus para Combater a Idolatria",
   description:
-    "Acompanhe deputados brasileiros: gastos, votações, presenças e mais. Transparência política para o cidadão.",
-  keywords: ["política", "deputados", "transparência", "brasil", "câmara", "votações", "gastos públicos"],
-  authors: [{ name: "Radar sem Filtro" }],
-  openGraph: {
-    title: "Radar sem Filtro",
-    description: "Acompanhe seus políticos de verdade",
-    type: "website",
-  },
+    "Transparência política radical. Veja gastos, votações e dados dos seus deputados sem filtro.",
 };
 
 export default function RootLayout({
@@ -30,13 +27,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider>
           <AuthProvider>
-            <Header />
-            <main className="min-h-screen">
-              {children}
-            </main>
+            <Navigation />
+            {children}
           </AuthProvider>
         </ThemeProvider>
       </body>
