@@ -355,7 +355,7 @@ export default function NoticiasPage() {
               </div>
             </div>
             <Link
-              href="/login"
+              href="/auth"
               className="bg-white text-brutal-red px-6 py-3 font-black uppercase border-2 border-white hover:bg-black hover:text-white hover:border-black transition-all"
             >
               Fazer Login
@@ -374,11 +374,10 @@ export default function NoticiasPage() {
           <button
             key={cat.id}
             onClick={() => setFiltro(cat.id)}
-            className={`px-4 py-2 font-bold uppercase text-sm border-2 border-black dark:border-brutal-dark-border transition-all ${
-              filtro === cat.id
+            className={`px-4 py-2 font-bold uppercase text-sm border-2 border-black dark:border-brutal-dark-border transition-all ${filtro === cat.id
                 ? "bg-black text-white dark:bg-brutal-dark-accent"
                 : "bg-white dark:bg-brutal-dark-surface dark:text-brutal-dark-text hover:bg-black hover:text-white dark:hover:bg-brutal-dark-accent"
-            }`}
+              }`}
           >
             {cat.label}
           </button>

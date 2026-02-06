@@ -12,15 +12,15 @@ interface PixPaymentProps {
   onCancel?: () => void;
 }
 
-// Dados do recebedor PIX - ATUALIZE COM SEUS DADOS REAIS
-const PIX_CONFIG = {
-  chavePix: "45998393963", // Sua chave PIX (email, telefone, CPF ou aleatória)
-  nomeRecebedor: "Carlos Eduardo Ziemann da Silva",
-  cidade: "Foz do Iguaçu",
-};
+interface PixConfigData {
+  chavePix: string;
+  nomeRecebedor: string;
+  cidade: string;
+  warning?: string;
+}
 
 // Gera código PIX no formato EMV (copia e cola)
-function gerarCodigoPix(valor: number, txid: string): string {
+function gerarCodigoPix(valor: number, txid: string, config: PixConfigData): string {
   const formatField = (id: string, value: string) => {
     const len = value.length.toString().padStart(2, "0");
     return `${id}${len}${value}`;
@@ -28,7 +28,7 @@ function gerarCodigoPix(valor: number, txid: string): string {
 
   // Merchant Account Information (chave PIX)
   const gui = formatField("00", "br.gov.bcb.pix");
-  const chave = formatField("01", PIX_CONFIG.chavePix);
+  const chave = formatField("01", config.chavePix);
   const merchantAccount = formatField("26", gui + chave);
 
   // Campos principais
@@ -37,8 +37,8 @@ function gerarCodigoPix(valor: number, txid: string): string {
   const transactionCurrency = formatField("53", "986"); // BRL
   const transactionAmount = formatField("54", valor.toFixed(2));
   const countryCode = formatField("58", "BR");
-  const merchantName = formatField("59", PIX_CONFIG.nomeRecebedor.substring(0, 25));
-  const merchantCity = formatField("60", PIX_CONFIG.cidade.substring(0, 15));
+  const merchantName = formatField("59", config.nomeRecebedor.substring(0, 25));
+  const merchantCity = formatField("60", config.cidade.substring(0, 15));
 
   // Additional Data Field (txid)
   const txidField = formatField("05", txid.substring(0, 25));
@@ -97,13 +97,34 @@ export default function PixPayment({
   const [codigoPix, setCodigoPix] = useState("");
   const [copied, setCopied] = useState(false);
   const [timeLeft, setTimeLeft] = useState(15 * 60); // 15 minutos
-  const [status, setStatus] = useState<"pending" | "checking" | "success" | "expired">("pending");
+  const [status, setStatus] = useState<"pending" | "checking" | "success" | "expired" | "loading">("loading");
+  const [pixConfig, setPixConfig] = useState<PixConfigData | null>(null);
+  const [configError, setConfigError] = useState<string | null>(null);
 
-  // Gera o código PIX
+  // Fetch PIX config from server
   useEffect(() => {
-    const codigo = gerarCodigoPix(price, txId);
-    setCodigoPix(codigo);
-  }, [price, txId]);
+    async function fetchPixConfig() {
+      try {
+        const res = await fetch("/api/pix-config");
+        if (!res.ok) throw new Error("Failed to fetch PIX config");
+        const data = await res.json();
+        setPixConfig(data);
+        setStatus("pending");
+      } catch (err) {
+        console.error("Error fetching PIX config:", err);
+        setConfigError("Erro ao carregar configuração de pagamento.");
+      }
+    }
+    fetchPixConfig();
+  }, []);
+
+  // Gera o código PIX quando config estiver disponível
+  useEffect(() => {
+    if (pixConfig) {
+      const codigo = gerarCodigoPix(price, txId, pixConfig);
+      setCodigoPix(codigo);
+    }
+  }, [price, txId, pixConfig]);
 
   // Timer de expiração
   useEffect(() => {
@@ -268,11 +289,10 @@ export default function PixPayment({
           />
           <button
             onClick={handleCopy}
-            className={`px-4 border-3 border-black dark:border-brutal-dark-border font-bold transition-colors ${
-              copied
-                ? "bg-green-500 text-white"
-                : "bg-white dark:bg-brutal-dark-surface hover:bg-black hover:text-white dark:hover:bg-brutal-dark-accent"
-            }`}
+            className={`px-4 border-3 border-black dark:border-brutal-dark-border font-bold transition-colors ${copied
+              ? "bg-green-500 text-white"
+              : "bg-white dark:bg-brutal-dark-surface hover:bg-black hover:text-white dark:hover:bg-brutal-dark-accent"
+              }`}
           >
             {copied ? <Check size={20} /> : <Copy size={20} />}
           </button>

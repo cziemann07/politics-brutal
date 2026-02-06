@@ -6,6 +6,7 @@ const BASE = "https://dadosabertos.camara.leg.br/api/v2";
 const MAX_RETRIES = 3;
 const INITIAL_RETRY_DELAY = 1000; // 1 segundo
 const REQUEST_TIMEOUT = 30000; // 30 segundos
+const MAX_PAGES = 50; // Safety limit to prevent infinite pagination loops
 
 export type DeputyBasic = {
   id: number;
@@ -134,12 +135,25 @@ export async function listDeputies(params?: {
 
   let url = `${BASE}/deputados?${q.toString()}`;
   const out: DeputyBasic[] = [];
+  let pageCount = 0;
 
-  while (url) {
+  while (url && pageCount < MAX_PAGES) {
     const page = await fetchJson<Paged<DeputyBasic>>(url);
     out.push(...(page.dados ?? []));
+    pageCount++;
+
     const next = page.links?.find((l) => l.rel === "next")?.href;
-    url = next ?? "";
+
+    // Stop if no more pages or empty response
+    if (!next || (page.dados?.length ?? 0) === 0) {
+      break;
+    }
+    url = next;
+  }
+
+  // Log summary in non-production
+  if (process.env.NODE_ENV !== 'production') {
+    console.log(`[listDeputies] Fetched ${pageCount} pages, ${out.length} items`);
   }
 
   return out;
@@ -161,9 +175,11 @@ export async function ceapTotalForDeputy(params: {
 
   let url = `${BASE}/deputados/${params.id}/despesas?${q.toString()}`;
   let total = 0;
+  let pageCount = 0;
 
-  while (url) {
+  while (url && pageCount < MAX_PAGES) {
     const page = await fetchJson<Paged<ExpenseRow>>(url);
+    pageCount++;
 
     for (const row of page.dados ?? []) {
       const v = typeof row.valorLiquido === "string" ? Number(row.valorLiquido) : row.valorLiquido;
@@ -171,7 +187,17 @@ export async function ceapTotalForDeputy(params: {
     }
 
     const next = page.links?.find((l) => l.rel === "next")?.href;
-    url = next ?? "";
+
+    // Stop if no more pages or empty response
+    if (!next || (page.dados?.length ?? 0) === 0) {
+      break;
+    }
+    url = next;
+  }
+
+  // Log summary in non-production
+  if (process.env.NODE_ENV !== 'production' && pageCount > 1) {
+    console.log(`[ceapTotalForDeputy] Deputado ${params.id}: ${pageCount} pages`);
   }
 
   // arredonda pra centavos
@@ -490,14 +516,14 @@ export async function getAusentesVotacao(votacaoId: string): Promise<DeputyBasic
   try {
     // Busca todos os deputados em exercício
     const todosDeputados = await listDeputies({ emExercicio: true });
-    
+
     // Busca votos da votação
     const votos = await getVotacaoVotos(votacaoId);
     const idsQueVotaram = new Set(votos.map(v => v.deputado_.id));
-    
+
     // Filtra os que não votaram
     const ausentes = todosDeputados.filter(d => !idsQueVotaram.has(d.id));
-    
+
     return ausentes;
   } catch (error) {
     console.error(`Erro ao buscar ausentes da votação ${votacaoId}:`, error);
@@ -526,28 +552,28 @@ export async function getFaltasDeputado(params: {
       dataFim: params.dataFim,
       itens: params.limite ?? 50,
     });
-    
+
     const resultado: {
       votacao: VotacaoBasic;
       presente: boolean;
       tipoVoto: string | null;
     }[] = [];
-    
+
     // Para cada votação, verifica se o deputado votou
     for (const votacao of votacoes) {
       const votos = await getVotacaoVotos(votacao.id);
       const votoDeputado = votos.find(v => v.deputado_.id === params.deputadoId);
-      
+
       resultado.push({
         votacao,
         presente: !!votoDeputado,
         tipoVoto: votoDeputado?.tipoVoto ?? null,
       });
-      
+
       // Pequeno delay para não sobrecarregar a API
       await delay(100);
     }
-    
+
     return resultado;
   } catch (error) {
     console.error(`Erro ao buscar faltas do deputado ${params.deputadoId}:`, error);
@@ -570,9 +596,9 @@ export async function getEventosComVotacao(params?: {
       situacao: "Encerrada",
       itens: params?.limite ?? 20,
     });
-    
+
     const eventosComVotacao: Array<EventoBasic & { votacoes: VotacaoBasic[] }> = [];
-    
+
     for (const evento of eventos) {
       const votacoes = await getVotacoesEvento(evento.id);
       if (votacoes.length > 0) {
@@ -580,7 +606,7 @@ export async function getEventosComVotacao(params?: {
       }
       await delay(100);
     }
-    
+
     return eventosComVotacao;
   } catch (error) {
     console.error("Erro ao buscar eventos com votação:", error);
@@ -612,14 +638,14 @@ export async function getEstatisticasPresenca(params: {
     dataFim: params.dataFim,
     limite: 100,
   });
-  
+
   const presencas = faltas.filter(f => f.presente).length;
   const ausencias = faltas.filter(f => !f.presente).length;
   const totalVotacoes = faltas.length;
-  const percentualPresenca = totalVotacoes > 0 
-    ? Math.round((presencas / totalVotacoes) * 100) 
+  const percentualPresenca = totalVotacoes > 0
+    ? Math.round((presencas / totalVotacoes) * 100)
     : 100;
-  
+
   return {
     totalVotacoes,
     presencas,

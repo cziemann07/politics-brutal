@@ -153,9 +153,9 @@ export async function PATCH(request: NextRequest) {
     const body = await request.json();
     const { txId, status, adminKey } = body;
 
-    // Validação básica de admin (em produção, use autenticação real)
-    const expectedAdminKey = process.env.ADMIN_API_KEY || "admin-secret-key";
-    if (adminKey !== expectedAdminKey) {
+    // Validação de admin - requer ADMIN_API_KEY em produção
+    const expectedAdminKey = process.env.ADMIN_API_KEY;
+    if (!expectedAdminKey || adminKey !== expectedAdminKey) {
       return NextResponse.json(
         { error: "Não autorizado" },
         { status: 401 }

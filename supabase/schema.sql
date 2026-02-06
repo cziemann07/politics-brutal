@@ -7,6 +7,18 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- =============================================
+-- TABELA: api_cache (cache de APIs externas)
+-- =============================================
+CREATE TABLE IF NOT EXISTS api_cache (
+  key TEXT PRIMARY KEY,
+  data JSONB NOT NULL,
+  fetched_at TIMESTAMPTZ DEFAULT NOW(),
+  expires_at TIMESTAMPTZ NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_api_cache_expires ON api_cache(expires_at);
+
+
+-- =============================================
 -- TABELA: users (perfis de usuário)
 -- =============================================
 CREATE TABLE IF NOT EXISTS users (
