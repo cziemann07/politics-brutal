@@ -32,126 +32,111 @@ interface Noticia {
   relevancia: "alta" | "media" | "baixa";
 }
 
-// Notícias reais e atuais - Dezembro 2025
+// Notícias reais e atuais - Fevereiro/Março 2026
 const noticias: Noticia[] = [
   {
-    id: 11,
-    titulo: "Câmara Aprova Flexibilização do Licenciamento Ambiental",
+    id: 20,
+    titulo: "CPMI do INSS Aprova Quebra de Sigilo de Lulinha com Briga e Confusão",
     subtitulo:
-      "PL 1.159/2024 reduz exigências para obras obterem autorização. Ambientalistas alertam para risco de mais desmatamento.",
-    fonte: "Câmara dos Deputados",
-    fonteUrl: "https://www.camara.leg.br/noticias/",
-    data: "22/12/2025",
-    categoria: "alerta",
-    tags: ["Licenciamento Ambiental", "Câmara", "Meio Ambiente", "Agronegócio"],
-    destaque: "Ruralistas celebram, ambientalistas protestam. O de sempre.",
-    contexto:
-      "O projeto segue para o Senado. Se aprovado, dependerá de sanção ou veto de Lula. Bancada ruralista votou em bloco a favor.",
-    relevancia: "alta",
-  },
-  {
-    id: 12,
-    titulo: "Isenção de IR até R$ 5 Mil: Promessa ou Realidade?",
-    subtitulo:
-      "Governo anuncia isenção do Imposto de Renda para rendimentos até R$ 5 mil, mas medida só vale a partir de 2026.",
-    fonte: "Ministério da Fazenda",
-    fonteUrl: "https://www.gov.br/fazenda/",
-    data: "21/12/2025",
-    categoria: "fato",
-    tags: ["Imposto de Renda", "Classe Média", "Economia", "Lula"],
-    destaque: "Promessa de campanha de 2022. Implementação só em 2026.",
-    contexto:
-      "O pacote fiscal inclui também taxação de super-ricos e fundos exclusivos. Oposição critica timing eleitoral da medida.",
-    relevancia: "alta",
-  },
-  {
-    id: 13,
-    titulo: "Salário Mínimo Sobe para R$ 1.518 em Janeiro",
-    subtitulo:
-      "Aumento de R$ 106 representa reposição da inflação mais ganho real de 2,5%. Empresários reclamam de custos.",
-    fonte: "Governo Federal",
-    fonteUrl: "https://www.gov.br/trabalho-e-emprego/",
-    data: "20/12/2025",
-    categoria: "fato",
-    tags: ["Salário Mínimo", "Economia", "Trabalhadores", "2025"],
-    destaque: "Ganho real de 2,5% - melhor que muitos esperavam.",
-    contexto:
-      "Impacto nas contas da Previdência estimado em R$ 14 bilhões. Benefícios atrelados ao mínimo também serão reajustados.",
-    relevancia: "media",
-  },
-  {
-    id: 14,
-    titulo: "Brasil x EUA: Crise Comercial se Arrasta e Tensão Aumenta",
-    subtitulo:
-      "Trump aplica sanções a produtos brasileiros. Governo brasileiro contesta na OMC e aprova contra-tarifas.",
-    fonte: "Ministério das Relações Exteriores",
-    fonteUrl: "https://www.gov.br/mre/",
-    data: "19/12/2025",
-    categoria: "alerta",
-    tags: ["EUA", "Trump", "Comércio", "Diplomacia", "OMC"],
-    destaque: "Guerra comercial esquenta. Exportadores brasileiros no prejuízo.",
-    contexto:
-      "Sanções americanas atingem principalmente aço, alumínio e produtos agrícolas. Brasil retalia com tarifas sobre produtos tech.",
-    relevancia: "alta",
-  },
-  {
-    id: 15,
-    titulo: "Mercosul-UE: Lula Dá Ultimato à União Europeia",
-    subtitulo:
-      "Presidente afirma que não haverá nova negociação se acordo atual não for aprovado até o final de 2025.",
-    fonte: "R7 Notícias",
-    fonteUrl: "https://noticias.r7.com/brasilia/lula-diz-que-brasil-nao-fara-acordo-mercosulue-se-pacto-nao-for-aprovado-em-2025-17122025/",
-    data: "17/12/2025",
-    categoria: "fato",
-    tags: ["Mercosul", "União Europeia", "Comércio", "Diplomacia"],
-    destaque: "25 anos de negociação. França e Itália ainda resistem.",
-    contexto:
-      "Macron e Meloni lideram oposição ao acordo por questões agrícolas. Agronegócio brasileiro perde mercado potencial de 450 milhões de consumidores.",
-    relevancia: "alta",
-  },
-  {
-    id: 16,
-    titulo: "Investimento Estrangeiro Bate Recorde de 10 Anos",
-    subtitulo:
-      "Brasil recebe US$ 84,1 bilhões em investimentos diretos até novembro. Maior valor desde 2014.",
-    fonte: "MDIC",
-    fonteUrl: "https://www.gov.br/mdic/",
-    data: "18/12/2025",
-    categoria: "fato",
-    tags: ["Investimento", "Economia", "PIB", "Estrangeiros"],
-    destaque: "Dado positivo que governo vai explorar eleitoralmente.",
-    contexto:
-      "Setor de energia e mineração lidera os aportes. Críticos apontam que volume está concentrado em poucos setores.",
-    relevancia: "media",
-  },
-  {
-    id: 1,
-    titulo: "Zezé Di Camargo: Do Palanque de Lula ao Moralismo de Ocasião",
-    subtitulo:
-      "Cantor que fez campanha para Lula em 2002 agora exige cancelamento de seu programa no SBT porque a emissora recebeu o presidente.",
-    fonte: "Poder360 / CartaCapital",
-    fonteUrl: "https://www.poder360.com.br/poder-midia/zeze-critica-sbt-sugere-aproximacao-com-lula-e-pede-fim-de-show/",
-    data: "15/12/2025",
-    categoria: "hipocrisia",
-    tags: ["Zezé Di Camargo", "SBT", "Lula", "Hipocrisia"],
-    destaque: "Em 2002 fez campanha para Lula. Em 2025 quer censurar sua presença na TV.",
-    contexto:
-      "Zezé recebeu R$ 2,21 milhões em cachês de prefeituras entre 2024-2025. Silvio Santos, que ele diz defender, nunca se indispôs com nenhum governo e pediu ajuda pessoalmente a Lula em 2010.",
-    relevancia: "alta",
-  },
-  {
-    id: 2,
-    titulo: "Câmara Rejeita Cassar Zambelli Mesmo Após Condenação",
-    subtitulo:
-      "Deputados protegem colega condenada e presa no exterior. Corporativismo vence mais uma vez.",
-    fonte: "Agência Brasil",
-    fonteUrl: "https://agenciabrasil.ebc.com.br/politica",
-    data: "14/12/2025",
+      "Votação terminou com empurrões e soco. Deputado do PT agrediu parlamentar do PL. Governo tenta anular decisão.",
+    fonte: "Senado Notícias",
+    fonteUrl: "https://www12.senado.leg.br/noticias/materias/2026/02/26/sob-protestos-cpmi-aprova-quebra-de-sigilos-de-lulinha",
+    data: "26/02/2026",
     categoria: "corrupcao",
-    tags: ["Zambelli", "Cassação", "Câmara", "Corporativismo"],
-    destaque: "Quando se trata de proteger os seus, esquerda e direita se unem.",
+    tags: ["CPMI", "INSS", "Lulinha", "Sigilo", "Congresso"],
+    destaque: "Filho do presidente tem sigilos bancário e fiscal quebrados. Governo surta.",
     contexto:
-      "Lindbergh Farias (PT) protocolou mandado de segurança pedindo que o STF determine a perda dos mandatos. A mesma Câmara que finge defender a moralidade.",
+      "Lulinha aparece em decisão do STF que autorizou nova fase da Operação Sem Desconto, que investiga descontos não autorizados em aposentadorias. Defesa diz que ele não tem relação com fraudes no INSS.",
+    relevancia: "alta",
+  },
+  {
+    id: 21,
+    titulo: "\"Acorda Brasil\": 22 Mil na Paulista Pedem Impeachment de Lula e Moraes",
+    subtitulo:
+      "Manifestação convocada por Nikolas Ferreira reuniu multidão em 19 estados. Bolsonaro apareceu por vídeo.",
+    fonte: "Poder360",
+    fonteUrl: "https://www.poder360.com.br/poder-brasil/ato-de-nikolas-contra-lula-e-moraes-reune-22-800-pessoas-na-paulista/",
+    data: "01/03/2026",
+    categoria: "polarizacao",
+    tags: ["Manifestação", "Nikolas", "Bolsonaro", "Impeachment", "Paulista"],
+    destaque: "Direita volta às ruas. Mas quem organiza também quer seu voto em outubro.",
+    contexto:
+      "Pautas incluem impeachment de Lula, de Moraes e de Toffoli, além de anistia aos condenados do 8 de Janeiro. Analistas apontam que ato serve de prévia eleitoral para 2026.",
+    relevancia: "alta",
+  },
+  {
+    id: 22,
+    titulo: "Condenados da Lava Jato Planejam Retorno em Massa nas Eleições",
+    subtitulo:
+      "Dirceu, Cabral e outros condenados por corrupção querem se candidatar em 2026 após mudanças na Ficha Limpa.",
+    fonte: "ISTOÉ",
+    fonteUrl: "https://istoe.com.br/jose-dirceu-cunha-e-outros-condenados-na-lava-jato-planejam-retorno-a-politica-apos-absolvicoes/",
+    data: "Fev/2026",
+    categoria: "corrupcao",
+    tags: ["Lava Jato", "Ficha Limpa", "Dirceu", "Cabral", "Eleições 2026"],
+    destaque: "Condenados a centenas de anos de prisão. Nenhum preso. Todos querendo voltar.",
+    contexto:
+      "Dirceu (79 anos) quer ser deputado federal por SP. Cabral (435 anos de pena) aguarda STF devolver elegibilidade. Cunha planeja MG como domicílio eleitoral. Congresso alterou a Lei da Ficha Limpa no ano passado, encurtando prazos de inelegibilidade.",
+    relevancia: "alta",
+  },
+  {
+    id: 23,
+    titulo: "Flávio Bolsonaro Protocola PEC Pelo Fim da Reeleição",
+    subtitulo:
+      "Proposta impede reeleição para presidente com mandato de 5 anos. Mas não impede Lula em 2026.",
+    fonte: "Diário do Grande ABC",
+    fonteUrl: "https://www.dgabc.com.br/Noticia/4288318/flavio-bolsonaro-protocola-pec-pelo-fim-da-reeleicao-a-presidencia",
+    data: "03/03/2026",
+    categoria: "hipocrisia",
+    tags: ["Reeleição", "PEC", "Flávio Bolsonaro", "Mandato", "Eleições"],
+    destaque: "Pai usou reeleição. Filho quer acabar com ela. Timing conveniente.",
+    contexto:
+      "PEC precisa de 3/5 dos votos nas duas casas. CCJ do Senado já aprovou versão anterior em maio de 2025. Se aprovada, não impediria Lula de concorrer em 2026 — só valeria para mandatos futuros.",
+    relevancia: "alta",
+  },
+  {
+    id: 24,
+    titulo: "Toffoli Anula Quebra de Sigilo da Própria Família em CPI",
+    subtitulo:
+      "Decano do STF anulou decisão da CPI do Crime Organizado que queria investigar empresa ligada à sua família.",
+    fonte: "CNN Brasil",
+    fonteUrl: "https://www.cnnbrasil.com.br/politica/",
+    data: "Fev/2026",
+    categoria: "corrupcao",
+    tags: ["STF", "Toffoli", "CPI", "Sigilo", "Judiciário"],
+    destaque: "Ministro do STF usa o próprio poder para proteger a si mesmo. Normalizado.",
+    contexto:
+      "A empresa Maridt, da família de Toffoli, é investigada pela CPI. O ministro argumentou que a decisão da CPI extrapolou seus limites constitucionais. Oposição pede impeachment.",
+    relevancia: "alta",
+  },
+  {
+    id: 25,
+    titulo: "Mudança na Ficha Limpa: Procurador Chama de \"Filme de Terror\"",
+    subtitulo:
+      "Alteração aprovada pelo Congresso encurta prazo de inelegibilidade e pode beneficiar dezenas de condenados.",
+    fonte: "ND Mais",
+    fonteUrl: "https://ndmais.com.br/politica/mudanca-na-lei-da-ficha-limpa-e-filme-de-terror-alerta-procurador/",
+    data: "Fev/2026",
+    categoria: "corrupcao",
+    tags: ["Ficha Limpa", "Congresso", "Inelegibilidade", "Corrupção"],
+    destaque: "Congresso muda regra para beneficiar condenados. Esquerda E direita votaram a favor.",
+    contexto:
+      "A contagem do prazo de inelegibilidade agora começa a partir da decisão de tribunal colegiado, não do trânsito em julgado. Bloco de políticos condenados aguarda decisão de Cármen Lúcia no STF sobre a constitucionalidade.",
+    relevancia: "alta",
+  },
+  {
+    id: 26,
+    titulo: "PEC do Mandato de 5 Anos e Fim da Escala 6x1 Podem Ir a Plenário",
+    subtitulo:
+      "Senado pode votar duas PECs polêmicas: mandatos mais longos para políticos e jornada de 36h para trabalhadores.",
+    fonte: "Senado Notícias",
+    fonteUrl: "https://www12.senado.leg.br/noticias/materias/2026/01/23/pecs-do-mandato-de-5-anos-e-do-fim-da-escala-6x1-podem-ir-a-plenario",
+    data: "Jan/2026",
+    categoria: "alerta",
+    tags: ["PEC", "Jornada 6x1", "Mandato", "Senado", "Trabalhadores"],
+    destaque: "Políticos querem mais tempo no poder. Trabalhadores querem menos tempo no trabalho. Adivinha qual passa primeiro.",
+    contexto:
+      "A PEC da jornada 6x1 propõe 36h semanais. A PEC do mandato de 5 anos beneficia diretamente quem já está no poder. As duas tramitam juntas mas com velocidades diferentes.",
     relevancia: "alta",
   },
   {
@@ -161,27 +146,12 @@ const noticias: Noticia[] = [
       "Dino manda PF investigar quase mil emendas. Assessora controlava 'salinha das emendas' na Câmara.",
     fonte: "Transparência Internacional",
     fonteUrl: "https://transparenciainternacional.org.br/publicacoes/raio-x-das-emendas-ao-orcamento/",
-    data: "12/12/2025",
+    data: "Dez/2025",
     categoria: "corrupcao",
     tags: ["Emendas Pix", "Orçamento Secreto", "Corrupção", "Dino"],
     destaque: "O 'Orçamento Secreto 2.0' que deputados de TODOS os partidos adoram.",
     contexto:
       "TCU investiga 40 mil emendas com conexões ao crime organizado. PF estima prejuízo de R$ 22 milhões só em uma operação de pavimentação.",
-    relevancia: "alta",
-  },
-  {
-    id: 4,
-    titulo: "Desembargador Preso por Vender Sentenças e Vazar Operações",
-    subtitulo:
-      "Macário Judice Neto, relator do caso TH Joias, foi promovido a desembargador após 17 anos afastado por denúncias.",
-    fonte: "ND Mais",
-    fonteUrl: "https://ndmais.com.br/justica/quem-e-o-desembargador-macario-judice-neto-preso/",
-    data: "10/12/2025",
-    categoria: "corrupcao",
-    tags: ["Judiciário", "Corrupção", "Operação Unha e Carne"],
-    destaque: "Afastado por vender sentenças, voltou e foi PROMOVIDO.",
-    contexto:
-      "Presidente da Alerj foi abordado com R$ 90 mil em espécie no carro. Solto 6 dias depois com tornozeleira. Justiça para quem?",
     relevancia: "alta",
   },
   {
@@ -200,36 +170,6 @@ const noticias: Noticia[] = [
     relevancia: "alta",
   },
   {
-    id: 6,
-    titulo: "MBL e Marçal: Inimigos que Usam as Mesmas Táticas",
-    subtitulo:
-      "Renan Santos chama Marçal de 'mentiroso'. Marçal diz que MBL 'não serve pra nada'. Ambos têm razão.",
-    fonte: "Revista Fórum / Metrópoles",
-    fonteUrl: "https://revistaforum.com.br/politica/2025/11/24/video-pablo-maral-esculhamba-mbl-derrotados-no-serve-pra-nada-192778.html",
-    data: "Nov/2025",
-    categoria: "hipocrisia",
-    tags: ["MBL", "Pablo Marçal", "Direita", "Briga"],
-    destaque: "Ambos fazem a mesma coisa. Só brigam quando é um contra o outro.",
-    contexto:
-      "Analistas apontam que a liberação do partido do MBL e a absolvição de Marçal visam fragmentar o bolsonarismo. Todos disputando o mesmo eleitor.",
-    relevancia: "media",
-  },
-  {
-    id: 7,
-    titulo: "Correios: De Centro do Mensalão a Buraco de R$ 4 Bilhões",
-    subtitulo:
-      "Empresa que foi pivô de escândalo em 2005 agora pede socorro ao Tesouro após sair da lista de privatização.",
-    fonte: "ND Mais",
-    fonteUrl: "https://ndmais.com.br/politica/polemicas-do-governo-lula-correios-bndes-dirceu/",
-    data: "Dez/2025",
-    categoria: "fato",
-    tags: ["Correios", "Mensalão", "Governo Lula", "Estatais"],
-    destaque: "20 anos depois, o mesmo problema. Os mesmos personagens.",
-    contexto:
-      "Dirceu articula nos bastidores. BNDES financia ditaduras amigas. A história se repete como farsa.",
-    relevancia: "media",
-  },
-  {
     id: 8,
     titulo: "PEC da Blindagem: Congresso Quer Impunidade por Lei",
     subtitulo:
@@ -245,33 +185,63 @@ const noticias: Noticia[] = [
     relevancia: "alta",
   },
   {
-    id: 9,
-    titulo: "Anistia ao 8 de Janeiro: Senador Quer Perdão Total",
+    id: 1,
+    titulo: "Zezé Di Camargo: Do Palanque de Lula ao Moralismo de Ocasião",
     subtitulo:
-      "Espiridião Amin quer reincluir perdão completo aos condenados. PL beneficiaria também Bolsonaro.",
-    fonte: "CNN Brasil",
-    fonteUrl: "https://www.cnnbrasil.com.br/tudo-sobre/polemica/",
+      "Cantor que fez campanha para Lula em 2002 agora exige cancelamento de seu programa no SBT porque a emissora recebeu o presidente.",
+    fonte: "Poder360 / CartaCapital",
+    fonteUrl: "https://www.poder360.com.br/poder-midia/zeze-critica-sbt-sugere-aproximacao-com-lula-e-pede-fim-de-show/",
     data: "Dez/2025",
-    categoria: "polarizacao",
-    tags: ["8 de Janeiro", "Anistia", "Bolsonaro", "Golpe"],
-    destaque: "Para a direita radical: 'patriotas injustiçados'. Para a lei: criminosos.",
+    categoria: "hipocrisia",
+    tags: ["Zezé Di Camargo", "SBT", "Lula", "Hipocrisia"],
+    destaque: "Em 2002 fez campanha para Lula. Em 2025 quer censurar sua presença na TV.",
     contexto:
-      "Especialistas afirmam que o PL da Dosimetria beneficiaria também criminosos comuns, não só os golpistas.",
+      "Zezé recebeu R$ 2,21 milhões em cachês de prefeituras entre 2024-2025. Silvio Santos, que ele diz defender, nunca se indispôs com nenhum governo.",
     relevancia: "alta",
   },
   {
-    id: 10,
-    titulo: "SBT Sempre Puxou Saco de Quem Está no Poder",
+    id: 4,
+    titulo: "Desembargador Preso por Vender Sentenças e Vazar Operações",
     subtitulo:
-      "Silvio Santos nunca se indispôs com nenhum governo. Filhas seguem a mesma cartilha. Surpresa de quem?",
-    fonte: "Análise PSF",
-    fonteUrl: "#",
-    data: "15/12/2025",
-    categoria: "fato",
-    tags: ["SBT", "Silvio Santos", "Governo", "Mídia"],
-    destaque: "O SBT apoiou Collor, FHC, Lula 1, Lula 2, Dilma, Temer, Bolsonaro, Lula 3.",
+      "Macário Judice Neto, relator do caso TH Joias, foi promovido a desembargador após 17 anos afastado por denúncias.",
+    fonte: "ND Mais",
+    fonteUrl: "https://ndmais.com.br/justica/quem-e-o-desembargador-macario-judice-neto-preso/",
+    data: "Dez/2025",
+    categoria: "corrupcao",
+    tags: ["Judiciário", "Corrupção", "Operação Unha e Carne"],
+    destaque: "Afastado por vender sentenças, voltou e foi PROMOVIDO.",
     contexto:
-      "Quem achou que as filhas de Silvio eram 'de direita' não entendeu nada sobre como funcionam grandes empresas de mídia no Brasil.",
+      "Presidente da Alerj foi abordado com R$ 90 mil em espécie no carro. Solto 6 dias depois com tornozeleira. Justiça para quem?",
+    relevancia: "alta",
+  },
+  {
+    id: 9,
+    titulo: "Anistia ao 8 de Janeiro: Pauta Volta com Força em Ano Eleitoral",
+    subtitulo:
+      "Direita radical pressiona por perdão total aos condenados. PL beneficiaria também Bolsonaro.",
+    fonte: "CNN Brasil",
+    fonteUrl: "https://www.cnnbrasil.com.br/tudo-sobre/polemica/",
+    data: "Fev/2026",
+    categoria: "polarizacao",
+    tags: ["8 de Janeiro", "Anistia", "Bolsonaro", "Golpe", "Eleições"],
+    destaque: "Para a direita radical: 'patriotas injustiçados'. Para a lei: criminosos.",
+    contexto:
+      "Manifestação do dia 1º de março incluiu anistia como pauta central. Especialistas afirmam que PL da Dosimetria beneficiaria também criminosos comuns.",
+    relevancia: "alta",
+  },
+  {
+    id: 27,
+    titulo: "Moraes Arquiva Inquérito Contra Zambelli: Caso Encerrado",
+    subtitulo:
+      "Ministro do STF determinou arquivamento do inquérito que apurava obstrução de justiça pela deputada.",
+    fonte: "Agência Brasil",
+    fonteUrl: "https://agenciabrasil.ebc.com.br/politica",
+    data: "Fev/2026",
+    categoria: "fato",
+    tags: ["Zambelli", "STF", "Moraes", "Arquivamento"],
+    destaque: "A mesma Zambelli que a Câmara se recusou a cassar. Agora o STF encerra o caso.",
+    contexto:
+      "Zambelli foi investigada por suposta obstrução de justiça. O arquivamento foi determinado por Alexandre de Moraes, o mesmo ministro que é alvo dos protestos da direita.",
     relevancia: "media",
   },
 ];

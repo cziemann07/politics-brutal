@@ -17,8 +17,12 @@ import {
   Flame,
   ShieldAlert,
   HandCoins,
+  Skull,
+  XCircle,
+  CheckCircle,
 } from "lucide-react";
 import EscandaloShareButton, { EscandaloShareData } from "@/components/ui/EscandaloShareButton";
+import MBLDossier from "@/components/features/Scandals/MBLDossier";
 
 interface Condenado {
   nome: string;
@@ -251,9 +255,11 @@ const escandalos: Escandalo[] = [
   },
 ];
 
-export default function InvestigacoesPage() {
+export default function EscandalosPage() {
   const [expandido, setExpandido] = useState<string | null>("lava-jato");
   const [abaAtiva, setAbaAtiva] = useState<"timeline" | "condenados" | "numeros">("timeline");
+  const [categoria, setCategoria] = useState<"historicos" | "denuncias">("historicos");
+  const [abaDenuncia, setAbaDenuncia] = useState<"polarizacao" | "mbl" | "alerta">("polarizacao");
 
   const toggleExpand = (id: string) => {
     setExpandido(expandido === id ? null : id);
@@ -273,7 +279,7 @@ export default function InvestigacoesPage() {
               Refrescando Sua Memória
             </span>
             <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter leading-none dark:text-brutal-dark-text">
-              Os Maiores Escândalos
+              Escândalos
             </h1>
           </div>
         </div>
@@ -283,6 +289,35 @@ export default function InvestigacoesPage() {
         </p>
       </div>
 
+      {/* NAVEGAÇÃO POR CATEGORIA */}
+      <div className="flex flex-wrap gap-3 mb-8">
+        <button
+          onClick={() => setCategoria("historicos")}
+          className={`flex items-center gap-2 px-5 py-3 font-black uppercase text-sm border-3 border-black dark:border-brutal-dark-border transition-all ${
+            categoria === "historicos"
+              ? "bg-black text-white dark:bg-brutal-dark-accent"
+              : "bg-white dark:bg-brutal-dark-surface dark:text-brutal-dark-text hover:bg-black hover:text-white dark:hover:bg-brutal-dark-accent"
+          }`}
+        >
+          <Flame size={18} />
+          <span>Escândalos Históricos</span>
+        </button>
+        <button
+          onClick={() => setCategoria("denuncias")}
+          className={`flex items-center gap-2 px-5 py-3 font-black uppercase text-sm border-3 border-black dark:border-brutal-dark-border transition-all ${
+            categoria === "denuncias"
+              ? "bg-black text-white dark:bg-brutal-dark-accent"
+              : "bg-white dark:bg-brutal-dark-surface dark:text-brutal-dark-text hover:bg-black hover:text-white dark:hover:bg-brutal-dark-accent"
+          }`}
+        >
+          <ShieldAlert size={18} />
+          <span>Denúncias Atuais</span>
+        </button>
+      </div>
+
+      {/* ==================== ESCÂNDALOS HISTÓRICOS ==================== */}
+      {categoria === "historicos" && (
+      <>
       {/* AVISO FORTE */}
       <div className="card-brutal bg-brutal-red text-white mb-8">
         <div className="flex items-start gap-4">
@@ -667,6 +702,300 @@ export default function InvestigacoesPage() {
           </div>
         </div>
       </div>
+      </>
+      )}
+
+      {/* ==================== DENÚNCIAS ATUAIS ==================== */}
+      {categoria === "denuncias" && (
+      <>
+      {/* TABS DE DENÚNCIAS */}
+      <div className="flex flex-wrap gap-2 mb-8 border-b-3 border-black dark:border-brutal-dark-border">
+        {[
+          { id: "polarizacao" as const, label: "O Câncer da Polarização", icon: Skull },
+          { id: "mbl" as const, label: "Caso MBL: Hipocrisia em Pessoa", icon: DollarSign },
+          { id: "alerta" as const, label: "Cuidado com Falsos Profetas", icon: AlertTriangle },
+        ].map((tab) => {
+          const Icon = tab.icon;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setAbaDenuncia(tab.id)}
+              className={`flex items-center gap-2 px-4 md:px-6 py-3 font-black uppercase text-sm border-2 border-b-0 border-black dark:border-brutal-dark-border transition-all ${
+                abaDenuncia === tab.id ? "bg-black text-white dark:bg-brutal-dark-accent" : "bg-white dark:bg-brutal-dark-surface dark:text-brutal-dark-text hover:bg-black hover:text-white dark:hover:bg-brutal-dark-accent"
+              }`}
+            >
+              <Icon size={18} />
+              <span className="hidden sm:inline">{tab.label}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* CONTEÚDO: POLARIZAÇÃO */}
+      {abaDenuncia === "polarizacao" && (
+        <div className="space-y-8">
+          <div className="card-brutal bg-brutal-red text-white">
+            <div className="flex items-center gap-3 mb-4">
+              <Skull size={40} />
+              <h2 className="text-2xl md:text-3xl font-black uppercase">
+                A Polarização Está Matando o Brasil
+              </h2>
+            </div>
+            <p className="font-medium text-lg leading-relaxed mb-4">
+              O brasileiro médio foi transformado em soldado de guerra ideológica. Esquerda contra
+              direita. PT contra Bolsonaro. Lula contra Mito. E enquanto você briga com seu vizinho
+              no grupo da família, os políticos dos DOIS lados enchem os bolsos com o seu dinheiro.
+            </p>
+            <div className="bg-black/30 p-4 border-2 border-white">
+              <p className="font-black text-xl">
+                A verdade incômoda: SEU POLÍTICO FAVORITO TAMBÉM É CORRUPTO.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="card-brutal">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="bg-red-500 p-2 border-2 border-black dark:border-red-500">
+                  <XCircle size={24} className="text-white" />
+                </div>
+                <h3 className="text-xl font-black uppercase dark:text-brutal-dark-text">O Problema da Esquerda</h3>
+              </div>
+              <ul className="space-y-3 font-medium dark:text-brutal-dark-muted">
+                <li className="flex items-start gap-2">
+                  <span className="text-brutal-red font-black">•</span>
+                  <span>Idolatria cega a Lula, ignorando escândalos como Mensalão e Petrolão</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-brutal-red font-black">•</span>
+                  <span>Defesa de regimes autoritários &quot;porque são de esquerda&quot;</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-brutal-red font-black">•</span>
+                  <span>Cancelamento de qualquer crítica como &quot;fascismo&quot;</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-brutal-red font-black">•</span>
+                  <span>Gastos públicos irresponsáveis em nome do &quot;social&quot;</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="card-brutal">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="bg-blue-500 p-2 border-2 border-black dark:border-blue-500">
+                  <XCircle size={24} className="text-white" />
+                </div>
+                <h3 className="text-xl font-black uppercase dark:text-brutal-dark-text">O Problema da Direita</h3>
+              </div>
+              <ul className="space-y-3 font-medium dark:text-brutal-dark-muted">
+                <li className="flex items-start gap-2">
+                  <span className="text-brutal-red font-black">•</span>
+                  <span>Culto de personalidade a Bolsonaro, ignorando suas falhas</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-brutal-red font-black">•</span>
+                  <span>Negacionismo científico e anti-intelectualismo</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-brutal-red font-black">•</span>
+                  <span>Defesa cega das Forças Armadas como &quot;salvadoras&quot;</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-brutal-red font-black">•</span>
+                  <span>Orçamento secreto e rachadinha &quot;porque os outros também fazem&quot;</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="card-brutal bg-black text-white">
+            <div className="flex items-center gap-3 mb-4">
+              <Scale size={32} />
+              <h3 className="text-xl font-black uppercase">A Única Posição Honesta</h3>
+            </div>
+            <p className="font-medium text-lg mb-4">
+              Ser crítico de TODOS os políticos. Cobrar transparência de TODOS os partidos.
+              Não aceitar justificativas de corrupção &quot;porque o outro lado também faz&quot;.
+              O Brasil só melhora quando pararmos de tratar política como futebol.
+            </p>
+            <div className="grid sm:grid-cols-3 gap-4 mt-6">
+              <div className="bg-white/10 p-4 text-center border border-white/30">
+                <span className="block text-3xl font-black">594</span>
+                <span className="text-sm font-bold">Deputados recebendo fundão</span>
+              </div>
+              <div className="bg-white/10 p-4 text-center border border-white/30">
+                <span className="block text-3xl font-black">R$ 4.9 Bi</span>
+                <span className="text-sm font-bold">Fundo Eleitoral 2024</span>
+              </div>
+              <div className="bg-white/10 p-4 text-center border border-white/30">
+                <span className="block text-3xl font-black">81</span>
+                <span className="text-sm font-bold">Senadores com foro privilegiado</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-brutal-bg dark:bg-brutal-dark-surface border-3 border-black dark:border-brutal-dark-border p-6 md:p-8 text-center">
+            <blockquote className="text-xl md:text-2xl font-black italic mb-4 dark:text-brutal-dark-text">
+              &quot;Quando você defende um político como se fosse seu time de futebol,
+              você deixou de ser cidadão e virou torcedor.&quot;
+            </blockquote>
+            <p className="font-bold text-gray-600 dark:text-brutal-dark-muted">
+              Pare de defender políticos. Comece a cobrar todos eles.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* CONTEÚDO: DOSSIÊ MBL */}
+      {abaDenuncia === "mbl" && (
+        <div className="space-y-8">
+          <div className="card-brutal bg-black text-white">
+            <div className="flex items-center gap-3 mb-4">
+              <DollarSign size={32} className="text-brutal-red" />
+              <h2 className="text-2xl md:text-3xl font-black uppercase">
+                O Caso Emblemático do MBL
+              </h2>
+            </div>
+            <p className="font-medium text-lg leading-relaxed">
+              O Movimento Brasil Livre é o exemplo perfeito de como movimentos &quot;anti-sistema&quot;
+              rapidamente se tornam aquilo que criticavam. Prometeram nunca usar fundão.
+              Prometeram transparência. Prometeram ser diferentes. E onde estão agora?
+            </p>
+          </div>
+
+          <MBLDossier />
+
+          <div className="card-brutal border-brutal-red border-3">
+            <h3 className="text-xl font-black uppercase mb-4 flex items-center gap-2 dark:text-brutal-dark-text">
+              <Target size={24} className="text-brutal-red" />
+              A Lição que Você Deve Aprender
+            </h3>
+            <p className="font-medium text-lg mb-4 dark:text-brutal-dark-muted">
+              O MBL não é pior nem melhor que PT, PSDB, MDB ou qualquer outro partido.
+              Eles são IGUAIS. Todos prometem mundos e fundos na oposição, todos viram
+              a casaca quando chegam ao poder. A diferença é que o MBL construiu sua
+              base exatamente criticando isso — e agora faz o mesmo.
+            </p>
+            <div className="bg-brutal-bg dark:bg-brutal-dark-bg p-4 border-2 border-black dark:border-brutal-dark-border">
+              <p className="font-black text-center dark:text-brutal-dark-text">
+                DESCONFIE DE TODO POLÍTICO. INCLUSIVE DESSE.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* CONTEÚDO: ALERTA FALSOS PROFETAS */}
+      {abaDenuncia === "alerta" && (
+        <div className="space-y-8">
+          <div className="card-brutal bg-brutal-red text-white">
+            <div className="flex items-center gap-3 mb-4">
+              <AlertTriangle size={40} />
+              <h2 className="text-2xl md:text-3xl font-black uppercase">
+                Alerta: Não Seja Trouxa de Novo
+              </h2>
+            </div>
+            <p className="font-medium text-lg leading-relaxed">
+              Você vai ser bombardeado com propagandas emocionais, promessas mirabolantes
+              e candidatos &quot;diferentes de tudo que está aí&quot;. Antes de votar, lembre-se:
+              TODO político quer seu voto. NENHUM deles quer seu bem-estar.
+            </p>
+          </div>
+
+          <div className="card-brutal">
+            <h3 className="text-xl font-black uppercase mb-6 border-b-3 border-black dark:border-brutal-dark-border pb-3 dark:text-brutal-dark-text">
+              Os Tipos de Candidatos que Você VAI Encontrar
+            </h3>
+
+            <div className="space-y-6">
+              <div className="flex gap-4 items-start p-4 bg-brutal-bg dark:bg-brutal-dark-bg border-2 border-black dark:border-brutal-dark-border">
+                <div className="bg-brutal-red text-white p-2 border-2 border-black dark:border-brutal-red shrink-0">
+                  <Users size={24} />
+                </div>
+                <div>
+                  <h4 className="font-black text-lg uppercase mb-2 dark:text-brutal-dark-text">O &quot;Outsider&quot; de YouTube</h4>
+                  <p className="font-medium text-gray-700 dark:text-brutal-dark-muted">
+                    Faz vídeos criticando políticos, vira político, e faz tudo igual.
+                    Exemplo clássico: MBL, Mamãe Falei, e dezenas de influencers que
+                    entraram na política &quot;para mudar&quot; e só mudaram de endereço.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex gap-4 items-start p-4 bg-brutal-bg dark:bg-brutal-dark-bg border-2 border-black dark:border-brutal-dark-border">
+                <div className="bg-blue-500 text-white p-2 border-2 border-black dark:border-blue-500 shrink-0">
+                  <Users size={24} />
+                </div>
+                <div>
+                  <h4 className="font-black text-lg uppercase mb-2 dark:text-brutal-dark-text">O &quot;Técnico Apolítico&quot;</h4>
+                  <p className="font-medium text-gray-700 dark:text-brutal-dark-muted">
+                    Diz que &quot;não é de esquerda nem de direita&quot;, mas financia campanha
+                    com fundão e se alia com qualquer um para ter poder. Geralmente
+                    vem do mercado financeiro ou empresariado.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex gap-4 items-start p-4 bg-brutal-bg dark:bg-brutal-dark-bg border-2 border-black dark:border-brutal-dark-border">
+                <div className="bg-green-500 text-white p-2 border-2 border-black dark:border-green-500 shrink-0">
+                  <Users size={24} />
+                </div>
+                <div>
+                  <h4 className="font-black text-lg uppercase mb-2 dark:text-brutal-dark-text">O &quot;Salvador da Pátria&quot;</h4>
+                  <p className="font-medium text-gray-700 dark:text-brutal-dark-muted">
+                    Usa linguagem messiânica, fala em &quot;salvar o Brasil&quot;, e cria culto
+                    de personalidade. Pode ser de esquerda ou direita — o padrão é o
+                    mesmo: ele é o escolhido, você é o fiel.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="card-brutal bg-black text-white">
+            <h3 className="text-xl font-black uppercase mb-6 flex items-center gap-2">
+              <CheckCircle size={24} className="text-green-400" />
+              Antes de Votar, Pergunte:
+            </h3>
+            <ul className="space-y-4 font-medium">
+              {[
+                "Esse candidato usa ou já usou Fundo Partidário/Eleitoral?",
+                "Ele emprega parentes em cargos políticos?",
+                "Qual o histórico de votações dele no Congresso?",
+                "Ele muda de partido com frequência?",
+                "As promessas dele são vagas ou específicas e verificáveis?",
+                "Ele aceita críticas ou ataca quem questiona?",
+              ].map((pergunta, idx) => (
+                <li key={idx} className="flex items-start gap-3">
+                  <div className="bg-green-400 text-black p-1 shrink-0 mt-1">
+                    <CheckCircle size={16} />
+                  </div>
+                  <span>{pergunta}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="bg-brutal-bg dark:bg-brutal-dark-surface border-3 border-black dark:border-brutal-dark-border p-6 md:p-8">
+            <h3 className="text-2xl font-black uppercase mb-4 text-center dark:text-brutal-dark-text">
+              O Voto Consciente
+            </h3>
+            <p className="font-medium text-lg text-center max-w-2xl mx-auto mb-6 dark:text-brutal-dark-muted">
+              Não existe político perfeito. Mas existem políticos menos piores.
+              Pesquise, compare, cobre. E lembre-se: seu voto é uma ferramenta,
+              não uma declaração de amor.
+            </p>
+            <div className="bg-black text-white p-4 text-center">
+              <p className="font-black text-lg uppercase">
+                Vote com a cabeça. Não com o coração.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+      </>
+      )}
     </main>
   );
 }

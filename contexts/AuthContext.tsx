@@ -17,8 +17,6 @@ type AuthUser = {
   isAdmin: boolean;
   subscriptionPlan: SubscriptionPlan;
   subscriptionExpiresAt: string | null;
-  quizStreak: number;
-  totalQuizzesCompleted: number;
 };
 
 type AuthContextType = {
@@ -64,8 +62,6 @@ function mapSupabaseUserToAuthUser(
     isAdmin: dbUser?.is_admin || false,
     subscriptionPlan: dbUser?.is_admin ? "pro" : subscriptionPlan, // Admin sempre tem PRO
     subscriptionExpiresAt: dbUser?.subscription_expires_at || null,
-    quizStreak: dbUser?.quiz_streak || 0,
-    totalQuizzesCompleted: dbUser?.total_quizzes_completed || 0,
   };
 }
 

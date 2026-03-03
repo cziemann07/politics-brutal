@@ -96,7 +96,7 @@ export default function PoliticianProfile({ params }: { params: { id: string } }
 
   if (isLoading) {
     return (
-      <main className="min-h-screen bg-brutal-bg p-4 md:p-8 font-sans flex items-center justify-center">
+      <main className="min-h-screen bg-brutal-bg dark:bg-brutal-dark-bg p-4 md:p-8 font-sans flex items-center justify-center">
         <div className="font-black text-xl">Carregando...</div>
       </main>
     );
@@ -104,7 +104,7 @@ export default function PoliticianProfile({ params }: { params: { id: string } }
 
   if (error || !politician) {
     return (
-      <main className="min-h-screen bg-brutal-bg p-4 md:p-8 font-sans">
+      <main className="min-h-screen bg-brutal-bg dark:bg-brutal-dark-bg p-4 md:p-8 font-sans">
         <div className="p-10 font-bold text-center text-3xl">
           {error ? `ERRO: ${error}` : "POLÍTICO NÃO ENCONTRADO (404)"}
         </div>
@@ -116,7 +116,7 @@ export default function PoliticianProfile({ params }: { params: { id: string } }
   }
 
   return (
-    <main className="min-h-screen bg-brutal-bg p-4 md:p-8 font-sans">
+    <main className="min-h-screen bg-brutal-bg dark:bg-brutal-dark-bg p-4 md:p-8 font-sans">
       <Link href="/bancada" className="btn-brutal inline-flex items-center gap-2 mb-8 text-sm">
         <ArrowLeft size={16} /> Voltar para Bancada
       </Link>

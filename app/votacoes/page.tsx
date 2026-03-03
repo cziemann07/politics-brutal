@@ -281,21 +281,21 @@ export default function VotacoesPage() {
 
                   {/* Resultado resumido */}
                   {votacao.votos && (
-                    <div className="grid grid-cols-3 gap-2">
-                      <div className="bg-green-100 dark:bg-green-900/30 border-2 border-black dark:border-green-600 p-3 text-center">
+                    <div className="grid grid-cols-3 gap-2 max-w-md">
+                      <div className="bg-green-100 dark:bg-green-900/30 border-2 border-black dark:border-green-600 p-2 sm:p-3 text-center">
                         <CheckCircle2 size={18} className="mx-auto mb-1 text-green-600" />
                         <p className="text-xs font-bold dark:text-green-400">SIM</p>
-                        <p className="text-xl font-black dark:text-green-400">{votacao.votos.sim}</p>
+                        <p className="text-lg sm:text-xl font-black dark:text-green-400">{votacao.votos.sim}</p>
                       </div>
-                      <div className="bg-red-100 dark:bg-red-900/30 border-2 border-black dark:border-red-600 p-3 text-center">
+                      <div className="bg-red-100 dark:bg-red-900/30 border-2 border-black dark:border-red-600 p-2 sm:p-3 text-center">
                         <XCircle size={18} className="mx-auto mb-1 text-red-600" />
                         <p className="text-xs font-bold dark:text-red-400">NÃO</p>
-                        <p className="text-xl font-black dark:text-red-400">{votacao.votos.não}</p>
+                        <p className="text-lg sm:text-xl font-black dark:text-red-400">{votacao.votos.não}</p>
                       </div>
-                      <div className="bg-gray-100 dark:bg-brutal-dark-bg border-2 border-black dark:border-brutal-dark-border p-3 text-center">
+                      <div className="bg-gray-100 dark:bg-brutal-dark-bg border-2 border-black dark:border-brutal-dark-border p-2 sm:p-3 text-center">
                         <Minus size={18} className="mx-auto mb-1 text-gray-600 dark:text-brutal-dark-muted" />
                         <p className="text-xs font-bold dark:text-brutal-dark-muted">TOTAL</p>
-                        <p className="text-xl font-black dark:text-brutal-dark-text">{votacao.votos.total}</p>
+                        <p className="text-lg sm:text-xl font-black dark:text-brutal-dark-text">{votacao.votos.total}</p>
                       </div>
                     </div>
                   )}

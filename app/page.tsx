@@ -120,13 +120,13 @@ export default function Home() {
           />
 
           <FeatureCard
-            href="/investigacoes"
+            href="/escandalos"
             icon={AlertCircle}
             iconColor="text-orange-600"
-            title="Investigações"
+            title="Escândalos"
             subtitle="12 casos ativos"
-            description="Processos em andamento, escândalos documentados e casos sob investigação. Transparência total."
-            ctaText="Ver investigações"
+            description="Escândalos históricos, denúncias atuais e casos documentados. Transparência total."
+            ctaText="Ver escândalos"
           />
 
           <FeatureCard
@@ -152,7 +152,7 @@ export default function Home() {
 
       {/* ========== 5. DOSSIÊS EM DESTAQUE ========== */}
       <section className="max-w-7xl mx-auto px-4 py-brutal-xl">
-        <SectionHeader title="Dossiês Exclusivos" linkHref="/investigacoes" linkText="Ver Todos" />
+        <SectionHeader title="Dossiês Exclusivos" linkHref="/escandalos" linkText="Ver Todos" />
 
         {/* Dossiê Principal */}
         <div className="mb-brutal-lg">
@@ -162,7 +162,7 @@ export default function Home() {
         {/* Prévias */}
         <div className="grid md:grid-cols-2 gap-brutal-md">
           <Link
-            href="/investigacoes#mbl"
+            href="/escandalos#mbl"
             className="card-brutal hover:shadow-hard-hover transition-all bg-white p-6 group"
           >
             <div className="flex items-start gap-brutal-sm">
@@ -181,14 +181,14 @@ export default function Home() {
           </Link>
 
           <Link
-            href="/investigacoes"
+            href="/escandalos"
             className="card-brutal hover:shadow-hard-hover transition-all bg-white p-6 group"
           >
             <div className="flex items-start gap-brutal-sm">
               <FileText className="w-8 h-8 text-brutal-blue shrink-0" />
               <div>
                 <h3 className="heading-card mb-2 group-hover:text-brutal-blue transition-colors">
-                  Mais Investigações
+                  Mais Escândalos
                 </h3>
                 <p className="text-small leading-relaxed mb-brutal-xs text-gray-700">
                   Explore outros casos, escândalos documentados e processos em andamento.

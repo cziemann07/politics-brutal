@@ -12,7 +12,10 @@
       "Bash(cat:*)",
       "Bash(find:*)",
       "Bash(npm install:*)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(npx tsx:*)",
+      "Bash(do echo:*)",
+      "Bash(npx tsc:*)"
     ]
   }
 }

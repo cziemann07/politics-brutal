@@ -365,14 +365,14 @@ export default function OrientacaoIdeologicaChart({
                 >
                   {LABELS_ORIENTACAO[orientacao]}
                 </h5>
-                <div className="space-y-1 max-h-32 overflow-y-auto">
+                <div className="space-y-1.5">
                   {detalhesPorPartido[orientacao].map((partido) => (
                     <div
                       key={partido.partido}
-                      className="flex justify-between text-sm"
+                      className="flex justify-between items-center text-sm gap-2"
                     >
                       <span className="font-bold dark:text-brutal-dark-text">{partido.partido}</span>
-                      <span className="font-black" style={{ color: CORES_ORIENTACAO[orientacao] }}>
+                      <span className="font-black shrink-0 tabular-nums" style={{ color: CORES_ORIENTACAO[orientacao] }}>
                         {partido.quantidade}
                       </span>
                     </div>

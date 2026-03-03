@@ -1,21 +1,21 @@
 {
   "periodo": {
-    "mes": 1,
+    "mes": 2,
     "ano": 2026,
-    "label": "01/2026"
+    "label": "02/2026"
   },
   "topGastador": {
-    "id": 204488,
-    "nome": "Célio Studart",
-    "partido": "PSD",
-    "estado": "CE",
-    "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/204488.jpg",
-    "gastos": 45270
+    "id": 220665,
+    "nome": "Clarissa Tércio",
+    "partido": "PP",
+    "estado": "PE",
+    "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/220665.jpg",
+    "gastos": 45328.4
   },
   "estatisticas": {
     "totalDeputados": 513,
-    "mediaGastosCeap": 13761.96,
-    "totalGastosMes": 1376195.68
+    "mediaGastosCeap": 12984.93,
+    "totalGastosMes": 1298493.19
   },
-  "atualizadoEm": "2026-02-04T16:14:20.531Z"
+  "atualizadoEm": "2026-03-03T20:46:13.180Z"
 }

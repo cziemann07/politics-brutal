@@ -261,9 +261,25 @@ export async function buildBancadaDataset(params: {
   uf?: string;
   concurrency?: number;
 }): Promise<DeputyWithCeap[]> {
-  const deputies = await listDeputies({ uf: params.uf, emExercicio: true, itens: 100 });
-  // Reduzindo concorrência de 8 para 3 para evitar sobrecarregar a API
-  const concurrency = params.concurrency ?? 3;
+  // Usa JSON estático como base (instantâneo) em vez de chamar a API
+  let deputies: DeputyBasic[];
+  try {
+    const deputadosJson = require("./data/deputados.json");
+    deputies = deputadosJson.map((d: any) => ({
+      id: d.id,
+      nome: d.nome,
+      siglaPartido: d.siglaPartido,
+      siglaUf: d.siglaUf,
+      urlFoto: d.urlFoto,
+    }));
+    if (params.uf) {
+      deputies = deputies.filter((d) => d.siglaUf === params.uf);
+    }
+  } catch {
+    // Fallback para API caso JSON não exista
+    deputies = await listDeputies({ uf: params.uf, emExercicio: true, itens: 100 });
+  }
+  const concurrency = params.concurrency ?? 5;
 
   console.log(`Processando ${deputies.length} deputados com concorrência ${concurrency}...`);
 

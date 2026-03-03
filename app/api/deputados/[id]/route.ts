@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { ceapTotalForDeputy, CEAP_TETO_POR_UF } from "@/lib";
+import deputadosJson from "@/lib/data/deputados.json";
 
 const BASE = "https://dadosabertos.camara.leg.br/api/v2";
 
@@ -24,17 +25,30 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
       return NextResponse.json({ error: "ID inválido" }, { status: 400 });
     }
 
-    // Buscar dados básicos do deputado
-    const depRes = await fetchJson<{ dados: any }>(`${BASE}/deputados/${id}`);
+    // Dados base do JSON estático (instantâneo)
+    const deputadoBase = deputadosJson.find((d) => d.id === id);
 
-    const dep = depRes.dados;
-    if (!dep) {
+    // Tentar buscar dados detalhados da API (gabinete, etc.)
+    let dep: any = null;
+    try {
+      const depRes = await fetchJson<{ dados: any }>(`${BASE}/deputados/${id}`);
+      dep = depRes.dados;
+    } catch {
+      // Se a API falhar, usa o JSON estático
+    }
+
+    if (!dep && !deputadoBase) {
       return NextResponse.json({ error: "Deputado não encontrado" }, { status: 404 });
     }
 
-    // Buscar CEAP do mês padrão (setembro 2024)
-    const ano = 2024;
-    const mes = 9;
+    // Buscar CEAP do mês mais recente disponível
+    const now = new Date();
+    // CEAP tem delay de ~30 dias, usar 2 meses atrás
+    const ceapDate = new Date(now.getFullYear(), now.getMonth() - 2, 1);
+    const ano = ceapDate.getFullYear();
+    const mes = ceapDate.getMonth() + 1;
+
+    const uf = dep?.siglaUf ?? deputadoBase?.siglaUf ?? "";
 
     let expenses = 0;
     let status: "Regular" | "Irregular" = "Regular";
@@ -42,7 +56,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
 
     try {
       expenses = await ceapTotalForDeputy({ id, ano, mes });
-      teto = CEAP_TETO_POR_UF[dep.siglaUf];
+      teto = CEAP_TETO_POR_UF[uf];
       if (teto) {
         status = expenses > teto ? "Irregular" : "Regular";
       }
@@ -51,20 +65,18 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     }
 
     const response = {
-      id: dep.id,
-      name: dep.nome,
-      party: dep.siglaPartido,
-      state: dep.siglaUf,
+      id,
+      name: dep?.nome ?? deputadoBase?.nome,
+      party: dep?.siglaPartido ?? deputadoBase?.siglaPartido,
+      state: uf,
       role: "Deputado Federal",
-      image: dep.urlFoto,
+      image: dep?.urlFoto ?? deputadoBase?.urlFoto,
       expenses,
       teto,
       status,
-      // Campos opcionais que podem não estar disponíveis
-      processes: undefined as any,
-      absurdities: undefined as any,
-      advisors: 25, // padrão
-      cabinet_budget: 111000, // padrão
+      // Dados do gabinete (só disponíveis via API detalhada)
+      gabinete: dep?.ultimoStatus?.gabinete ?? null,
+      email: dep?.ultimoStatus?.gabinete?.email ?? deputadoBase?.email ?? null,
     };
 
     return NextResponse.json(response, {

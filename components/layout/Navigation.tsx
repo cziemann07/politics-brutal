@@ -23,7 +23,6 @@ import {
   ChevronRight,
   LogIn,
   LogOut,
-  Brain,
   Shield,
 } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -31,11 +30,10 @@ import { useAuth } from "@/contexts/AuthContext";
 
 const navItems = [
   { href: "/", label: "Início", icon: Home },
-  { href: "/quiz", label: "Quiz", icon: Brain },
   { href: "/bancada", label: "Bancada", icon: Users },
   { href: "/votacoes", label: "Votações", icon: FileText },
   { href: "/noticias", label: "Notícias", icon: Newspaper },
-  { href: "/investigacoes", label: "Investigações", icon: AlertCircle },
+  { href: "/escandalos", label: "Escândalos", icon: AlertCircle },
   { href: "/eleicoes-2026", label: "Eleições 2026", icon: TrendingUp },
   { href: "/metodologia", label: "Metodologia", icon: BarChart3 },
 ];
@@ -146,7 +144,7 @@ export default function Navigation() {
 
                 {/* Profile Popup */}
                 {isProfileOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-64 bg-white dark:bg-brutal-dark-surface border-3 border-black dark:border-brutal-dark-border shadow-hard dark:shadow-none z-50">
+                  <div className="fixed sm:absolute right-4 sm:right-0 top-[72px] sm:top-full sm:mt-2 w-[calc(100vw-2rem)] sm:w-72 max-w-[calc(100vw-2rem)] bg-white dark:bg-brutal-dark-surface border-3 border-black dark:border-brutal-dark-border shadow-hard dark:shadow-none z-50">
                     {!isLoggedIn ? (
                       /* Estado Deslogado */
                       <div className="p-4">

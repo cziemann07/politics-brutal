@@ -1,1 +1,1 @@
-export { useQuiz } from "./useQuiz";
+export { useVotes } from "./useVotes";

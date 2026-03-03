@@ -1,36 +1,26 @@
 import { NextResponse } from "next/server";
-import { listDeputies } from "@/lib";
+import deputadosJson from "@/lib/data/deputados.json";
 
 export async function GET(req: Request) {
-  try {
-    const { searchParams } = new URL(req.url);
-    const emExercicio = searchParams.get("emExercicio") === "true";
+  const { searchParams } = new URL(req.url);
+  const uf = searchParams.get("uf");
 
-    const deputados = await listDeputies({
-      itens: 513,
-      emExercicio: emExercicio || undefined,
-    });
+  let deputados = deputadosJson;
 
-    // 🔹 Normaliza para o formato do FRONT
-    const normalizados = deputados.map((d: any) => ({
-      id: d.id,
-      name: d.nome,
-      party: d.siglaPartido,
-      state: d.siglaUf,
-      role: "Deputado Federal",
-      image: d.urlFoto,
-    }));
-
-    const res = NextResponse.json({ dados: normalizados });
-    res.headers.set("Cache-Control", "public, s-maxage=3600, stale-while-revalidate=86400");
-    return res;
-  } catch (e: any) {
-    return NextResponse.json(
-      {
-        error: "Falha ao buscar deputados",
-        detail: String(e?.message ?? e),
-      },
-      { status: 500 }
-    );
+  if (uf) {
+    deputados = deputados.filter((d) => d.siglaUf === uf.toUpperCase());
   }
+
+  const normalizados = deputados.map((d) => ({
+    id: d.id,
+    name: d.nome,
+    party: d.siglaPartido,
+    state: d.siglaUf,
+    role: "Deputado Federal",
+    image: d.urlFoto,
+  }));
+
+  const res = NextResponse.json({ dados: normalizados });
+  res.headers.set("Cache-Control", "public, s-maxage=86400, stale-while-revalidate=604800");
+  return res;
 }

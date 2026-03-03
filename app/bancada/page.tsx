@@ -72,7 +72,7 @@ type OrgaoDeputado = {
 ========================= */
 
 const ANO_PADRAO = 2024;
-const MES_PADRAO = 9;
+const MES_PADRAO = 12;
 
 /* =========================
    COMPONENT
