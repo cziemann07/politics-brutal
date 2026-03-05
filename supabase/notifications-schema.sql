@@ -6,6 +6,8 @@
 -- =============================================
 -- TABELA: user_notification_settings (configurações de notificação)
 -- =============================================
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 CREATE TABLE IF NOT EXISTS user_notification_settings (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
@@ -253,7 +255,7 @@ CREATE INDEX IF NOT EXISTS idx_user_followed_deputies_deputado ON user_followed_
 ALTER TABLE user_notification_settings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_followed_deputies ENABLE ROW LEVEL SECURITY;
 ALTER TABLE notifications ENABLE ROW LEVEL SECURITY;
-ALTER TABLE notification_queue ENABLE ROW LEVEL SECURITY;
+--ALTER TABLE notification_queue ENABLE ROW LEVEL SECURITY;
 ALTER TABLE deputy_events ENABLE ROW LEVEL SECURITY;
 ALTER TABLE deputy_event_attendance ENABLE ROW LEVEL SECURITY;
 ALTER TABLE deputy_absences ENABLE ROW LEVEL SECURITY;
