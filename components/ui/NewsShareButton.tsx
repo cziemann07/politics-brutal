@@ -154,22 +154,50 @@ export default function NewsShareButton({ data }: { data: NewsShareData }) {
     }
   }, [data.titulo]);
 
-  // Truncamentos
-  const tituloTruncado = data.titulo.length > 80 
-    ? data.titulo.slice(0, 77) + "..." 
-    : data.titulo;
+  // Calcula densidade de conteúdo para ajustar tamanhos dinamicamente
+  const totalChars = 
+    data.titulo.length + 
+    data.subtitulo.length + 
+    (data.destaque?.length || 0) + 
+    (data.contexto?.length || 0);
 
-  const subtituloTruncado = data.subtitulo.length > 200 
-    ? data.subtitulo.slice(0, 197) + "..." 
-    : data.subtitulo;
+  // 4 níveis de densidade — só comprime pra textos realmente longos
+  const density: "ultra-compact" | "compact" | "normal" | "spacious" = 
+    totalChars > 900 ? "ultra-compact" :
+    totalChars > 650 ? "compact" : 
+    totalChars > 400 ? "normal" : "spacious";
 
-  const destaqueTruncado = data.destaque && data.destaque.length > 120
-    ? data.destaque.slice(0, 117) + "..."
-    : data.destaque;
+  // Limites altíssimos: só trunca em casos extremos
+  const limites = {
+    "ultra-compact": { titulo: 200, subtitulo: 350, destaque: 250, contexto: 350 },
+    compact:         { titulo: 250, subtitulo: 450, destaque: 300, contexto: 400 },
+    normal:          { titulo: 300, subtitulo: 500, destaque: 350, contexto: 500 },
+    spacious:        { titulo: 300, subtitulo: 500, destaque: 350, contexto: 500 },
+  }[density];
 
-  const contextoTruncado = data.contexto && data.contexto.length > 150
-    ? data.contexto.slice(0, 147) + "..."
-    : data.contexto;
+  // Font sizes dinâmicos (px) para o card de 1080x1350
+  const fontSizes = {
+    "ultra-compact": { titulo: 30, subtitulo: 19, destaque: 19, contexto: 17 },
+    compact:         { titulo: 34, subtitulo: 21, destaque: 21, contexto: 18 },
+    normal:          { titulo: 42, subtitulo: 25, destaque: 24, contexto: 20 },
+    spacious:        { titulo: 50, subtitulo: 28, destaque: 27, contexto: 23 },
+  }[density];
+
+  // Padding/spacing dinâmico
+  const spacing = {
+    "ultra-compact": { bodyPad: 32, gap: 12, headerPad: "28px 36px 32px 36px" },
+    compact:         { bodyPad: 36, gap: 14, headerPad: "30px 40px 36px 40px" },
+    normal:          { bodyPad: 42, gap: 20, headerPad: "36px 44px 44px 44px" },
+    spacious:        { bodyPad: 48, gap: 26, headerPad: "40px 48px 52px 48px" },
+  }[density];
+
+  const truncate = (text: string, max: number) =>
+    text.length > max ? text.slice(0, max - 3) + "..." : text;
+
+  const tituloTruncado = truncate(data.titulo, limites.titulo);
+  const subtituloTruncado = truncate(data.subtitulo, limites.subtitulo);
+  const destaqueTruncado = data.destaque ? truncate(data.destaque, limites.destaque) : undefined;
+  const contextoTruncado = data.contexto ? truncate(data.contexto, limites.contexto) : undefined;
 
   return (
     <>
@@ -259,35 +287,47 @@ export default function NewsShareButton({ data }: { data: NewsShareData }) {
                 </div>
 
                 {/* Mini Body */}
-                <div style={{ padding: "12px", height: "65%" }}>
+                <div style={{ padding: "12px", height: "65%", overflow: "hidden" }}>
                   <p style={{ 
                     color: colors.bodyText, 
-                    fontSize: "9px", 
+                    fontSize: "8px", 
                     fontWeight: 900,
                     textTransform: "uppercase",
                     lineHeight: 1.2,
-                    marginBottom: "8px",
+                    marginBottom: "6px",
                     borderBottom: `2px solid ${colors.bodyText}`,
-                    paddingBottom: "8px",
+                    paddingBottom: "6px",
                   }}>
-                    {tituloTruncado.slice(0, 60)}...
+                    {tituloTruncado.slice(0, 90)}
                   </p>
                   <p style={{ 
                     color: colors.subtitleText, 
-                    fontSize: "6px",
+                    fontSize: "5.5px",
                     lineHeight: 1.4,
+                    marginBottom: "6px",
                   }}>
-                    {subtituloTruncado.slice(0, 80)}...
+                    {subtituloTruncado.slice(0, 140)}
                   </p>
                   {destaqueTruncado && (
                     <div style={{
                       backgroundColor: colors.accentBg,
-                      padding: "6px",
-                      marginTop: "8px",
+                      padding: "4px 6px",
+                      marginBottom: "4px",
                       borderLeft: `3px solid ${colors.bodyText}`,
                     }}>
-                      <p style={{ color: colors.accentText, fontSize: "6px", fontWeight: 700 }}>
-                        {destaqueTruncado.slice(0, 50)}...
+                      <p style={{ color: colors.accentText, fontSize: "5.5px", fontWeight: 700, lineHeight: 1.3 }}>
+                        {destaqueTruncado.slice(0, 100)}
+                      </p>
+                    </div>
+                  )}
+                  {contextoTruncado && (
+                    <div style={{
+                      backgroundColor: colors.contextBg,
+                      padding: "4px 6px",
+                      borderLeft: `2px solid ${colors.contextBorder}`,
+                    }}>
+                      <p style={{ color: colors.subtitleText, fontSize: "5px", lineHeight: 1.3 }}>
+                        {contextoTruncado.slice(0, 90)}
                       </p>
                     </div>
                   )}
@@ -407,7 +447,7 @@ export default function NewsShareButton({ data }: { data: NewsShareData }) {
             style={{
               backgroundColor: colors.headerBg,
               color: colors.headerText,
-              padding: "40px 48px 56px 48px",
+              padding: spacing.headerPad,
             }}
           >
             <div
@@ -459,21 +499,21 @@ export default function NewsShareButton({ data }: { data: NewsShareData }) {
           <div
             style={{
               flex: 1,
-              padding: "48px",
+              padding: `${spacing.bodyPad}px`,
               display: "flex",
               flexDirection: "column",
             }}
           >
             <h1
               style={{
-                fontSize: "52px",
+                fontSize: `${fontSizes.titulo}px`,
                 fontWeight: 900,
                 textTransform: "uppercase",
                 lineHeight: 1.12,
                 letterSpacing: "-1px",
                 color: colors.bodyText,
-                marginBottom: "28px",
-                paddingBottom: "28px",
+                marginBottom: `${spacing.gap}px`,
+                paddingBottom: `${spacing.gap}px`,
                 borderBottom: `6px solid ${colors.bodyText}`,
                 wordBreak: "break-word",
               }}
@@ -483,11 +523,11 @@ export default function NewsShareButton({ data }: { data: NewsShareData }) {
 
             <p
               style={{
-                fontSize: "28px",
+                fontSize: `${fontSizes.subtitulo}px`,
                 fontWeight: 500,
                 lineHeight: 1.45,
                 color: colors.subtitleText,
-                marginBottom: "36px",
+                marginBottom: `${spacing.gap}px`,
                 wordBreak: "break-word",
               }}
             >
@@ -499,14 +539,14 @@ export default function NewsShareButton({ data }: { data: NewsShareData }) {
                 style={{
                   backgroundColor: colors.accentBg,
                   color: colors.accentText,
-                  padding: "28px 32px",
-                  marginBottom: "28px",
+                  padding: `${spacing.gap}px ${spacing.gap + 4}px`,
+                  marginBottom: `${spacing.gap - 4}px`,
                   borderLeft: `8px solid ${colors.bodyText}`,
                 }}
               >
                 <p
                   style={{
-                    fontSize: "28px",
+                    fontSize: `${fontSizes.destaque}px`,
                     fontWeight: 800,
                     lineHeight: 1.35,
                     margin: 0,
@@ -518,20 +558,20 @@ export default function NewsShareButton({ data }: { data: NewsShareData }) {
               </div>
             )}
 
-            {contextoTruncado && !destaqueTruncado && (
+            {contextoTruncado && (
               <div
                 style={{
                   backgroundColor: colors.contextBg,
-                  padding: "24px 28px",
-                  marginBottom: "28px",
+                  padding: `${spacing.gap - 4}px ${spacing.gap}px`,
+                  marginBottom: `${spacing.gap - 4}px`,
                   borderLeft: `6px solid ${colors.contextBorder}`,
                 }}
               >
                 <p
                   style={{
-                    fontSize: "24px",
+                    fontSize: `${fontSizes.contexto}px`,
                     fontWeight: 500,
-                    lineHeight: 1.5,
+                    lineHeight: 1.45,
                     color: colors.subtitleText,
                     margin: 0,
                     wordBreak: "break-word",

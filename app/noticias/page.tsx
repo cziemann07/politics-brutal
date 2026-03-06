@@ -35,6 +35,21 @@ interface Noticia {
 // Notícias reais e atuais - Fevereiro/Março 2026
 const noticias: Noticia[] = [
   {
+    id: 28,
+    titulo: "Verba de Gabinete dos Deputados Sobe 35% — Sem Votação, Sem Debate",
+    subtitulo:
+      "Ato assinado em fevereiro aumentou o teto de gastos de cada deputado de R$ 111 mil para R$ 151 mil por mês. O brasileiro soube depois.",
+    fonte: "Ato da Mesa Diretora da Câmara dos Deputados",
+    fonteUrl: "https://www.camara.leg.br/noticias/1117019-mesa-diretora-reajusta-verba-de-gabinete-parlamentar/",
+    data: "20/02/2026",
+    categoria: "corrupcao",
+    tags: ["Verba de Gabinete", "Câmara", "Hugo Motta", "Salário Mínimo", "Transparência"],
+    destaque: "Salário mínimo subiu 24,5% em 3 anos. Verba de gabinete subiu 35,2%. Quem paga a conta já sabe.",
+    contexto:
+      "Decisão aprovada por Ato da Mesa Diretora, sem votação em plenário. Justificativa oficial: recomposição inflacionária (IPCA de 13,75%). Contexto real: Congresso havia aprovado aumento salarial de assessores e o teto antigo não comportava. Solução: aumentar o teto com dinheiro público. São 513 deputados × R$ 151 mil/mês.",
+    relevancia: "alta",
+  },
+  {
     id: 20,
     titulo: "CPMI do INSS Aprova Quebra de Sigilo de Lulinha com Briga e Confusão",
     subtitulo:
